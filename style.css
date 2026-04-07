@@ -1,0 +1,110 @@
+/* Global style */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Quicksand', sans-serif;
+    background-color: #FFFCF2; 
+    color: #7F5539; 
+    overflow-x: hidden; 
+}
+
+/*top navigation bar*/
+.topnav {
+    background-color: #FFF9E3; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 5vw;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-icon {
+    cursor: pointer;
+    font-size: 28px;
+}
+
+.logo-text {
+    font-weight: 700; 
+    font-size: 24px;
+    letter-spacing: -0.5px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/*round icon buttons used for profile, notifications and etc*/
+.nav-circle {
+    text-decoration: none;
+    color: #7F5539;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.nav-circle:hover {
+    background-color: #EDE0D4;
+}
+
+#profile-icon, .nav-circle .material-icons {
+    font-size: 32px; 
+}
+
+/*sign up button styling */
+.signup-btn {
+    text-decoration: none;
+    background-color: #7F5539;
+    color: #FFF9E3;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.signup-btn:hover {
+    background-color: #9C6644;
+}
+
+/*Floating action button keeps the button in place regardless of scroll*/
+.floating-post-btn {
+    position: fixed;        
+    bottom: 30px;           
+    right: 30px;            
+    width: 65px;
+    height: 65px;
+    background-color: #7F5539;
+    color: #FFF9E3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(127, 85, 57, 0.3);
+    text-decoration: none;
+    z-index: 9999;          
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-post-btn:hover {
+    transform: scale(1.1) rotate(90deg);
+    background-color: #9C6644;
+}
+
+.floating-post-btn .material-icons {
+    font-size: 35px;
+}
