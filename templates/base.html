@@ -1,0 +1,38 @@
+{# 
+    Main layout template using Jinja2 inheritance.
+    Contains the global navigation bar and the floating post button.
+    NOTE: Any elements intended to appear on EVERY page should be added here.
+#}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CozyCravings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="topnav">
+        <div class="nav-left">
+            <span class="material-icons menu-icon">menu</span>
+            <span class="logo-text">CozyCravings</span>
+        </div>
+
+        <div class="nav-right">
+            <a href="{{ url_for('profile') }}" class="nav-circle">
+                <span class="material-icons">account_circle</span>
+            </a>
+            <a href="{{ url_for('signup') }}" class="signup-btn">Sign Up</a>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <a href="{{ url_for('post') }}" class="floating-post-btn">
+        <span class="material-icons">add</span>
+    </a>
+
+</body>  
+</html> 
