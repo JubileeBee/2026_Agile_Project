@@ -108,3 +108,22 @@ html, body {
 .floating-post-btn .material-icons {
     font-size: 35px;
 }
+/* =========================
+   Recipe Detail Page Layout
+   ========================= */
+.recipe-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.recipe-image img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.comments-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+}
