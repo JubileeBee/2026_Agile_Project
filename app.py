@@ -21,5 +21,12 @@ def signup():
 def post():
     return render_template('post.html')
 
+# Route for displaying a single recipe detail page
+# The <int:id> allows dynamic URLs like /recipe/1, /recipe/2
+
+@app.route('/recipe/<int:id>')
+def recipe_detail(id):
+    return render_template('recipe.html', recipe_id=id)
+
 if __name__ == '__main__':
     app.run(debug=True)
