@@ -1,17 +1,24 @@
+:root {
+    --primary-brown: #7F5539;
+    --primary-brown-dark: #9C6644;
+    --background: #FFFCF2;
+    --secondary-bg: #FFF9E3;
+    --hover-bg: #EDE0D4;
+}
+
 /* Global style */
 html, body {
     margin: 0;
     padding: 0;
-    width: 100%;
     font-family: 'Quicksand', sans-serif;
-    background-color: #FFFCF2; 
-    color: #7F5539; 
+    background-color: var(--background); 
+    color: var(--primary-brown); 
     overflow-x: hidden; 
 }
 
 /*top navigation bar*/
 .topnav {
-    background-color: #FFF9E3; 
+    background-color: var(--secondary-bg); 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,7 +54,7 @@ html, body {
 /*round icon buttons used for profile, notifications and etc*/
 .nav-circle {
     text-decoration: none;
-    color: #7F5539;
+    color: var(--primary-brown);
     width: 42px;
     height: 42px;
     display: flex;
@@ -58,7 +65,7 @@ html, body {
 }
 
 .nav-circle:hover {
-    background-color: #EDE0D4;
+    background-color: var(--hover-bg);
 }
 
 #profile-icon, .nav-circle .material-icons {
@@ -68,8 +75,8 @@ html, body {
 /*sign up button styling */
 .signup-btn {
     text-decoration: none;
-    background-color: #7F5539;
-    color: #FFF9E3;
+    background-color: var(--primary-brown);
+    color: var(--secondary-bg);
     padding: 8px 20px;
     border-radius: 25px;
     font-size: 14px;
@@ -78,7 +85,7 @@ html, body {
 }
 
 .signup-btn:hover {
-    background-color: #9C6644;
+    background-color: var(--primary-brown-dark);
 }
 
 /*Floating action button keeps the button in place regardless of scroll*/
@@ -88,8 +95,8 @@ html, body {
     right: 30px;            
     width: 65px;
     height: 65px;
-    background-color: #7F5539;
-    color: #FFF9E3;
+    background-color: var(--primary-brown);
+    color: var(--secondary-bg);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -102,12 +109,13 @@ html, body {
 
 .floating-post-btn:hover {
     transform: scale(1.1) rotate(90deg);
-    background-color: #9C6644;
+    background-color: var(--primary-brown-dark);
 }
 
 .floating-post-btn .material-icons {
     font-size: 35px;
 }
+
 /* =========================
    Recipe Detail Page Layout
    ========================= */
