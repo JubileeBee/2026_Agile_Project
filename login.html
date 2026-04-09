@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+        }
+        /* main split container*/
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        /* login input for the left side of the login page */
+        .left {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+        }
+        .login-box {
+            width: 70%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #555;
+            margin-bottom: 30px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 50px;
+        }
+        button {
+            width: 100px;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+    
+        }
+        /* image placeholder on the right side of the login page */
+        .right {
+            width: 50%;
+            background-color: #eaeaea;
+
+            /* Center placeholder text*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #777;
+        }
+
+    </style>
+</head>
+<body>
+    <div class = "container">
+        <!--LEFT: LOGIN-->
+        <div class="left">
+            <div class="login-box">
+                <h1>Welcome Back!</h1>
+                <p>Sign in with your username and password</p>
+
+                <form onsubmit ="return validateForm()">
+                    <input type="text" placeholder="Username" required><br><br> <!--required: browser validation-->
+                    <input type="password" placeholder="Password" required><br><br>
+                    <button type ="submit">Login</button> <!-- will link to profile page later on-->
+                </form>
+            </div>
+        </div>
+        <!-- RIGHT: IMAGE-->
+        <div class:"right">
+            <!-- image goes here-->
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+            const username = document.geElementById("username").value;
+            const password = document.getElementById("password").value;
+            
+            if (username === "" || password === "") {
+                alert("Fill all fields");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
