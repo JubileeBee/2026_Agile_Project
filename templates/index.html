@@ -9,6 +9,7 @@
 {% block content %}
 
 <div class="home-container">
+
     <header class="welcome-hero">
         <h1>Welcome to CozyCravings</h1>
         <div class="search-container">
@@ -21,10 +22,15 @@
         <div class="section-header">
             <h2>This Week's Comfort Obsessions</h2>
         </div>
-        <div class="recipe-grid">
-            {% for recipe in trending_recipes %}
-                {% include "recipe_card.html" %}
-            {% endfor %}
+
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in trending_recipes %}
+                <div class="col-md-6 col-lg-4">
+                    {% include "recipe_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 
@@ -32,10 +38,15 @@
         <div class="section-header">
             <h2>Your Recent Recipes</h2>
         </div>
-        <div class="recipe-grid">
-            {% for recipe in recent_recipes %}
-                {% include "recipe_card.html" %}
-            {% endfor %}
+
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in recent_recipes %}
+                <div class="col-md-6 col-lg-4">
+                    {% include "recipe_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 
@@ -43,12 +54,18 @@
         <div class="section-header">
             <h2>Recipes Picked For You</h2>
         </div>
-        <div class="recipe-grid">
-            {% for recipe in recommended_recipes %}
-                {% include "recipe_card.html" %}
-            {% endfor %}
+
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in recommended_recipes %}
+                <div class="col-md-6 col-lg-4">
+                    {% include "recipe_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
+
 </div>
 
 {% endblock %}

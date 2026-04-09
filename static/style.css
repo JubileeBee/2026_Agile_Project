@@ -7,7 +7,7 @@
     --hover-bg: #EDE0D4;
     --card-color: #ffffff;
     --meta-type-color: #422e21;
-	--card-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035), 0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05), 0 100px 80px rgba(0, 0, 0, 0.07);
+	--card-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 	--global-radius: 16px;
     --card-text-color: #070705;
 }
@@ -202,7 +202,6 @@ html, body {
 }
 
 .home-container h2 {
-    display: flex;
     flex-direction: column;
     align-items: left;
     gap: 20px;
@@ -213,23 +212,13 @@ html, body {
    Recipe Card Layout
    ========================= */
 
-.recipe-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-    gap: 2rem;
-    padding: 2rem;
-    width: 100%;
-}
-
 .recipe-card {
     background-color: var(--card-color);
     box-shadow: var(--card-shadow);
     border-radius: var(--global-radius);
     color: var(--primary-brown-dark);
     width: 22rem;
-    font-family: 'Gill Sans', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     line-height: 1.5;
     overflow: hidden;
     display: flex;
@@ -303,4 +292,16 @@ html, body {
     align-items: center;
     gap: 2px;
     color: var(--primary-brown);
+}
+.recipe-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.recipe-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-6px);
 }
