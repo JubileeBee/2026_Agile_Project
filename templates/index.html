@@ -1,3 +1,9 @@
+{# 
+    This is the home page template for CozyCravings, a recipe sharing platform. 
+    It extends the base.html template and fills in the content block with a welcome hero 
+    and a section showcasing variety of recipes.
+#}
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -7,22 +13,42 @@
         <h1>Welcome to CozyCravings</h1>
         <div class="search-container">
             <input type="text" placeholder="What are your cravings for today?"/>
-            <button>Search</buttonbutton>
+            <button>Search</button>
         </div>
     </header>
 
-    <div class="section-style">
-        <h2>This Week’s Comfort Obsession</h2>
-    </div>
+    <section class="section-style">
+        <div class="section-header">
+            <h2>This Week's Comfort Obsessions</h2>
+        </div>
+        <div class="recipe-grid">
+            {% for recipe in trending_recipes %}
+                {% include "recipe_card.html" %}
+            {% endfor %}
+        </div>
+    </section>
 
-    <div class="section-style recent-history">
-        <h2>Your Recent Recipes</h2>
-    </div>
+    <section class="section-style recent-history">
+        <div class="section-header">
+            <h2>Your Recent Recipes</h2>
+        </div>
+        <div class="recipe-grid">
+            {% for recipe in recent_recipes %}
+                {% include "recipe_card.html" %}
+            {% endfor %}
+        </div>
+    </section>
 
-    <div class="section-style recommendations">
-        <h2>Recipes Picked For You</h2>
-    </div>
-    
+    <section class="section-style recommendations">
+        <div class="section-header">
+            <h2>Recipes Picked For You</h2>
+        </div>
+        <div class="recipe-grid">
+            {% for recipe in recommended_recipes %}
+                {% include "recipe_card.html" %}
+            {% endfor %}
+        </div>
+    </section>
 </div>
 
 {% endblock %}
