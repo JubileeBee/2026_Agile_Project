@@ -16,7 +16,9 @@ html, body {
     overflow-x: hidden; 
 }
 
-/*top navigation bar*/
+/* =========================
+   Navigation Bar Layout
+   ========================= */
 .topnav {
     background-color: var(--secondary-bg); 
     display: flex;
@@ -51,6 +53,9 @@ html, body {
     gap: 15px;
 }
 
+/* =========================
+   Post Button Layout
+   ========================= */
 /*round icon buttons used for profile, notifications and etc*/
 .nav-circle {
     text-decoration: none;
@@ -134,4 +139,58 @@ html, body {
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #ccc;
+}
+
+/* =========================
+   Home Page Layout
+   ========================= */
+
+/*top welcome part*/
+.welcome-hero {
+    background-color: #F2EADC;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height: 300px; 
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--primary-brown); 
+    text-align: center;
+}
+
+.welcome-hero h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.welcome-hero p {
+    margin-top: 0;
+}
+
+/*search button bar*/
+.search-container {
+    display: flex;
+    margin-top: 15px;
+}
+
+.search-container input {
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    border-radius: 20px 0 0 20px;
+    width: 250px;
+}
+
+.search-container button {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--primary-brown);
+    color: white;
 }
