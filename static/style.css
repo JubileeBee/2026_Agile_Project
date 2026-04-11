@@ -1,17 +1,32 @@
+/*CSS varaible */
+:root {
+    --primary-brown: #7F5539;
+    --primary-brown-dark: #9C6644;
+    --background: #FFFCF2;
+    --secondary-bg: #FFF9E3;
+    --hover-bg: #EDE0D4;
+    --card-color: #ffffff;
+    --meta-type-color: #422e21;
+	--card-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+	--global-radius: 16px;
+    --card-text-color: #070705;
+}
+
 /* Global style */
 html, body {
     margin: 0;
     padding: 0;
-    width: 100%;
     font-family: 'Quicksand', sans-serif;
-    background-color: #FFFCF2; 
-    color: #7F5539; 
+    background-color: var(--background);
+    color: var(--primary-brown); 
     overflow-x: hidden; 
 }
 
-/*top navigation bar*/
+/* =========================
+   Navigation Bar Layout
+   ========================= */
 .topnav {
-    background-color: #FFF9E3; 
+    background-color: var(--secondary-bg); 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -44,10 +59,13 @@ html, body {
     gap: 15px;
 }
 
+/* =========================
+   Post Button Layout
+   ========================= */
 /*round icon buttons used for profile, notifications and etc*/
 .nav-circle {
     text-decoration: none;
-    color: #7F5539;
+    color: var(--primary-brown);
     width: 42px;
     height: 42px;
     display: flex;
@@ -58,7 +76,7 @@ html, body {
 }
 
 .nav-circle:hover {
-    background-color: #EDE0D4;
+    background-color: var(--hover-bg);
 }
 
 #profile-icon, .nav-circle .material-icons {
@@ -68,8 +86,8 @@ html, body {
 /*sign up button styling */
 .signup-btn {
     text-decoration: none;
-    background-color: #7F5539;
-    color: #FFF9E3;
+    background-color: var(--primary-brown);
+    color: var(--secondary-bg);
     padding: 8px 20px;
     border-radius: 25px;
     font-size: 14px;
@@ -78,7 +96,7 @@ html, body {
 }
 
 .signup-btn:hover {
-    background-color: #9C6644;
+    background-color: var(--primary-brown-dark);
 }
 
 /*Floating action button keeps the button in place regardless of scroll*/
@@ -88,8 +106,8 @@ html, body {
     right: 30px;            
     width: 65px;
     height: 65px;
-    background-color: #7F5539;
-    color: #FFF9E3;
+    background-color: var(--primary-brown);
+    color: var(--secondary-bg);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -102,12 +120,13 @@ html, body {
 
 .floating-post-btn:hover {
     transform: scale(1.1) rotate(90deg);
-    background-color: #9C6644;
+    background-color: var(--primary-brown-dark);
 }
 
 .floating-post-btn .material-icons {
     font-size: 35px;
 }
+
 /* =========================
    Recipe Detail Page Layout
    ========================= */
@@ -126,4 +145,163 @@ html, body {
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #ccc;
+}
+
+/* =========================
+   Home Page Layout
+   ========================= */
+
+/*top welcome part*/
+.welcome-hero {
+    background-color: #F2EADC;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height: 300px; 
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--primary-brown); 
+    text-align: center;
+}
+
+.welcome-hero h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.welcome-hero p {
+    margin-top: 0;
+}
+
+/*search button bar*/
+.search-container {
+    display: flex;
+    margin-top: 15px;
+}
+
+.search-container input {
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    border-radius: 20px 0 0 20px;
+    width: 250px;
+}
+
+.search-container button {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--primary-brown);
+    color: white;
+}
+
+.home-container h2 {
+    flex-direction: column;
+    align-items: left;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* =========================
+   Recipe Card Layout
+   ========================= */
+
+.recipe-card {
+    background-color: var(--card-color);
+    box-shadow: var(--card-shadow);
+    border-radius: var(--global-radius);
+    color: var(--primary-brown-dark);
+    width: 22rem;
+    font-family: 'Quicksand', sans-serif;
+    line-height: 1.5;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe-card figure {
+    width: 100%;
+    margin: 0;
+    height: 14rem;
+    overflow: hidden;
+    border-radius: var(--global-radius) var(--global-radius) 0 0;
+}
+
+.recipe-card figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.recipe-card-content {
+    padding: 0.7rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    margin: 0;
+    font-size: 13px;
+}
+
+.recipe-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.recipe-tag {
+    background-color: var(--primary-brown);
+    color: #fff;
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.recipe-stats {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: #777;
+}
+
+.recipe-card h1 {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.recipe-stats li {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: var(--primary-brown);
+}
+.recipe-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.recipe-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-6px);
 }

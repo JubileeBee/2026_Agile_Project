@@ -6,8 +6,23 @@ from flask import Flask, render_template, url_for
 app = Flask(__name__)
 
 @app.route('/')
-def index():
-    return render_template('index.html') 
+def home():
+    test_recipe = {
+        'id': 1,
+        'title': 'Chocolate Lava Cake',
+        'category': 'Dessert',
+        'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400',
+        'rating': 4.8,
+        'likes': 231,
+        'duration': '30 mins'
+    }
+
+    return render_template(
+        'index.html',
+        trending_recipes=[test_recipe],
+        recent_recipes=[],
+        recommended_recipes=[]
+    )
 
 @app.route('/profile')
 def profile():

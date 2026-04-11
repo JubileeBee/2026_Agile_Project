@@ -1,5 +1,71 @@
+{# 
+    This is the home page template for CozyCravings, a recipe sharing platform. 
+    It extends the base.html template and fills in the content block with a welcome hero 
+    and a section showcasing variety of recipes.
+#}
+
 {% extends "base.html" %}
 
 {% block content %}
+
+<div class="home-container">
+
+    <header class="welcome-hero">
+        <h1>Welcome to CozyCravings</h1>
+        <div class="search-container">
+            <input type="text" placeholder="What are your cravings for today?"/>
+            <button>Search</button>
+        </div>
+    </header>
+
+    <section class="section-style">
+        <div class="section-header">
+            <h2>This Week's Comfort Obsessions</h2>
+        </div>
+
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in trending_recipes %}
+                <div class="col-md-6 col-lg-4">
+                    {% include "recipe_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section-style recent-history">
+        <div class="section-header">
+            <h2>Your Recent Recipes</h2>
+        </div>
+
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in recent_recipes %}
+                <div class="col-md-6 col-lg-4">
+                    {% include "recipe_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section-style recommendations">
+        <div class="section-header">
+            <h2>Recipes Picked For You</h2>
+        </div>
+
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in recommended_recipes %}
+                <div class="col-md-6 col-lg-4">
+                    {% include "recipe_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+</div>
 
 {% endblock %}
