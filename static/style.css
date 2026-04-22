@@ -308,9 +308,68 @@ html, body {
 
 .recipe-form-container {
     max-width: 700px;
-    margin: 60px auto;  /* ← THIS centers it */
+    margin: 60px auto; 
     padding: 30px;
     background: var(--card-color);
     border-radius: var(--global-radius);
     box-shadow: var(--card-shadow);
+}
+
+/* =========================
+   Recipe Form Pages (Create + Edit)
+   ========================= */
+
+   .form-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-brown);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--meta-type-color);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-brown);
+    box-shadow: 0 0 0 2px rgba(127, 85, 57, 0.1);
+}
+
+.submit-btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 40px;
+    border-radius: 25px;
+    border: none;
+    background-color: var(--primary-brown);
+    color: var(--secondary-bg);
+    font-weight: 600;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-brown-dark);
+    transform: scale(1.05);
 }
