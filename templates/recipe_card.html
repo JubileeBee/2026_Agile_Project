@@ -1,0 +1,28 @@
+<a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link"></a>
+<article class="recipe-card">
+    <figure class="recipe-image">
+        <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+    </figure>
+    <div class="recipe-card-content">
+        <div class="card-meta">
+            <div class="recipe-tags">
+                <span class="recipe-tag">{{ recipe.category }}</span>
+            </div>
+            <ul class="recipe-stats">
+                <li>
+                    <span class="material-icons" style="font-size:14px;">star</span>
+                    {{ recipe.rating }}
+                </li>
+                <li>
+                    <span class="material-icons" style="font-size:14px;">favorite</span>
+                    {{ recipe.likes }}
+                </li>
+                <li>
+                    <span class="material-icons" style="font-size:14px;">schedule</span>
+                    {{ recipe.duration }}
+                </li>
+            </ul>
+        </div>
+        <h1 class="recipe-title">{{ recipe.title }}</h1>
+    </div>
+</article>
