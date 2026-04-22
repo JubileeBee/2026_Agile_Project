@@ -305,3 +305,12 @@ html, body {
 .recipe-card:hover {
     transform: translateY(-6px);
 }
+
+.recipe-form-container {
+    max-width: 700px;
+    margin: 60px auto;  /* ← THIS centers it */
+    padding: 30px;
+    background: var(--card-color);
+    border-radius: var(--global-radius);
+    box-shadow: var(--card-shadow);
+}
