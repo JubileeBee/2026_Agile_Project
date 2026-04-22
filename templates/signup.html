@@ -1,0 +1,153 @@
+<!--/* This is the register page for the website. 
+It allows users to create an account by providing their username, email, and password. 
+The form will be submitted to the server for processing and validation.
+*/-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <!--External CSS file for styling-->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/login-style.css') }}">
+    <script src = "{{ url_for('static', filename = 'js/register-script.js') }}" defer></script>
+</head>
+<body>
+    <div class="soft-background">
+        <div class="floating-shapes">
+            <div class="soft-blob blob-1"></div>
+            <div class="soft-blob blob-2"></div>
+            <div class="soft-blob blob-3"></div>
+            <div class="soft-blob blob-4"></div>
+        </div>  
+    </div>
+
+    <div class="login-container">
+        <div class="soft-card">
+            <div class="comfort-header">
+                <div class="gentle-logo">
+                    <div class="logo-circle">
+                        <div class="comfort-icon">
+                            <svg class="comfort-icon" width="28" height="28" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4z" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M4 20c0-4 3.5-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h1 class="comfort-title">Create Account</h1>
+                    <p class="gentle-subtitle">Join our community of food lovers</p>
+                </div>
+
+                <!--Form-->
+                <form id="signupForm">
+                    <div class="soft-field">
+                        <div class="field-container">
+                            <input type="text" id="username" name="username" required autocomplete="username">
+                            <label for="username">Username</label>
+                            <div class="field-accent"></div>    
+                        </div>
+                    </div>
+                    <!--Email-->
+                    <div class="soft-field">
+                        <div class="field-container">
+                            <input type="email" id="email" name="email" required autocomplete="email">
+                            <label for="email">Email</label>
+                            <div class="field-accent"></div>    
+                        </div>
+                    </div>
+                    <!--Password-->
+                    <div class="soft-field">
+                        <div class="field-container">
+                            <input type="password" id="password" name="password" required autocomplete="new-password">
+                            <label for="password">Password</label>
+
+                            <button type="button" class="gentle-toggle" onclick="togglePassword('password', this)">
+                                <svg class="toggle-icon eye-open" viewBox="0 0 24 24" fill="none">
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="currentColor"/>
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor"/>
+                                </svg>
+                                <svg class="toggle-icon eye-closed" viewBox="0 0 24 24" fill="none">
+                                    <path d="M3 3l18 18" stroke="currentColor"/>
+                                    <path d="M10.6 10.6A3 3 0 0012 15a3 3 0 002.4-4.4" stroke="currentColor"/>
+                                </svg>
+                            </button>
+                            <div class="field-accent"></div>    
+                        </div>
+                    </div>
+
+                    <!--Confirm Password-->
+                    <div class="soft-field>
+                        <div class="field-container">
+                            <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <div class="field-accent"></div>    
+                        </div>
+                    </div>
+                    <!--Terms-->
+                    <div class="comfort-options">
+                        <label class="gentle-checkbox">
+                            <input type="checkbox" required>
+                            <span class="checkbox-soft">
+                                <div class="check-circle"></div>
+                                <svg class="check-mark width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                    <path d"M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </span>
+                            <span class="checkbox-text">I agree to the <a href="/terms" target="_blank">Terms of Service</a></span>
+                        </label>
+                    </div>
+
+                    <!--Submit Button-->
+                    <button type="submit" class="comfort-button">
+                        <div class="button-background"></div>
+                        <span class="button-text">Create Account</span>
+                        <div class="button-loader">
+                            <div class="gentle-spinner">
+                                <div class="spinner-circle"></div>
+                            </div>
+                        </div>
+                        <div class="button-glow"></div>
+                    </button>       
+                </form>
+
+                <!--Divider-->
+                <div class="divider">
+                    <div class ="divider-line"></div>
+                    <span class="divider-text">or</span>
+                    <div class="divider-line"></div>
+                </div>
+
+                <!--Social Login Options-->
+                <div class="comfort-social">
+                    <button class="social-soft">
+                        <div class="social-background"></div>
+                        <span>Google</span>
+                    </button>
+                    <button class="social-soft">
+                        <div class="social-background"></div>
+                        <span>Facebook</span>
+                    </button>
+                    <button class="social-soft">
+                        <div class="social-background"></div>
+                        <span>Apple</span>
+                    </button>
+                </div>
+
+                <!--Login link-->
+                <div class="comfort-signup">
+                    <span class="signup-text">Already have an account?</span>
+                    <a href="/login" class="comfort-link signup-link">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(fieldId, toggleButton) {
+            const input = document.getElementById(fieldId);
+            const isHidden = input.type === 'password';
+            input.type = isHidden ? 'text' : 'password';
+            toggleButton.classList.toggle('active', isHidden);
+        }
+    </script>
+    </body> 
+</html>
