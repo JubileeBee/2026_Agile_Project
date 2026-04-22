@@ -1,4 +1,4 @@
-class RecipesharingLoginForm {
+class RecipeSharingLoginForm{
     constructor() {
         this.form = document.getElementById('loginForm');
         this.emailInput = document.getElementById('email');
