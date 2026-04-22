@@ -12,7 +12,6 @@
     <title>Soft Minimalism Login</title>
     <!--External CSS file for styling-->
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/login-style.css') }}">
-    <script src = "{{ url_for('static', filename = 'js/login-script.js') }}" defer></script>    
 </head>
 <body>
     <!--Animated background elements-->
@@ -156,8 +155,7 @@
         </div>
     </div>
 
-    <script src="../../shared/js/form-utils.js"></script>
-    <script src="script.js"></script>
+    <script src = "{{ url_for('static', filename = 'js/login-script.js') }}" defer></script>    
             
 </body>
 </html>
