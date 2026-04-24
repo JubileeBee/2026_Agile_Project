@@ -50,7 +50,7 @@
     </section>
     {% endif %}
 
-
+    {% if recommended_recipes %}
     <section class="section-style recommendations">
         <div class="section-header">
             <h2>Recipes Picked For You</h2>
@@ -58,11 +58,15 @@
 
         <div class="container">
             <div class="scroll-row d-flex gap-4"> 
+                {% for recipe in recommended_recipes %}
                     <div class="scroll-item">
+                        {% include "recipe_card.html" %}
                     </div>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 
 </div>
 
