@@ -18,7 +18,7 @@ def home():
 
     return render_template('index.html',
         trending_recipes=test_recipes,
-        recent_recipes=test_recipes[:4],
+        recent_recipes=test_recipes[1:5],
         recommended_recipes=test_recipes
     )
 

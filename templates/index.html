@@ -34,18 +34,22 @@
     </section>
     {% endif %}
 
-    <section class="section-style recent-history">
-        <div class="section-header">
-            <h2>Your Recent Recipes</h2>
+    {% if recent_recipes %}
+    <section class="section-style recent-history mb-5"> <div class="section-header mb-4"> <h2>Your Recent Recipes</h2>
         </div>
 
         <div class="container">
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                </div>
+            <div class="scroll-row d-flex gap-4"> 
+                {% for recipe in recent_recipes %}
+                    <div class="scroll-item">
+                        {% include "recipe_card.html" %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
+
 
     <section class="section-style recommendations">
         <div class="section-header">
@@ -53,9 +57,9 @@
         </div>
 
         <div class="container">
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                </div>
+            <div class="scroll-row d-flex gap-4"> 
+                    <div class="scroll-item">
+                    </div>
             </div>
         </div>
     </section>

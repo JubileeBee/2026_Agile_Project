@@ -305,7 +305,7 @@ html, body {
 
 .recipe-footer {
     display: flex;
-    justify-content: flex-end; /* This is the magic line for the right side */
+    justify-content: flex-end; 
 }
 
 .user-info {
@@ -331,4 +331,25 @@ html, body {
 
 .recipe-card:hover {
     transform: translateY(-6px);
+}
+
+/* =========================
+   Recipe Card Layout Scroll Feature
+   ========================= */
+
+.scroll-row {
+    display: flex;       
+    overflow-x: auto;    
+    gap: 20px;           
+    padding: 15px 0;     
+    scrollbar-width: none; 
+}
+
+.scroll-row::-webkit-scrollbar {
+    display: none; 
+}
+
+.scroll-item {
+    flex: 0 0 auto; 
+    width: 21 rem; 
 }
