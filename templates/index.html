@@ -17,12 +17,11 @@
             <button>Search</button>
         </div>
     </header>
-
+    {% if trending_recipes %}
     <section class="section-style">
         <div class="section-header">
             <h2>This Week's Comfort Obsessions</h2>
         </div>
-
         <div class="container">
             <div class="row g-4">
                 {% for recipe in trending_recipes %}
@@ -33,6 +32,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <section class="section-style recent-history">
         <div class="section-header">
@@ -41,11 +41,8 @@
 
         <div class="container">
             <div class="row g-4">
-                {% for recipe in recent_recipes %}
                 <div class="col-md-6 col-lg-4">
-                    {% include "recipe_card.html" %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </section>
@@ -57,11 +54,8 @@
 
         <div class="container">
             <div class="row g-4">
-                {% for recipe in recommended_recipes %}
                 <div class="col-md-6 col-lg-4">
-                    {% include "recipe_card.html" %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </section>
