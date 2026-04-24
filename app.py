@@ -9,12 +9,13 @@ app = Flask(__name__)
 def home():
     test_recipe = {
         'id': 1,
-        'title': 'Chocolate Lava Cake',
+        'title': 'Chocolate Lava Brownie C...',
         'category': 'Dessert',
         'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400',
         'rating': 4.8,
         'likes': 231,
-        'duration': '30 mins'
+        'duration': '30 mins',
+        'profile': 'Emma Doe'
     }
 
     return render_template(

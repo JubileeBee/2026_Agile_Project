@@ -218,6 +218,7 @@ html, body {
     border-radius: var(--global-radius);
     color: var(--primary-brown-dark);
     width: 22rem;
+    height: 21.2rem;
     font-family: 'Quicksand', sans-serif;
     line-height: 1.5;
     overflow: hidden;
@@ -243,10 +244,14 @@ html, body {
 }
 
 .recipe-card-content {
-    padding: 0.7rem 1.5rem 1.5rem 1.5rem;
+    flex-grow: 1;
+    padding: 0.7rem 1.3rem 0.5rem 1.3rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    justify-content: space-between;
+    gap: 4px;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .card-meta {
@@ -284,7 +289,11 @@ html, body {
 
 .recipe-card h1 {
     font-size: 1.4rem;
-    margin: 0;
+    margin-top: 5px;
+    margin-bottom: -3px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .recipe-stats li {
@@ -293,6 +302,24 @@ html, body {
     gap: 2px;
     color: var(--primary-brown);
 }
+
+.recipe-footer {
+    display: flex;
+    justify-content: flex-end; /* This is the magic line for the right side */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--primary-brown);
+}
+
+.username {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 .recipe-link {
     text-decoration: none;
     color: inherit;
