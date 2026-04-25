@@ -21,6 +21,33 @@ def home():
         recent_recipes=test_recipes[1:5],
         recommended_recipes=test_recipes
     )
+@app.route("/recipes")
+def recipes():
+    return render_template("browse_recipes.html")
+
+@app.route("/favourites")
+def favourites():
+    return render_template("favourites.html")
+
+@app.route("/history")
+def history():
+    return render_template("history.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact_us.html")
+
+@app.route("/about_us")
+def about_us():
+    return render_template("about_us.html")
+
+@app.route("/privacy_policy")
+def privacy():
+    return render_template("privacy.html")
+
+@app.route("/terms_and_condition")
+def terms():
+    return render_template("terms.html")
 
 @app.route('/profile')
 def profile():
