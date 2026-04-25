@@ -239,6 +239,7 @@ html, body {
 
 .footer-legal a {
     text-decoration: none;
+    margin-left: 20px;
     color: var(--secondary-bg);
 }
 

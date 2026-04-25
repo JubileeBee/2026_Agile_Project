@@ -47,17 +47,17 @@
                 <section>
                     <h3 class="footer-heading">Explore</h3>
                     <nav class="footer-links">
-                        <a href="#">All Recipes</a>
-                        <a href="#">By Category</a>
-                        <a href="#">Favourites</a>
+                        <a href="{{ url_for('recipes') }}">All Recipes</a>
+                        <a href="{{ url_for('favourites') }}">Favourites</a>
+                        <a href="{{ url_for('history') }}">Recently Visited</a>
                     </nav>
                 </section>
 
                 <section>
                     <h3 class="footer-heading">About</h3>
                     <nav class="footer-links">
-                        <a href="#">About Us</a>
-                        <a href="#">Contact</a>
+                        <a href="{{ url_for('about_us') }}">About Us</a>
+                        <a href="{{ url_for('contact') }}">Contact</a>
                     </nav>
                 </section>
             </div>
@@ -75,7 +75,8 @@
         <div class="footer-bottom">
             <p>&copy; 2026 CozyCravings.com</p>
             <nav class="footer-legal">
-                <a href="#">Privacy Policy</a>
+                <a href="{{ url_for('terms') }}">Terms & Conditions</a>
+                <a href="{{ url_for('privacy') }}">Privacy Policy</a>
             </nav>
         </div>
     </footer>
