@@ -205,7 +205,17 @@ html, body {
     flex-direction: column;
     align-items: left;
     gap: 20px;
-    padding: 20px;
+    padding: 0px;
+}
+
+.section-header {
+    padding-left: -12px;  
+}
+
+.section-header h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 50px;  
 }
 
 /* =========================
@@ -333,15 +343,15 @@ html, body {
     transform: translateY(-6px);
 }
 
-/* =========================
-   Recipe Card Layout Scroll Feature
-   ========================= */
+/* ===========================================
+   Horizontal Scroll Layout (Recipe Cards)
+   =========================================== */
 
 .scroll-row {
     display: flex;       
     overflow-x: auto;    
     gap: 20px;           
-    padding: 15px 0;     
+    padding: 0 0 15px 0;     
     scrollbar-width: none; 
 }
 

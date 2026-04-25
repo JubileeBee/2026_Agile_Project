@@ -17,12 +17,15 @@
             <button>Search</button>
         </div>
     </header>
+
     {% if trending_recipes %}
-    <section class="section-style">
-        <div class="section-header">
-            <h2>This Week's Comfort Obsessions</h2>
-        </div>
+    <section class="section-style py-3">
         <div class="container">
+            
+            <div class="section-header mb-1">
+                <h2>This Week's Comfort Obsessions</h2>
+            </div>
+
             <div class="row g-4">
                 {% for recipe in trending_recipes %}
                 <div class="col-md-6 col-lg-4">
@@ -30,40 +33,47 @@
                 </div>
                 {% endfor %}
             </div>
+
         </div>
     </section>
     {% endif %}
 
     {% if recent_recipes %}
-    <section class="section-style recent-history mb-5"> <div class="section-header mb-4"> <h2>Your Recent Recipes</h2>
-        </div>
-
+    <section class="section-style recent-history">
         <div class="container">
-            <div class="scroll-row d-flex gap-4"> 
+
+            <div class="section-header">
+                <h2>Your Recent Recipes</h2>
+            </div>
+
+            <div class="scroll-row d-flex gap-4">
                 {% for recipe in recent_recipes %}
                     <div class="scroll-item">
                         {% include "recipe_card.html" %}
                     </div>
                 {% endfor %}
             </div>
+
         </div>
     </section>
     {% endif %}
 
     {% if recommended_recipes %}
-    <section class="section-style recommendations">
-        <div class="section-header">
-            <h2>Recipes Picked For You</h2>
-        </div>
-
+    <section class="section-style recommendations py-3">
         <div class="container">
-            <div class="scroll-row d-flex gap-4"> 
+
+            <div class="section-header mb-1">
+                <h2>Recipes Picked For You</h2>
+            </div>
+
+            <div class="scroll-row d-flex gap-4">
                 {% for recipe in recommended_recipes %}
                     <div class="scroll-item">
                         {% include "recipe_card.html" %}
                     </div>
                 {% endfor %}
             </div>
+
         </div>
     </section>
     {% endif %}
