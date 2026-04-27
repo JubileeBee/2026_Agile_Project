@@ -6,7 +6,7 @@ class RecipeSharingLoginForm{
         this.passwordToggle = document.getElementById('passwordToggle');
         this.submitButton = this.form.querySelector('.comfort-button');
         this.successMessage = document.getElementById('successMessage');
-        this.socialButtons = document.querySelectorAll('.social-button');
+        this.socialButtons = document.querySelectorAll('.social-soft');
         this.init();
     }
 
@@ -44,7 +44,7 @@ class RecipeSharingLoginForm{
     setupSocialButtons() {
         this.socialButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                const provider = button.ATTRIBUTE_NODE.querySelector('span').textContent.trim();
+                const provider = button.querySelector('span').textContent.trim();
                 this.handleSocialLogin(provider, button);
             });
         });
@@ -86,7 +86,7 @@ class RecipeSharingLoginForm{
 
     addGentleClickEffects() {
         //Add click animations to all interactive elements
-        const interactiveElements = document.querySelectorAll('.comfort-button, .social-soft', 'gentle-checkbox');
+        const interactiveElements = document.querySelectorAll('.comfort-button, .social-soft, .gentle-checkbox');
         interactiveElements.forEach(el => {
             el.addEventListener('mousedown', () => {
                 el.style.transform = 'scale(0.98)';

@@ -1,0 +1,127 @@
+<!--This file contains the Terms of Use and Privacy Policy for our cooking platform. 
+It outlines the rules for using the platform and how we handle user data. By creating an account, users agree to these terms.
+The policy covers respectful use, account security, data collection, and contact information for questions.--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Terms & Privacy</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#faf9f6,#f5f3f0);
+color:#6f5446;
+line-height:1.7;
+padding:40px 20px;
+}
+
+.policy-container{
+max-width:800px;
+margin:auto;
+background:rgba(255,255,255,.9);
+padding:50px;
+border-radius:28px;
+box-shadow:0 15px 35px rgba(0,0,0,.04);
+}
+
+h1{
+font-size:2.2rem;
+margin-bottom:30px;
+color:#8b6655;
+}
+
+h2{
+margin-top:35px;
+margin-bottom:14px;
+font-size:1.35rem;
+color:#8b6655;
+}
+
+p{
+margin-bottom:16px;
+}
+
+ul{
+padding-left:22px;
+margin-bottom:20px;
+}
+
+li{
+margin-bottom:8px;
+}
+
+.back-link{
+display:inline-block;
+margin-top:35px;
+text-decoration:none;
+padding:12px 20px;
+border-radius:14px;
+background:#f0ceaa;
+color:#6f5446;
+font-weight:600;
+}
+
+.back-link:hover{
+opacity:.9;
+}
+</style>
+</head>
+<body>
+
+<div class="policy-container">
+
+<h1>Terms & Privacy Policy</h1>
+
+<p>
+By creating an account you agree to these basic terms and privacy practices.
+</p>
+
+<section id="terms">
+<h2>Terms of Use</h2>
+
+<ul>
+<li>Use the platform respectfully and lawfully.</li>
+<li>Keep your account credentials secure.</li>
+<li>You are responsible for activity under your account.</li>
+<li>We may update features or policies over time.</li>
+</ul>
+</section>
+
+
+<section id="privacy">
+<h2>Privacy Policy</h2>
+
+<p>
+We collect only information needed to create and maintain your account,
+such as your name, email, and login credentials.
+</p>
+
+<ul>
+<li>Your data is not sold to third parties.</li>
+<li>Information is used for account access and platform improvements.</li>
+<li>You may request deletion of your account at any time.</li>
+</ul>
+</section>
+
+<h2>Contact</h2>
+
+<p>
+Questions about these terms can be directed to support@example.com
+</p>
+
+<a href="{{ url_for('signup') }}" class="back-link">
+← Back to Sign Up
+</a>
+
+</div>
+
+</body>
+</html>
