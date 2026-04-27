@@ -1,55 +1,78 @@
-from flask import Flask, render_template, redirect, url_for
-from flask_dance.contrib.google import make_google_blueprint, google    
+# Main Flask application handling server-side routing and rendering of Jinja2 templates.
+# The @app.route decorators map specific URLs to the functions that render the HTML pages.
+
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
-app.secret_key = "your-secret-key"
-google_bp = make_google_blueprint(
-    client_id="your-google-client-id", 
-    client_secret="your-google-client-secret", 
-    redirect_to="google_login")
-
-app.register_blueprint(
-    google_bp, 
-    url_prefix="/signup")
-
 @app.route('/')
-def login():
-    return render_template('login.html')
+def home():
+    test_recipes = [
+        {'id': 1, 'title': 'Chocolate Lava Cake', 'category': 'Dessert', 'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400', 'rating': 4.8, 'likes': 231, 'duration': '30 mins', 'profile': 'Emma Doe'},
+        {'id': 2, 'title': 'Avocado Toast', 'category': 'Breakfast', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfqIDCCdL5IDo0IOwcXdOx6q8o7V6su_lCg&s', 'rating': 4.5, 'likes': 189, 'duration': '10 mins', 'profile': 'Jake Lee'},
+        {'id': 3, 'title': 'Soy Sauce Ramen', 'category': 'Dinner', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s', 'rating': 4.7, 'likes': 312, 'duration': '45 mins', 'profile': 'Mia Chen'},
+        {'id': 4, 'title': 'Caesar Salad', 'category': 'Lunch', 'image_url': 'https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg', 'rating': 4.3, 'likes': 98, 'duration': '15 mins', 'profile': 'Tom Hill'},
+        {'id': 5, 'title': 'Mango Smoothie', 'category': 'Drinks', 'image_url': 'https://twosleevers.com/wp-content/uploads/2025/05/Mango-Smoothie-1.jpg', 'rating': 4.6, 'likes': 145, 'duration': '5 mins', 'profile': 'Sara Kim'},
+        {'id': 6, 'title': 'Banana Pancakes', 'category': 'Breakfast', 'image_url': 'https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg', 'rating': 4.9, 'likes': 278, 'duration': '20 mins', 'profile': 'Chris Ray'},
+    ]
+
+    return render_template('index.html',
+        trending_recipes=test_recipes,
+        recent_recipes=test_recipes[1:5],
+        recommended_recipes=test_recipes
+    )
+@app.route("/recipes")
+def recipes():
+    return render_template("browse_recipes.html")
+
+@app.route("/favourites")
+def favourites():
+    return render_template("favourites.html")
+
+@app.route("/history")
+def history():
+    return render_template("history.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact_us.html")
+
+@app.route("/about_us")
+def about_us():
+    return render_template("about_us.html")
+
+@app.route("/privacy_policy")
+def privacy():
+    return render_template("privacy.html")
+
+@app.route("/terms_and_condition")
+def terms():
+    return render_template("terms.html")
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
-@app.route('/terms')
-def terms():
-    return render_template('terms.html')
 
-@app.route("/login/google")
-def google_login():
-    return redirect("/google-oauth-start")
+@app.route('/post')
+def post():
+    return render_template('post.html')
 
-@app.route("/login/facebook")
-def facebook_login():
-    return redirect("/facebook-oauth-start")
+# Route for displaying a single recipe detail page
+# The <int:id> allows dynamic URLs like /recipe/1, /recipe/2
 
-@app.route("/google-authorized") 
-def google_authorized():
-    if not google.authorized:
-        return redirect(url_for("google.login"))
-    resp = google.get("/oauth2/v2/userinfo")
-    user_data = resp.json()
+@app.route('/recipe/<int:id>')
+def recipe_detail(id):
+    return render_template('recipe.html', recipe_id=id)
 
-    email = user_data["email"]
-    user = User.query.filter_by(email=email).first()
-    if user: 
-        #existing user, log them in
-        login_user(user)
-    else:
-        #new user, create an account and log them in
-        user = User(email=email)
-        db.session.add(user)
-        db.session.commit()
-        login_user(new_user)
-    return redirect(url_for("dashboard"))
+#if __name__ == '__main__':
+#    app.run(debug=True)
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 app.run(debug=True)
