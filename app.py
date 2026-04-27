@@ -68,5 +68,11 @@ def post():
 def recipe_detail(id):
     return render_template('recipe.html', recipe_id=id)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+#    app.run(debug=True)
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+app.run(debug=True)
