@@ -46,8 +46,8 @@ def google_authorized():
         login_user(user)
     else:
         #new user, create an account and log them in
-        new_user = User(email=email)
-        db.session.add(new_user)
+        user = User(email=email)
+        db.session.add(user)
         db.session.commit()
         login_user(new_user)
     return redirect(url_for("dashboard"))
