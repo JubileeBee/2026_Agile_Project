@@ -352,7 +352,7 @@ html, body {
     box-shadow: var(--card-shadow);
     border-radius: var(--global-radius);
     color: var(--primary-brown-dark);
-    width: 22rem;
+    width: 100%;
     max-width:100%;
     height: auto;
     font-family: 'Quicksand', sans-serif;
@@ -365,7 +365,7 @@ html, body {
 .recipe-card figure {
     width: 100%;
     margin: 0;
-    height: 14rem;
+    height: 250px;
     overflow: hidden;
     border-radius: var(--global-radius) var(--global-radius) 0 0;
 }
@@ -407,9 +407,9 @@ html, body {
 .recipe-tag {
     background-color: var(--primary-brown);
     color: #fff;
-    padding: 0.4rem 1.2rem;
+    padding: 0.4rem 1rem;
     border-radius: 50px;
-    font-size: 13px;
+    font-size: 0.9em;
     font-weight: 600;
 }
 
@@ -468,6 +468,7 @@ html, body {
 .recipe-card:hover {
     transform: translateY(-6px);
 }
+
 @media (max-width:1024px) {
     .recipe-card {
         width: 100%;
@@ -491,7 +492,10 @@ html, body {
     display: flex;       
     overflow-x: auto;    
     gap: 20px;           
-    padding: 7px 0 15px 0;     
+    padding: 7px 0 15px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-brown-dark) transparent;
+    cursor: grab;     
     scroll-snap-type: x mandatory; 
 }
 
@@ -516,6 +520,26 @@ html, body {
 }
 .scroll-item {
     flex: 0 0 auto; 
-    width: 21 rem;
+    width: 22rem;
     scroll-snap-align:start; 
+}
+
+@media (max-width: 576px) {
+    .scroll-row {
+        gap: 12px;           
+        padding-left: 15px;  
+        padding-right: 15px; 
+    }
+
+    .scroll-item {
+        width: 85vw;         
+    }
+
+    .recipe-card {
+        width: 100%;         
+    }
+
+    .recipe-card figure {
+        height: 11rem;
+    }
 }
