@@ -477,14 +477,30 @@ html, body {
     overflow-x: auto;    
     gap: 20px;           
     padding: 0 0 15px 0;     
-    scrollbar-width: none; 
+    scroll-snap-type: x mandatory; 
+}
+
+.scroll-row:active {
+    cursor: grabbing;
 }
 
 .scroll-row::-webkit-scrollbar {
-    display: none; 
+    height: 6px;
 }
 
+.scroll-row::-webkit-scrollbar-track {
+    background: transparent;
+}
+.scroll-row::-webkit-scrollbar-thumb {
+    background: var(--primary-brown-dark);
+    border-radius: 10px;
+}
+
+.scroll-row::-webkit-scrollbar-button {
+    display: none;
+}
 .scroll-item {
     flex: 0 0 auto; 
-    width: 21 rem; 
+    width: 21 rem;
+    scroll-snap-align:start; 
 }
