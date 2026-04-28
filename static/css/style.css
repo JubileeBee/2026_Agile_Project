@@ -59,6 +59,11 @@ html, body {
     gap: 15px;
 }
 
+.logo-text {
+    text-decoration: none;
+    color: inherit;
+}
+
 /* =========================
    Post Button Layout
    ========================= */
@@ -125,6 +130,126 @@ html, body {
 
 .floating-post-btn .material-icons {
     font-size: 35px;
+}
+
+/* =========================
+   Recipe Footer Layout
+   ========================= */
+
+
+   .site-footer {
+    background-color: #755d47;
+    color: var(--secondary-bg);
+    margin-top: 60px;
+    padding: 40px 60px 0 60px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px; 
+    margin: 0 auto 15px auto;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary-bg);
+}
+
+.footer-nav-group {
+    display: flex;
+    gap: 60px;
+}
+
+.footer-heading {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--secondary-bg);
+    margin-bottom: 12px;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: var(--secondary-bg);
+    font-size: 0.9rem;
+    opacity: 0.85;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;  
+}
+
+.footer-socials {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: -20px;
+}
+
+.footer-socials a {
+    color: var(--secondary-bg);
+    font-size: 1.4rem;
+    opacity: 0.85;
+    transition: 0.3s;
+}
+
+.footer-socials a:hover {
+    opacity: 1;
+}
+
+.footer-divider {
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 0;
+    border-top: 1px solid var(--secondary-bg);
+    opacity: 0.15;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 0.8rem;
+    color: var(--secondary-bg);
+    opacity: 0.7;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.footer-legal a {
+    text-decoration: none;
+    margin-left: 20px;
+    color: var(--secondary-bg);
+}
+
+.footer-legal a:hover {
+    text-decoration: underline;
 }
 
 /* =========================
@@ -205,7 +330,17 @@ html, body {
     flex-direction: column;
     align-items: left;
     gap: 20px;
-    padding: 20px;
+    padding: 0px;
+}
+
+.section-header {
+    padding-left: -12px;  
+}
+
+.section-header h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 50px;  
 }
 
 /* =========================
@@ -218,6 +353,7 @@ html, body {
     border-radius: var(--global-radius);
     color: var(--primary-brown-dark);
     width: 22rem;
+    height: 21.2rem;
     font-family: 'Quicksand', sans-serif;
     line-height: 1.5;
     overflow: hidden;
@@ -243,10 +379,14 @@ html, body {
 }
 
 .recipe-card-content {
-    padding: 0.7rem 1.5rem 1.5rem 1.5rem;
+    flex-grow: 1;
+    padding: 0.7rem 1.3rem 0.5rem 1.3rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    justify-content: space-between;
+    gap: 4px;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .card-meta {
@@ -284,7 +424,11 @@ html, body {
 
 .recipe-card h1 {
     font-size: 1.4rem;
-    margin: 0;
+    margin-top: 5px;
+    margin-bottom: -3px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .recipe-stats li {
@@ -293,6 +437,24 @@ html, body {
     gap: 2px;
     color: var(--primary-brown);
 }
+
+.recipe-footer {
+    display: flex;
+    justify-content: flex-end; 
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--primary-brown);
+}
+
+.username {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 .recipe-link {
     text-decoration: none;
     color: inherit;
@@ -306,110 +468,23 @@ html, body {
     transform: translateY(-6px);
 }
 
-.recipe-form-container {
-    max-width: 700px;
-    margin: 100px auto 60px auto; 
-    padding: 30px;
-    background: var(--card-color);
-    border-radius: var(--global-radius);
-    box-shadow: var(--card-shadow);
+/* ===========================================
+   Horizontal Scroll Layout (Recipe Cards)
+   =========================================== */
 
-    text-align: center;
+.scroll-row {
+    display: flex;       
+    overflow-x: auto;    
+    gap: 20px;           
+    padding: 0 0 15px 0;     
+    scrollbar-width: none; 
 }
 
-/* =========================
-   Recipe Form Pages (Create + Edit)
-   ========================= */
-
-   .form-title {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--primary-brown);
+.scroll-row::-webkit-scrollbar {
+    display: none; 
 }
 
-.form-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--meta-type-color);
-
-    align-self: flex-start;
-    margin-left: 10%;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    max-width: 500%;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-    font-family: inherit;
-    transition: 0.2s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-brown);
-    box-shadow: 0 0 0 2px rgba(127, 85, 57, 0.1);
-}
-
-.submit-btn {
-    display: block;
-    margin: 30px auto 0;
-    padding: 12px 40px;
-    border-radius: 25px;
-    border: none;
-    background-color: var(--primary-brown);
-    color: var(--secondary-bg);
-    font-weight: 600;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-.submit-btn:hover {
-    background-color: var(--primary-brown-dark);
-    transform: scale(1.05);
-}
-
-
-.recipe-card {
-    position: relative; /* IMPORTANT */
-}
-
-.edit-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 50%;
-
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 16px;
-    cursor: pointer;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: all 0.2s ease;
-}
-
-.edit-btn:hover {
-    background: var(--primary-brown);
-    color: white;
-    transform: scale(1.1);
+.scroll-item {
+    flex: 0 0 auto; 
+    width: 21 rem; 
 }

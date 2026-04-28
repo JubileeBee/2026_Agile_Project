@@ -1,8 +1,10 @@
-<a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link"></a>
-<article class="recipe-card">
+<article class="recipe-card"
+         onclick="window.location.href='{{ url_for('recipe_detail', id=recipe.id) }}'">
+
     <figure class="recipe-image">
         <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
     </figure>
+
     <div class="recipe-card-content">
         <div class="card-meta">
             <div class="recipe-tags">
@@ -23,6 +25,20 @@
                 </li>
             </ul>
         </div>
+
         <h1 class="recipe-title">{{ recipe.title }}</h1>
+
+        <div class="recipe-footer">
+            <div class="user-info">
+                <span class="username">{{ recipe.profile }}</span>
+            </div>
+
+            <button 
+                class="edit-btn"
+                onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe_page', recipe_id=recipe.id) }}';">
+
+                <span class="material-icons">edit</span>
+            </button>
+        </div>
     </div>
 </article>

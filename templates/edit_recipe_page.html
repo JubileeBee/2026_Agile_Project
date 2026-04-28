@@ -1,25 +1,22 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
 {% block content %}
+
 <div class="recipe-form-container">
 
     <h2 class="form-title">Edit Recipe</h2>
 
-    <form method="POST" action="{{ url_for('edit_recipe') }}" enctype="multipart/form-data">
+    {% if recipe %}
+    <form method="POST" action="{{ url_for('edit_recipe', recipe_id=recipe.id) }}" enctype="multipart/form-data">
 
         <div class="form-group">
             <label>Recipe Title</label>
-            <input type="text" name="title" value="Spaghetti Bolognese" required>
+            <input type="text" name="title" value="{{ recipe.title }}" required>
         </div>
 
         <div class="form-group">
             <label>Ingredients</label>
-            <textarea name="ingredients" rows="4" required>Tomatoes, Pasta, Beef, Garlic</textarea>
-        </div>
-
-        <div class="form-group">
-            <label>Instructions</label>
-            <textarea name="steps" rows="4" required>Boil pasta, cook beef, mix sauce...</textarea>
+            <textarea name="ingredients" rows="4" required>{{ recipe.ingredients }}</textarea>
         </div>
 
         <div class="form-group">
@@ -30,5 +27,10 @@
         <button type="submit" class="submit-btn">Update Recipe</button>
 
     </form>
+    {% else %}
+        <p>Recipe not found</p>
+    {% endif %}
+
 </div>
+
 {% endblock %}
