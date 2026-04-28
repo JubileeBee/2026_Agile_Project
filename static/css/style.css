@@ -307,6 +307,11 @@ html, body {
 .search-container {
     display: flex;
     margin-top: 15px;
+    width: 100%;
+    max-width: 750px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search-container input {
@@ -314,7 +319,8 @@ html, body {
     border: none;
     outline: none;
     border-radius: 20px 0 0 20px;
-    width: 250px;
+    flex: 0.67;
+    min-width: 0;
 }
 
 .search-container button {
@@ -342,6 +348,7 @@ html, body {
     margin-bottom: 20px;
     margin-top: 50px;  
 }
+
 
 /* =========================
    Recipe Card Layout
