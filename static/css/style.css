@@ -476,7 +476,7 @@ html, body {
     display: flex;       
     overflow-x: auto;    
     gap: 20px;           
-    padding: 0 0 15px 0;     
+    padding: 7px 0 15px 0;     
     scroll-snap-type: x mandatory; 
 }
 
