@@ -396,6 +396,7 @@ html, body {
     align-items: center; 
     margin: 0;
     font-size: 13px;
+    flex-wrap: wrap;
 }
 
 .recipe-tags {
@@ -484,6 +485,54 @@ html, body {
         height: 11rem;
     }
 }
+/* ===========================================
+   Top 6 Layout (Recipe Cards)
+   =========================================== */
+.top-6::-webkit-scrollbar {
+    height: 8px;
+}
+
+.top-6::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.top-6::-webkit-scrollbar-thumb {
+    background-color: var(--primary-brown);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.top-6::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-brown-dark);
+}
+
+@media (max-width: 576px) {
+
+    .top-6 {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 12px;
+
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+
+        padding: 10px 0;
+    }
+
+    .top-6-item {
+        flex: 0 0 80vw;
+        scroll-snap-align: start;
+    }
+
+    .top-6::-webkit-scrollbar-button {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+}
+
 /* ===========================================
    Horizontal Scroll Layout (Recipe Cards)
    =========================================== */
