@@ -347,8 +347,26 @@ html, body {
 .section-header h2 {
     font-weight: 600;
     margin-bottom: 20px;
-    margin-top: 50px;  
+    margin-top: 50px;
+    color: var(--primary-brown-dark);  
 }
+
+/* This ensures headings don't touch the screen edges on mobile */
+@media (max-width: 576px) {
+    .section-header {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        margin-bottom: 15px; /* Adds a nice gap between the title and the cards */
+    }
+    
+    /* If you have specific spacing on the top-6 header */
+    .section-style .section-header h2 {
+        margin-top: 30px; /* Reduced from 50px for mobile so there isn't massive empty space */
+        font-size: 1.5rem; /* Slightly smaller for mobile screens */
+    }
+}
+
+
 
 
 /* =========================
@@ -526,12 +544,11 @@ html, body {
         flex-wrap: nowrap;
         overflow-x: auto;
         gap: 0px;
-        padding: 0 0 10px 0;
-        margin-left: 0;
-        margin-right: 0;
         scroll-snap-type: x mandatory;
         scrollbar-width: thin;
         scrollbar-color: var(--primary-brown-dark) transparent;
+        margin: 0 0px;
+        padding-bottom: 15px;
     }
 
     .top-6 .col-6,
@@ -543,15 +560,29 @@ html, body {
         scroll-snap-align: start;
     }
 
-
     .top-6::-webkit-scrollbar-button {
         display: none;
     }
+
+    .top-6-section .section-header h2 {
+        margin-bottom: 0px;
+    }
 }
 
-@media (max-width: 768px) {
-    .py-3 .section-header h2 {
-        margin-bottom: 20px;
+@media (min-width: 480px) and (max-width: 768px) {
+    .top-6 {
+        margin: 0 10px;
+    }
+}
+
+@media (min-width: 570px) and (max-width: 770px) {
+    .top-6-section .section-header {
+        padding-left: 12px;
+    }
+
+    .top-6-section .container {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
@@ -599,7 +630,9 @@ html, body {
     .scroll-row {
         gap: 12px;           
         padding-left: 15px;  
-        padding-right: 15px; 
+        padding-right: 15px;
+        scroll-padding: 0 20px;
+        margin: 0 10px; 
     }
 
     .scroll-item {
@@ -614,3 +647,4 @@ html, body {
         height: 11rem;
     }
 }
+
