@@ -295,7 +295,8 @@ html, body {
 }
 
 .welcome-hero h1 {
-    font-size: 40px;
+    font-size: clamp(35px, 4vw, 40px);
+    font-weight: 700;
     margin-bottom: 10px;
 }
 
