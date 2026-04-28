@@ -353,7 +353,8 @@ html, body {
     border-radius: var(--global-radius);
     color: var(--primary-brown-dark);
     width: 22rem;
-    height: 21.2rem;
+    max-width:100%;
+    height: auto;
     font-family: 'Quicksand', sans-serif;
     line-height: 1.5;
     overflow: hidden;
@@ -467,7 +468,21 @@ html, body {
 .recipe-card:hover {
     transform: translateY(-6px);
 }
+@media (max-width:1024px) {
+    .recipe-card {
+        width: 100%;
+    }
+}
 
+@media (max-width: 576px) {
+    .recipe-card {
+        width: 75vw;
+    }
+
+    .recipe-card figure {
+        height: 11rem;
+    }
+}
 /* ===========================================
    Horizontal Scroll Layout (Recipe Cards)
    =========================================== */
