@@ -357,18 +357,16 @@ html, body {
     color: var(--primary-brown-dark);  
 }
 
-/* This ensures headings don't touch the screen edges on mobile */
 @media (max-width: 576px) {
     .section-header {
         padding-left: 20px !important;
         padding-right: 20px !important;
-        margin-bottom: 15px; /* Adds a nice gap between the title and the cards */
+        margin-bottom: 15px; 
     }
     
-    /* If you have specific spacing on the top-6 header */
     .section-style .section-header h2 {
-        margin-top: 30px; /* Reduced from 50px for mobile so there isn't massive empty space */
-        font-size: 1.5rem; /* Slightly smaller for mobile screens */
+        margin-top: 30px; 
+        font-size: 1.5rem; 
     }
 }
 
