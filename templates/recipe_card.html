@@ -30,15 +30,16 @@
 
         <div class="recipe-footer">
             <div class="user-info">
+
+                <button 
+                    class="edit-btn"
+                    onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe_page', recipe_id=recipe.id) }}';">
+                    <span class="material-icons">edit</span>
+                </button>
+
                 <span class="username">{{ recipe.profile }}</span>
+
             </div>
-
-            <button 
-                class="edit-btn"
-                onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe_page', recipe_id=recipe.id) }}';">
-
-                <span class="material-icons">edit</span>
-            </button>
         </div>
     </div>
 </article>
