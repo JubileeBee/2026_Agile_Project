@@ -8,12 +8,12 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     test_recipes = [
-        {'id': 1, 'title': 'Chocolate Lava Cake', 'category': 'Dessert', 'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400', 'rating': 4.8, 'likes': 231, 'duration': '30 mins', 'profile': 'Emma Doe', 'ingredients': 'Chocolate, Eggs, Butter'},
-        {'id': 2, 'title': 'Avocado Toast', 'category': 'Breakfast', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfqIDCCdL5IDo0IOwcXdOx6q8o7V6su_lCg&s', 'rating': 4.5, 'likes': 189, 'duration': '10 mins', 'profile': 'Jake Lee', 'ingredients': 'Avocado, Bread'},
-        {'id': 3, 'title': 'Soy Sauce Ramen', 'category': 'Dinner', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s', 'rating': 4.7, 'likes': 312, 'duration': '45 mins', 'profile': 'Mia Chen', 'ingredients': 'Ramen Noodle, Water, Soy Sauce'},
-        {'id': 4, 'title': 'Caesar Salad', 'category': 'Lunch', 'image_url': 'https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg', 'rating': 4.3, 'likes': 98, 'duration': '15 mins', 'profile': 'Tom Hill', 'ingredients': 'Lettuce, Egg, Bacon, Chicken, Ceasar Sauce'},
-        {'id': 5, 'title': 'Mango Smoothie', 'category': 'Drinks', 'image_url': 'https://twosleevers.com/wp-content/uploads/2025/05/Mango-Smoothie-1.jpg', 'rating': 4.6, 'likes': 145, 'duration': '5 mins', 'profile': 'Sara Kim', 'ingredients': 'Mango, Water, Ice'},
-        {'id': 6, 'title': 'Banana Pancakes', 'category': 'Breakfast', 'image_url': 'https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg', 'rating': 4.9, 'likes': 278, 'duration': '20 mins', 'profile': 'Chris Ray', 'ingredients': 'Banana, Eggs, Flour, Sugar, Water, Milk'},
+        {'id': 1, 'title': 'Chocolate Lava Cake', 'category': 'Dessert', 'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400', 'rating': 4.8, 'likes': 231, 'duration': '30 mins', 'profile': 'Emma Doe', 'ingredients': 'Chocolate, Eggs, Butter', 'instructions': 'Melt chocolate and butter. Whisk eggs, combine, pour into ramekins and bake at 180°C for 10–12 minutes.'},
+        {'id': 2, 'title': 'Avocado Toast', 'category': 'Breakfast', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfqIDCCdL5IDo0IOwcXdOx6q8o7V6su_lCg&s', 'rating': 4.5, 'likes': 189, 'duration': '10 mins', 'profile': 'Jake Lee', 'ingredients': 'Avocado, Bread', 'instructions': 'Toast bread, mash avocado with salt and pepper, spread on toast and drizzle with olive oil or lemon juice.'},
+        {'id': 3, 'title': 'Soy Sauce Ramen', 'category': 'Dinner', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s', 'rating': 4.7, 'likes': 312, 'duration': '45 mins', 'profile': 'Mia Chen', 'ingredients': 'Ramen Noodle, Water, Soy Sauce', 'instructions': 'Boil water, cook noodles, heat soy sauce broth, combine and simmer briefly before serving.'},
+        {'id': 4, 'title': 'Caesar Salad', 'category': 'Lunch', 'image_url': 'https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg', 'rating': 4.3, 'likes': 98, 'duration': '15 mins', 'profile': 'Tom Hill', 'ingredients': 'Lettuce, Egg, Bacon, Chicken, Caesar Sauce', 'instructions': 'Cook chicken and bacon, chop lettuce, combine all ingredients with dressing and toss well.'},
+        {'id': 5, 'title': 'Mango Smoothie', 'category': 'Drinks', 'image_url': 'https://twosleevers.com/wp-content/uploads/2025/05/Mango-Smoothie-1.jpg', 'rating': 4.6, 'likes': 145, 'duration': '5 mins', 'profile': 'Sara Kim', 'ingredients': 'Mango, Water, Ice', 'instructions': 'Blend mango, water and ice until smooth, adjust thickness and serve chilled.'},
+        {'id': 6, 'title': 'Banana Pancakes', 'category': 'Breakfast', 'image_url': 'https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg', 'rating': 4.9, 'likes': 278, 'duration': '20 mins', 'profile': 'Chris Ray', 'ingredients': 'Banana, Eggs, Flour, Sugar, Water, Milk', 'instructions': 'Mash bananas, mix with ingredients to form batter, cook on pan until golden on both sides.'},
     ]
 
     return render_template('index.html',
@@ -80,12 +80,12 @@ def login():
 
 def get_all_recipes():
     return [
-        {'id': 1, 'title': 'Chocolate Lava Cake', 'category': 'Dessert', 'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400', 'rating': 4.8, 'likes': 231, 'duration': '30 mins', 'profile': 'Emma Doe', 'ingredients': 'Chocolate, Eggs, Butter'},
-        {'id': 2, 'title': 'Avocado Toast', 'category': 'Breakfast', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfqIDCCdL5IDo0IOwcXdOx6q8o7V6su_lCg&s', 'rating': 4.5, 'likes': 189, 'duration': '10 mins', 'profile': 'Jake Lee', 'ingredients': 'Avocado, Bread'},
-        {'id': 3, 'title': 'Soy Sauce Ramen', 'category': 'Dinner', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s', 'rating': 4.7, 'likes': 312, 'duration': '45 mins', 'profile': 'Mia Chen', 'ingredients': 'Ramen Noodle, Water, Soy Sauce'},
-        {'id': 4, 'title': 'Caesar Salad', 'category': 'Lunch', 'image_url': 'https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg', 'rating': 4.3, 'likes': 98, 'duration': '15 mins', 'profile': 'Tom Hill', 'ingredients': 'Lettuce, Egg, Bacon, Chicken, Ceasar Sauce'},
-        {'id': 5, 'title': 'Mango Smoothie', 'category': 'Drinks', 'image_url': 'https://twosleevers.com/wp-content/uploads/2025/05/Mango-Smoothie-1.jpg', 'rating': 4.6, 'likes': 145, 'duration': '5 mins', 'profile': 'Sara Kim', 'ingredients': 'Mango, Water, Ice'},
-        {'id': 6, 'title': 'Banana Pancakes', 'category': 'Breakfast', 'image_url': 'https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg', 'rating': 4.9, 'likes': 278, 'duration': '20 mins', 'profile': 'Chris Ray', 'ingredients': 'Banana, Eggs, Flour, Sugar, Water, Milk'},
+        {'id': 1, 'title': 'Chocolate Lava Cake', 'category': 'Dessert', 'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400', 'rating': 4.8, 'likes': 231, 'duration': '30 mins', 'profile': 'Emma Doe', 'ingredients': 'Chocolate, Eggs, Butter', 'instructions': 'Melt chocolate and butter. Whisk eggs, combine, pour into ramekins and bake at 180°C for 10–12 minutes.'},
+        {'id': 2, 'title': 'Avocado Toast', 'category': 'Breakfast', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfqIDCCdL5IDo0IOwcXdOx6q8o7V6su_lCg&s', 'rating': 4.5, 'likes': 189, 'duration': '10 mins', 'profile': 'Jake Lee', 'ingredients': 'Avocado, Bread', 'instructions': 'Toast bread, mash avocado with salt and pepper, spread on toast and drizzle with olive oil or lemon juice.'},
+        {'id': 3, 'title': 'Soy Sauce Ramen', 'category': 'Dinner', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s', 'rating': 4.7, 'likes': 312, 'duration': '45 mins', 'profile': 'Mia Chen', 'ingredients': 'Ramen Noodle, Water, Soy Sauce', 'instructions': 'Boil water, cook noodles, heat soy sauce broth, combine and simmer briefly before serving.'},
+        {'id': 4, 'title': 'Caesar Salad', 'category': 'Lunch', 'image_url': 'https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg', 'rating': 4.3, 'likes': 98, 'duration': '15 mins', 'profile': 'Tom Hill', 'ingredients': 'Lettuce, Egg, Bacon, Chicken, Caesar Sauce', 'instructions': 'Cook chicken and bacon, chop lettuce, combine all ingredients with dressing and toss well.'},
+        {'id': 5, 'title': 'Mango Smoothie', 'category': 'Drinks', 'image_url': 'https://twosleevers.com/wp-content/uploads/2025/05/Mango-Smoothie-1.jpg', 'rating': 4.6, 'likes': 145, 'duration': '5 mins', 'profile': 'Sara Kim', 'ingredients': 'Mango, Water, Ice', 'instructions': 'Blend mango, water and ice until smooth, adjust thickness and serve chilled.'},
+        {'id': 6, 'title': 'Banana Pancakes', 'category': 'Breakfast', 'image_url': 'https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg', 'rating': 4.9, 'likes': 278, 'duration': '20 mins', 'profile': 'Chris Ray', 'ingredients': 'Banana, Eggs, Flour, Sugar, Water, Milk', 'instructions': 'Mash bananas, mix with ingredients to form batter, cook on pan until golden on both sides.'},
     ]
 
 def get_recipe_by_id(recipe_id):
@@ -104,6 +104,7 @@ def edit_recipe(recipe_id):
     if recipe:
         recipe['title'] = request.form['title']
         recipe['ingredients'] = request.form['ingredients']
+        recipe['instructions'] = request.form['instructions']
 
     return redirect(url_for('recipe_detail', id=recipe_id))
 
@@ -117,6 +118,7 @@ def create_recipe():
     title = request.form['title']
     ingredients = request.form['ingredients']
     steps = request.form['steps']
+    recipe = request.form['instructions']
 
     # For now, just print (since no DB)
     print("New Recipe:", title, ingredients, steps)
