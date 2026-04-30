@@ -1,6 +1,6 @@
 {# 
     Main layout template using Jinja2 inheritance.
-    Contains the global navigation bar and the floating post button.
+    Contains the global navigation bar and the floating post button and a footer bar.
     NOTE: Any elements intended to appear on EVERY page should be added here.
 #}
 
@@ -36,7 +36,9 @@
     <a href="{{ url_for('post') }}" class="floating-post-btn">
         <span class="material-icons">add</span>
     </a>
-
+    
+    <script src="{{ url_for('static', filename='js/recipe_card_script.js') }}"></script>
+    
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-brand">
