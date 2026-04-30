@@ -398,6 +398,7 @@ html, body {
     height: 250px;
     overflow: hidden;
     border-radius: var(--global-radius) var(--global-radius) 0 0;
+    position: relative;
 }
 
 .recipe-card figure img {
@@ -501,6 +502,26 @@ html, body {
 .recipe-card:hover {
     transform: translateY(-6px);
 }
+
+.heart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.heart-btn .material-icons {
+    color: var(--primary-brown);
+}
+
 
 @media (max-width:1024px) {
     .recipe-card {
