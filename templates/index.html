@@ -19,16 +19,16 @@
     </header>
 
     {% if trending_recipes %}
-    <section class="section-style py-3">
+    <section class="section-style top-6-section">
         <div class="container">
             
             <div class="section-header mb-1">
                 <h2>This Week's Comfort Obsessions</h2>
             </div>
 
-            <div class="row g-4">
+            <div class="row g-4 top-6">
                 {% for recipe in trending_recipes %}
-                <div class="col-md-6 col-lg-4">
+                <div class="col-6 col-md-6 col-lg-4">
                     {% include "recipe_card.html" %}
                 </div>
                 {% endfor %}
