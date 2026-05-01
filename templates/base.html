@@ -32,7 +32,9 @@
         </div>
     </nav>
 
-    {% block content %}{% endblock %}
+    <main class="page-content">
+        {% block content %}{% endblock %}
+    </main>
 
     <a href="{{ url_for('post') }}" class="floating-post-btn">
         <span class="material-icons">add</span>

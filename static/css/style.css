@@ -10,6 +10,7 @@
 	--card-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 	--global-radius: 16px;
     --card-text-color: #070705;
+    --nav-height: 70px;
 }
 
 /* Global style */
@@ -20,6 +21,10 @@ html, body {
     background-color: var(--background);
     color: var(--primary-brown); 
     overflow-x: hidden; 
+}
+
+.page-content {
+    padding-top: var(--nav-height);
 }
 
 /* =========================
@@ -36,6 +41,7 @@ html, body {
     top: 0;
     z-index: 1000;
     transition: transform 0.3s ease;
+    height: var(--nav-height);
 }
 
 .nav-left {
@@ -693,5 +699,6 @@ html, body {
         height: 11rem;
     }
 }
+
 
 
