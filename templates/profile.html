@@ -94,6 +94,88 @@
             </div>
         </div>
     </div>
+
+    <!-- The User's favourites part-->
+    <div class="profile-tab-content active" id="favourites"> <!-- should this be a different name for ids-->>
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in user.favourites %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
+                        <div class="recipe-card">
+                            <figure>
+                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                                <button class="heart-btn">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </figure>
+                            <div class="recipe-card-content">
+                                <div class="card-meta">
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">{{ recipe.category }}</span>
+                                    </div>
+                                    <ul class="recipe-stats">
+                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
+                                    </ul>
+                                </div>
+                                <h1>{{ recipe.title }}</h1>
+                                <div class="recipe-footer">
+                                    <div class="user-info">
+                                        <span class="material-icons" style="font-size:16px">account_circle</span>
+                                        <span class="username">{{ user.name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- The User's Likes part-->
+    <div class="profile-tab-content active" id="likes"> <!-- should this be a different name for ids-->>
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in user.likes %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
+                        <div class="recipe-card">
+                            <figure>
+                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                                <button class="heart-btn">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </figure>
+                            <div class="recipe-card-content">
+                                <div class="card-meta">
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">{{ recipe.category }}</span>
+                                    </div>
+                                    <ul class="recipe-stats">
+                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
+                                    </ul>
+                                </div>
+                                <h1>{{ recipe.title }}</h1>
+                                <div class="recipe-footer">
+                                    <div class="user-info">
+                                        <span class="material-icons" style="font-size:16px">account_circle</span>
+                                        <span class="username">{{ user.name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
     
     <!-- Implemented JavaScript for interactive tab functionality -->
         <script>
@@ -109,6 +191,8 @@
             });
         });
     </script>
+
+    
 
     <div class="delete-section">
         <button class="delete-account-btn">Delete Account</button>
