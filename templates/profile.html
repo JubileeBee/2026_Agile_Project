@@ -19,12 +19,8 @@
         <div class="profile-info">
 
             <h1 class="profile-name">{{ user.name }}</h1>
-
-            <p class="profile-bio">
-                {{ user.bio }}
-            </p>
+            <p class="profile-bio">{{ user.bio }}</p>
             <div class="profile-stats">
-
                 <div class="stat">
                     <span class="stat-number">{{ user.recipes_count }}</span>
                     <span class="stat-label">Recipes</span>
@@ -48,7 +44,7 @@
         </a>
     </div>
 
-    <div class="user-recipe-panel">
+    <div class="profile-tabs">
         <button class="profile-tab active" data-tab="my-recipes">My Recipes</button>
         <button class="profile-tab" data-tab="favourites">Favourites</button>
         <button class="profile-tab" data-tab="likes">Likes</button>
@@ -96,7 +92,7 @@
     </div>
 
     <!-- The User's favourites part-->
-    <div class="profile-tab-content active" id="favourites"> <!-- should this be a different name for ids-->>
+    <div class="profile-tab-content" id="favourites"> <!-- should this be a different name for ids-->
         <div class="container">
             <div class="row g-4">
                 {% for recipe in user.favourites %}
@@ -137,7 +133,7 @@
     </div>
 
     <!-- The User's Likes part-->
-    <div class="profile-tab-content active" id="likes"> <!-- should this be a different name for ids-->>
+    <div class="profile-tab-content" id="likes"> <!-- should this be a different name for ids-->
         <div class="container">
             <div class="row g-4">
                 {% for recipe in user.likes %}
