@@ -51,7 +51,14 @@ def terms():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    user = {
+        'name': 'Emma Doe',
+        'bio': 'This is where the bio goes.',
+        'recipes_count': 12,
+        'likes_count': 48,
+        'favourites_count': 23
+    }
+    return render_template('profile.html', user=user)
 
 @app.route('/signup')
 def signup():

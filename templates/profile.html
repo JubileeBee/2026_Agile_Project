@@ -1,0 +1,47 @@
+{# 
+    User Profile Page Template
+    This template displays the user's profile information, including their name, bio, and statistics
+#}
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <h1>{{ user.name }}</h1>
+
+    <div class="profile-avatar">
+        <img src="/static/images/default-profile.png" class="profile-img" alt="Profile Image">
+    </div>
+
+    <p>{{ user.bio }}</p>
+
+    <div class="profile-sections">
+        <p>Recipes: {{ user.recipes_count }}</p>
+        <p>Likes: {{ user.likes_count }}</p>
+        <p>Favourites: {{ user.favourites_count }}</p>
+    </div>
+
+    <button class="edit-profile-btn">Edit Profile</button>
+
+    <div class="delete-section">
+        <button class="delete-account-btn">Delete Account</button>
+
+        <div class="delete-confirmation">
+            <p>
+                Are you sure you want to delete this account? This action is permanent.
+                Your recipes, likes, and favourites will be deleted too.
+            </p>
+        </div>
+    </div>
+
+    <div class="user-recipe-panel">
+        <p>Your Recipes </p>
+        <p>Likes </p>
+        <p>Favourites  </p>
+    </div>
+
+</div>
+
+{% endblock %}
