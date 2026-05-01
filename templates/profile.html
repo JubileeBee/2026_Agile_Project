@@ -94,6 +94,21 @@
             </div>
         </div>
     </div>
+    
+    <!-- Implemented JavaScript for interactive tab functionality -->
+        <script>
+        const tabs = document.querySelectorAll('.profile-tab');
+        const contents = document.querySelectorAll('.profile-tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
 
     <div class="delete-section">
         <button class="delete-account-btn">Delete Account</button>
