@@ -1,6 +1,7 @@
 {# 
     User Profile Page Template
     This template displays the user's profile information, including their name, bio, and statistics
+    I've made a personal style.css because the style.css is getting too long
 #}
 
 {% extends "base.html" %}
@@ -8,22 +9,44 @@
 {% block content %}
 
 <div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar-wrap">
+            <div class="profile-avatar">
+                <img src="/static/images/default-profile.png" class="profile-img" alt="Profile Image">
+            </div>
+        </div>
 
-    <h1>{{ user.name }}</h1>
+        <div class="profile-info">
 
-    <div class="profile-avatar">
-        <img src="/static/images/default-profile.png" class="profile-img" alt="Profile Image">
+            <h1 class="profile-name">{{ user.name }}</h1>
+
+            <p class="profile-bio">
+                {{ user.bio }}
+            </p>
+            <div class="profile-stats">
+
+                <div class="stat">
+                    <span class="stat-number">{{ user.recipes_count }}</span>
+                    <span class="stat-label">Recipes</span>
+                </div>
+
+                <div class="stat">
+                    <span class="stat-number">{{ user.favourites_count }}</span>
+                    <span class="stat-label">Favourites</span>
+                </div>
+
+                <div class="stat">
+                    <span class="stat-number">{{ user.likes_count }}</span>
+                    <span class="stat-label">Likes</span>
+                </div>
+
+            </div>
+        </div>
+        <a href="#" class="edit-profile-btn">
+            <span class="material-icons">edit</span>
+            Edit Profile
+        </a>
     </div>
-
-    <p>{{ user.bio }}</p>
-
-    <div class="profile-sections">
-        <p>Recipes: {{ user.recipes_count }}</p>
-        <p>Likes: {{ user.likes_count }}</p>
-        <p>Favourites: {{ user.favourites_count }}</p>
-    </div>
-
-    <button class="edit-profile-btn">Edit Profile</button>
 
     <div class="delete-section">
         <button class="delete-account-btn">Delete Account</button>
