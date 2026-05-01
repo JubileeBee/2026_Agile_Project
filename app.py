@@ -53,10 +53,6 @@ def terms():
 def profile():
     return render_template('profile.html')
 
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
-
 @app.route('/post')
 def post():
     return render_template('post.html')
@@ -74,5 +70,9 @@ def recipe_detail(id):
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
 
 app.run(debug=True)
