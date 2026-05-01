@@ -42,15 +42,12 @@ html, body {
     gap: 15px;
 }
 
-.menu-icon {
-    cursor: pointer;
-    font-size: 28px;
-}
-
 .logo-text {
     font-weight: 700; 
     font-size: 24px;
     letter-spacing: -0.5px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .nav-right {
@@ -59,10 +56,36 @@ html, body {
     gap: 15px;
 }
 
-.logo-text {
+.nav-text {
     text-decoration: none;
-    color: inherit;
+    color: var(--primary-brown);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 2px;
+    position: relative;
+    transition: color 0.2s;
 }
+
+.nav-text::after {
+    width: 0;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: var(--primary-brown-dark);
+    border-radius: 2px;
+    transition: width 0.25s ease;
+}
+
+.nav-text:hover {
+    color: var(--primary-brown-dark);
+}
+
+.nav-text:hover::after {
+    width: 100%;
+}
+
 
 /* =========================
    Post Button Layout
@@ -135,8 +158,6 @@ html, body {
 /* =========================
    Recipe Footer Layout
    ========================= */
-
-
    .site-footer {
     background-color: #755d47;
     color: var(--secondary-bg);
