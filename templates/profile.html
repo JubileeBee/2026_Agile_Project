@@ -48,6 +48,53 @@
         </a>
     </div>
 
+    <div class="user-recipe-panel">
+        <button class="profile-tab active" data-tab="my-recipes">My Recipes</button>
+        <button class="profile-tab" data-tab="favourites">Favourites</button>
+        <button class="profile-tab" data-tab="likes">Likes</button>
+    </div>
+
+    <!-- The User's recipe part-->
+    <div class="profile-tab-content active" id="my-recipes">
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in user.recipes %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
+                        <div class="recipe-card">
+                            <figure>
+                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                                <button class="heart-btn">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </figure>
+                            <div class="recipe-card-content">
+                                <div class="card-meta">
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">{{ recipe.category }}</span>
+                                    </div>
+                                    <ul class="recipe-stats">
+                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
+                                    </ul>
+                                </div>
+                                <h1>{{ recipe.title }}</h1>
+                                <div class="recipe-footer">
+                                    <div class="user-info">
+                                        <span class="material-icons" style="font-size:16px">account_circle</span>
+                                        <span class="username">{{ user.name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
     <div class="delete-section">
         <button class="delete-account-btn">Delete Account</button>
 
@@ -57,12 +104,6 @@
                 Your recipes, likes, and favourites will be deleted too.
             </p>
         </div>
-    </div>
-
-    <div class="user-recipe-panel">
-        <p>Your Recipes </p>
-        <p>Likes </p>
-        <p>Favourites  </p>
     </div>
 
 </div>
