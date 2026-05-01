@@ -75,4 +75,8 @@ def login():
 def signup():
     return render_template('signup.html')
 
+@app.route('/add_recipe')
+def add_recipe():
+    return render_template('add_recipe.html')
+
 app.run(debug=True)
