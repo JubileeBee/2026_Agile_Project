@@ -42,26 +42,7 @@
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-brand">
-                <div class="footer-logo">CozyCravings Logo</div>
-            </div>
-
-            <div class="footer-nav-group">
-                <section>
-                    <h3 class="footer-heading">Explore</h3>
-                    <nav class="footer-links">
-                        <a href="{{ url_for('recipes') }}">All Recipes</a>
-                        <a href="{{ url_for('favourites') }}">Favourites</a>
-                        <a href="{{ url_for('history') }}">Recently Visited</a>
-                    </nav>
-                </section>
-
-                <section>
-                    <h3 class="footer-heading">About</h3>
-                    <nav class="footer-links">
-                        <a href="{{ url_for('about_us') }}">About Us</a>
-                        <a href="{{ url_for('contact') }}">Contact</a>
-                    </nav>
-                </section>
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="CozyCravings Logo">
             </div>
 
             <div class="footer-socials">

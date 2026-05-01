@@ -164,61 +164,26 @@ html, body {
     background-color: #755d47;
     color: var(--secondary-bg);
     margin-top: 60px;
-    padding: 40px 60px 0 60px;
+    padding: 20px 60px 0px 60px;
 }
 
 .footer-container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1200px; 
-    margin: 0 auto 15px auto;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-.footer-logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--secondary-bg);
-}
-
-.footer-nav-group {
-    display: flex;
-    gap: 60px;
-}
-
-.footer-heading {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--secondary-bg);
-    margin-bottom: 12px;
-}
-
-.footer-links {
-    display: flex;
     flex-direction: column;
-    gap: 8px;
-}
-
-.footer-links a {
-    text-decoration: none;
-    color: var(--secondary-bg);
-    font-size: 0.9rem;
-    opacity: 0.85;
-    transition: 0.3s;
-}
-
-.footer-links a:hover {
-    opacity: 1;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 15px auto;
+    gap: 20px;
 }
 
 .footer-brand {
     display: flex;
-    flex-direction: column;
-    gap: 16px;  
+    justify-content: center;
+}
+
+.footer-brand img {
+    width: 300px;
+    margin: -120px 0;
 }
 
 .footer-socials {
@@ -274,6 +239,7 @@ html, body {
 .footer-legal a:hover {
     text-decoration: underline;
 }
+@media
 
 /* =========================
    Recipe Detail Page Layout
