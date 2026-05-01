@@ -31,9 +31,11 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 5vw;
-    position: sticky;
+    position: fixed;
+    width:100%;
     top: 0;
     z-index: 1000;
+    transition: transform 0.3s ease;
 }
 
 .nav-left {
