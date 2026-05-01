@@ -45,13 +45,15 @@
     </div>
 
         <!-- Edit Profile Modal -->
-    <div class = "popup">
-        <p> User Name </p>
-        <p> Bio  </p>
-        <p> Password Change  </p>
-        <p> Delete Account </p>
-        <button id="closeModal">Close</button>
-    </div>
+        <div class="popup-overlay" id="popupOverlay">
+            <div class="popup">
+                <p>User Name</p>
+                <p>Bio</p>
+                <p>Password Change</p>
+                <p>Delete Account</p>
+                <button id="closeModal">Close</button>
+            </div>
+        </div>
 
     <div class="profile-tabs">
         <button class="profile-tab active" data-tab="my-recipes">My Recipes</button>
@@ -199,16 +201,22 @@
 
     <script>
         const openModal = document.getElementById('openModal');
-        const popup = document.querySelector('.popup');
+        const overlay = document.getElementById('popupOverlay');
         const closeModal = document.getElementById('closeModal');
 
         openModal.addEventListener('click', function(e) {
             e.preventDefault();
-            popup.classList.add('active');
+            overlay.classList.add('active');
         });
 
         closeModal.addEventListener('click', function() {
-            popup.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
         });
     </script>
 
