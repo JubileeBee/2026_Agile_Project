@@ -4,75 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Recipe</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_recipe-style.css') }}">
-</head>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/add_recipe.css') }}">
+
 <body>
-    <div class="container">
+
+<div class="container">
     <h1>Add Your Recipe</h1>
 
     <form action="/add_recipe" method="POST" enctype="multipart/form-data">
 
         <!-- Title -->
-        <div>
-            <label for="title">Recipe Title</label>
-            <input type="text" id="title" name="title" required>
-        </div>
+        <label>Recipe Title</label>
+        <input type="text" name="title" required>
 
-        <!-- Image -->
-        <div>
-            <label for="image">Upload Image</label>
-            <input type="file" id="image" name="image" accept="image/*">
-        </div>
+        <!-- Description -->
+        <label for="description">Description</label>
+        <textarea 
+            id="description" 
+            name="description" 
+            rows="3" 
+            maxlength="300"
+            placeholder="Briefly describe your recipe (e.g. flavour, texture, occasion)..."
+            required>
+            
+        </textarea>
 
-        <!-- Times -->
-        <div class="grid-3">
+        <small class="char-count" id="desc-count">0 / 300</small>
+
+        <!-- Time & Servings -->
+
+        <div class="time-grid">
+
             <div>
                 <label for="prep_time">Prep Time (mins)</label>
-                <input type="number" id="prep_time" name="prep_time" required>
+                <input type="number" id="prep_time" name="prep_time" min="0" required>
             </div>
 
             <div>
                 <label for="cook_time">Cook Time (mins)</label>
-                <input type="number" id="cook_time" name="cook_time" required>
+                <input type="number" id="cook_time" name="cook_time" min="0" required>
+            </div>
+
+            <div>
+                <label for="total_time">Total Time (mins)</label>
+                <input type="number" id="total_time" name="total_time" readonly>
+                <div class="time-display" id="total_display"></div>
             </div>
 
             <div>
                 <label for="servings">Servings</label>
-                <input type="number" id="servings" name="servings" required>
+                <input type="number" id="servings" name="servings" min="1" required>
             </div>
+
         </div>
 
         <!-- Ingredients -->
-        <div>
-            <label for="ingredients">Ingredients</label>
-            <textarea id="ingredients" name="ingredients" rows="5" placeholder="One ingredient per line..." required></textarea>
+        <label>Ingredients</label>
+
+        <div id="ingredients-container">
+            <div class="ingredient-row">
+                <input type="text" name="ingredient_name[]" placeholder="Ingredient (e.g. flour)" required>
+                <input type="text" name="ingredient_quantity[]" placeholder="Qty (e.g. 2)" required>
+                <input type="text" name="ingredient_unit[]" placeholder="Unit (e.g. cups)">
+                
+                <button type="button" class="remove-btn">X</button>
+            </div>
         </div>
+
+        <button type="button" class="btn" id="add-ingredient-btn">+ Add Ingredient</button>
 
         <!-- Instructions -->
-        <div>
-            <label for="instructions">Instructions</label>
-            <textarea id="instructions" name="instructions" rows="7" placeholder="Step-by-step instructions..." required></textarea>
-        </div>
+        <label>Instructions</label>
+        <textarea name="instructions" rows="6" required></textarea>
 
-        <!-- Allergies -->
-        <div>
-            <label for="allergies">Allergies <span class="optional">(optional)</span></label>
-            <input type="text" id="allergies" name="allergies" placeholder="e.g. nuts, dairy">
-        </div>
+        <!-- Optional -->
+        <label>Allergies <span class="optional">(optional)</span></label>
+        <input type="text" name="allergies">
 
-        <!-- Notes -->
-        <div>
-            <label for="notes">Notes <span class="optional">(optional)</span></label>
-            <textarea id="notes" name="notes" rows="4" placeholder="Extra tips, substitutions..."></textarea>
-        </div>
+        <label>Notes <span class="optional">(optional)</span></label>
+        <textarea name="notes" rows="3"></textarea>
 
-        <!-- Submit -->
-        <button type="submit">Submit Recipe</button>
+        <button type="submit" class="btn">Submit Recipe</button>
+
+        
 
     </form>
 </div>
 
-</body>
-</html>
+<!-- External JS -->
+<script src="{{ url_for('static', filename='js/add_recipe.js') }}" defer></script>
+
 </body>
 </html>
