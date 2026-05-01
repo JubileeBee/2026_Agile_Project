@@ -56,7 +56,17 @@ def profile():
         'bio': 'This is where the bio goes.',
         'recipes_count': 12,
         'likes_count': 48,
-        'favourites_count': 23
+        'favourites_count': 23,
+        'recipes': [
+            {'id': 1, 'title': 'Chocolate Lava Cake', 'category': 'Dessert', 'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400', 'rating': 4.8, 'likes': 231, 'duration': '30 mins'},
+            {'id': 6, 'title': 'Banana Pancakes', 'category': 'Breakfast', 'image_url': 'https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg', 'rating': 4.9, 'likes': 278, 'duration': '20 mins'},
+        ],
+        'favourites': [
+            {'id': 4, 'title': 'Caesar Salad', 'category': 'Lunch', 'image_url': 'https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg', 'rating': 4.3, 'likes': 98, 'duration': '15 mins'},
+        ],
+        'likes': [
+            {'id': 3, 'title': 'Soy Sauce Ramen', 'category': 'Dinner', 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s', 'rating': 4.7, 'likes': 312, 'duration': '45 mins', 'profile': 'Mia Chen'},
+        ]
     }
     return render_template('profile.html', user=user)
 
