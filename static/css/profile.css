@@ -165,3 +165,18 @@
     display: block;
 }
 
+@media (max-width: 576px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-stats {
+        justify-content: center;
+    }
+
+    .edit-profile-btn {
+        align-self: center;
+    }
+}
