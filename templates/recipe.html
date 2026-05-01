@@ -4,35 +4,119 @@
     Extends base layout for consistent navigation and styling.
 #}
 
-{% extends "base.html" %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Card</title>
 
-<div class="recipe-container">
-    <h1>Recipe Title</h1>
-    <p><strong>By:</strong> Username</p>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
+</head>
 
-    <div class="recipe-image">
-        <img src="https://via.placeholder.com/600x300" alt="Recipe Image">
+<body>
+
+<div class="card">
+
+    <!-- Header -->
+    <div class="header">
+
+        <h1>FLUFFY PANCAKES</h1>
+
+        <div class="meta-bar">
+
+            <!-- Rating -->
+            <div class="rating">
+                ★★★★☆ <span class="rating-value">4.5</span>
+            </div>
+
+            <!-- Likes -->
+            <div class="likes">
+                <span class="heart">♥</span>
+                <span id="like-count">128</span>
+            </div>
+
+            <!-- Category Tag -->
+            <div class="tag">DESSERT</div>
+
+        </div>
+
     </div>
 
-    <h2>Ingredients</h2>
-    <ul>
-        <li>Ingredient 1</li>
-        <li>Ingredient 2</li>
-    </ul>
+    <!-- Top Section -->
+    <div class="top-section">
 
-    <h2>Steps</h2>
-    <ol>
-        <li>Step 1</li>
-        <li>Step 2</li>
-    </ol>
+        <!-- Image -->
+        <div class="image-box">
+            <img src="{{ url_for('static', filename='images/pancakes.jpg') }}" alt="Recipe Image">
+        </div>
 
-    <div class="comments-section">
-        <h2>Comments</h2>
-        <p>No comments yet...</p>
+        <!-- Info -->
+        <div class="info">
+            <div class="info-item">
+                <span>Prep time</span>
+                <strong>15 min</strong>
+            </div>
+            <div class="divider"></div>
+
+            <div class="info-item">
+                <span>Cook time</span>
+                <strong>15 min</strong>
+            </div>
+            <div class="divider"></div>
+
+            <div class="info-item">
+                <span>Servings</span>
+                <strong>8</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+        <!-- Preparation -->
+        <div class="left">
+            <h2>Preparation</h2>
+            <p>
+                Whisk the egg yolk with a tablespoon of sugar until pale and frothy. 
+                Mix the milk in batches. Sift flour and baking powder over the mixture.
+            </p>
+
+            <p>
+                Whip egg whites until stiff peaks form. Fold gently into batter.
+                Heat a non-stick pan and cook over low heat until golden.
+            </p>
+        </div>
+
+        <!-- Ingredients -->
+        <div class="right">
+            <h2>Ingredients</h2>
+            <ul>
+                <li>2 eggs</li>
+                <li>1½ tbsp milk</li>
+                <li>¼ cup flour</li>
+                <li>½ tsp vanilla</li>
+                <li>1 tbsp sugar</li>
+                <li>Fresh berries</li>
+            </ul>
+
+            <div class="notes">
+                <strong>Notes:</strong>
+                <p>
+                    Serve warm with butter, cream, and maple syrup.
+                </p>
+            </div>
+        </div>
+
     </div>
 
 </div>
 
-{% endblock %}
+<script src="{{ url_for('static', filename='js/recipe.js') }}"></script>
+
+</body>
+</html>
+
