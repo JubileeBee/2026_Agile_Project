@@ -189,6 +189,16 @@
     z-index: 1000;
 }
 
+.popup-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
 .popup.active {
     display: block;
 }
