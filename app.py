@@ -79,4 +79,9 @@ def signup():
 def add_recipe():
     return render_template('add_recipe.html')
 
-app.run(debug=True)
+@app.route('/recipe_page')
+def recipe_page():
+    return render_template('recipe.html')
+
+if __name__ == '__main__':
+   app.run(debug=True)
