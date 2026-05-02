@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
         row.classList.add("ingredient-row");
 
         row.innerHTML = `
+            <input type="text" name="ingredient_name[]" placeholder="Ingredient" required>
             <input type="text" name="ingredient_quantity[]" placeholder="Qty">
             <input type="text" name="ingredient_unit[]" placeholder="Unit">
-            <input type="text" name="ingredient_name[]" placeholder="Ingredient" required>
             <button type="button" class="remove-btn">X</button>
         `;
 
