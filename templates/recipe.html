@@ -22,23 +22,23 @@
     <!-- Header -->
     <div class="header">
 
-        <h1>FLUFFY PANCAKES</h1>
+        <h1>{{ recipe.title }}</h1>
 
         <div class="meta-bar">
 
             <!-- Rating -->
             <div class="rating">
-                ★★★★☆ <span class="rating-value">4.5</span>
+                ★★★★☆ <span class="rating-value">{{ recipe.rating }}</span>
             </div>
 
             <!-- Likes -->
             <div class="likes">
                 <span class="heart">♥</span>
-                <span id="like-count">128</span>
+                <span id="like-count">{{ recipe.likes }}</span>
             </div>
 
             <!-- Category Tag -->
-            <div class="tag">DESSERT</div>
+            <div class="tag">{{ recipe.category }}</div>
 
         </div>
 
@@ -49,26 +49,26 @@
 
         <!-- Image -->
         <div class="image-box">
-            <img src="{{ url_for('static', filename='images/pancakes.jpg') }}" alt="Recipe Image">
+            <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
         </div>
 
         <!-- Info -->
         <div class="info">
             <div class="info-item">
                 <span>Prep time</span>
-                <strong>15 min</strong>
+                <strong>{{ recipe.prep_time }} min</strong>
             </div>
             <div class="divider"></div>
 
             <div class="info-item">
                 <span>Cook time</span>
-                <strong>15 min</strong>
+                <strong>{{ recipe.cook_time }} min</strong>
             </div>
             <div class="divider"></div>
 
             <div class="info-item">
                 <span>Servings</span>
-                <strong>8</strong>
+                <strong>{{ recipe.servings }}</strong>
             </div>
         </div>
 
@@ -80,35 +80,28 @@
         <!-- Preparation -->
         <div class="left">
             <h2>Preparation</h2>
-            <p>
-                Whisk the egg yolk with a tablespoon of sugar until pale and frothy. 
-                Mix the milk in batches. Sift flour and baking powder over the mixture.
-            </p>
 
-            <p>
-                Whip egg whites until stiff peaks form. Fold gently into batter.
-                Heat a non-stick pan and cook over low heat until golden.
-            </p>
+            {% for step in recipe.steps %}
+                <p>{{ step }}</p>
+            {% endfor %}
         </div>
 
         <!-- Ingredients -->
         <div class="right">
             <h2>Ingredients</h2>
+
             <ul>
-                <li>2 eggs</li>
-                <li>1½ tbsp milk</li>
-                <li>¼ cup flour</li>
-                <li>½ tsp vanilla</li>
-                <li>1 tbsp sugar</li>
-                <li>Fresh berries</li>
+                {% for item in recipe.ingredients %}
+                    <li>{{ item }}</li>
+                {% endfor %}
             </ul>
 
+            {% if recipe.notes %}
             <div class="notes">
                 <strong>Notes:</strong>
-                <p>
-                    Serve warm with butter, cream, and maple syrup.
-                </p>
+                <p>{{ recipe.notes }}</p>
             </div>
+            {% endif %}
         </div>
 
     </div>
