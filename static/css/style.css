@@ -31,7 +31,7 @@ html, body {
    Navigation Bar Layout
    ========================= */
 .topnav {
-    background-color: var(--secondary-bg); 
+    background-color: #755d47;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -55,7 +55,7 @@ html, body {
     font-size: 24px;
     letter-spacing: -0.5px;
     text-decoration: none;
-    color: inherit;
+    color: var(--secondary-bg);
 }
 
 .nav-right {
@@ -66,7 +66,7 @@ html, body {
 
 .nav-text {
     text-decoration: none;
-    color: var(--primary-brown);
+    color: var(--secondary-bg);
     font-size: 16px;
     font-weight: 600;
     padding: 6px 2px;
@@ -81,13 +81,13 @@ html, body {
     bottom: 0;
     left: 0;
     height: 2px;
-    background-color: var(--primary-brown-dark);
+    background-color: var(--secondary-bg);
     border-radius: 2px;
     transition: width 0.25s ease;
 }
 
 .nav-text:hover {
-    color: var(--primary-brown-dark);
+    color: var(--hover-bg);
 }
 
 .nav-text:hover::after {
@@ -101,7 +101,7 @@ html, body {
 /*round icon buttons used for profile, notifications and etc*/
 .nav-circle {
     text-decoration: none;
-    color: var(--primary-brown);
+    color: var(--secondary-bg);
     width: 42px;
     height: 42px;
     display: flex;
@@ -112,7 +112,7 @@ html, body {
 }
 
 .nav-circle:hover {
-    background-color: var(--hover-bg);
+    background-color: var(--primary-brown);
 }
 
 #profile-icon, .nav-circle .material-icons {
@@ -122,8 +122,8 @@ html, body {
 /*sign up button styling */
 .signup-btn {
     text-decoration: none;
-    background-color: var(--primary-brown);
-    color: var(--secondary-bg);
+    background-color: var(--secondary-bg);
+    color: var(--primary-brown);
     padding: 8px 20px;
     border-radius: 25px;
     font-size: 14px;
@@ -132,7 +132,7 @@ html, body {
 }
 
 .signup-btn:hover {
-    background-color: var(--primary-brown-dark);
+    background-color: var(--hover-bg);
 }
 
 /*Floating action button keeps the button in place regardless of scroll*/
@@ -311,7 +311,6 @@ html, body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding-top: 80px;
     height: 300px; 
     display: flex;
     flex-direction: column;
@@ -699,6 +698,3 @@ html, body {
         height: 11rem;
     }
 }
-
-
-
