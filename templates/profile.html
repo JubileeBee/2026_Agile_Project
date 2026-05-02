@@ -82,21 +82,22 @@
 
                 <button class="save-btn" id="saveBtn">Save Changes</button>
 
-                <div class = "delete-button-popup">
-                    <div class ="front"> Delete </div>
-                    <div class = "back">
-                        <p> Are you sure you want to delete your account? </p>
-                        <p> This action cannot be undone. </p>
-                            <div class="delete-confirm-box" id="deleteConfirmBox">
-                                <p class="danger-zone-desc">
-                                    Type <strong>DELETE</strong> below to confirm.
-                                </p>
-                                <input type="text" class="form-input" id="deleteConfirmInput" placeholder="Type DELETE to confirm">
-                                <button class="confirm-delete-btn" id="confirmDeleteBtn" disabled>
-                                    Yes, Delete My Account
-                                </button>
-                            </div>
+                <div class="delete-section">
+                    <button class="delete-btn" id="deleteToggle">
+                        Delete Account
+                    </button>
+                    <div class="delete-modal" id="deleteModal">
+                        <p>Are you sure you want to delete your account?</p>
+                        <p>This action cannot be undone.</p>
+                        <div class="delete-confirm-box">
+                            <p>Type <strong>DELETE</strong> below to confirm.</p>
+                            <input type="text" class="form-input" id="deleteConfirmInput" placeholder="Type DELETE to confirm">
+                            <button class="confirm-delete-btn" id="confirmDeleteBtn" disabled>
+                                Yes, Delete My Account
+                            </button>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
