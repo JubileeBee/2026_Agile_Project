@@ -308,9 +308,18 @@
         });
 
         confirmDeleteBtn.addEventListener('click', () => {
-            window.location.href = '/';
+            overlay.classList.remove('active');
+            document.getElementById('byePopupOverlay').classList.add('active');
+            document.getElementById('byePopup').classList.add('active');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2500);
         });
     </script>
+    <div class="bye-popup-overlay" id="byePopupOverlay"></div>
+    <div class="bye-popup" id="byePopup">
+        <p> Bye bye, we'll miss you!</p>
+    </div>
 </div>
 
 {% endblock %}
