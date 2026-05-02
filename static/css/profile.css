@@ -388,6 +388,11 @@
     background-color: darkred;
 }
 
+@media (max-width: 768px) { 
+    .popup { 
+        width: 90%; 
+        padding: 20px; } 
+}
 
 
  
