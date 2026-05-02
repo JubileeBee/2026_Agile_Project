@@ -176,7 +176,7 @@
 
 .popup {
     width: 600px;
-    max-height: 80vh;      
+    max-height: 95vh;      
     overflow-y: auto;      
     background: white;
     border-radius: 6px;
@@ -184,7 +184,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 30px;
+    padding: 40px;
     color: var(--primary-brown);
     z-index: 1000;
 }
@@ -315,7 +315,8 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 10px;         
-    float: left;            
+    float: left;
+    margin-bottom: 10px;       
 }
 .delete-btn:hover {
     background-color: darkred;
@@ -324,7 +325,6 @@
 /* Back Side of the Delete button */
 .delete-modal {
     display: none;
-    position: absolute;
     top: calc(100% + 10px);
     left: 0;
     width: 100%;
@@ -337,7 +337,6 @@
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     z-index: 999;
-    margin-top: 10px;
 
 }
 

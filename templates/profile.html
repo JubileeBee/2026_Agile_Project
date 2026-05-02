@@ -291,7 +291,14 @@
         const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
         deleteToggle.addEventListener('click', () => {
-            deleteModal.classList.toggle('active');
+            const isOpen = deleteModal.classList.contains('active');
+            if (isOpen) {
+                deleteModal.classList.remove('active');
+                deleteToggle.textContent = "Delete Account";
+            } else {
+                deleteModal.classList.add('active');
+                deleteToggle.textContent = "Cancel Delete";
+            }
             deleteConfirmInput.value = "";
             confirmDeleteBtn.disabled = true;
         });
