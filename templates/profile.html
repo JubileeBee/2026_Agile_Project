@@ -283,6 +283,27 @@
             });
         });
     </script>
+    <!-- This is for the delete account confirmation modal -->
+    <script>
+        const deleteToggle = document.getElementById('deleteToggle');
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteConfirmInput = document.getElementById('deleteConfirmInput');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+        deleteToggle.addEventListener('click', () => {
+            deleteModal.classList.toggle('active');
+            deleteConfirmInput.value = "";
+            confirmDeleteBtn.disabled = true;
+        });
+
+        deleteConfirmInput.addEventListener('input', () => {
+            confirmDeleteBtn.disabled = deleteConfirmInput.value !== 'DELETE';
+        });
+
+        confirmDeleteBtn.addEventListener('click', () => {
+            window.location.href = '/';
+        });
+    </script>
 </div>
 
 {% endblock %}

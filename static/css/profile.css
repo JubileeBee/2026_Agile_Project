@@ -175,7 +175,9 @@
 }
 
 .popup {
-    width: 400px;
+    width: 600px;
+    max-height: 80vh;      
+    overflow-y: auto;      
     background: white;
     border-radius: 6px;
     position: fixed;
@@ -308,25 +310,32 @@
     background-color: darkred;
 }
 
-/* HIDDEN POPUP */
+/* Back Side of the Delete button */
 .delete-modal {
     display: none;
-    position: absolute;
-    top: 120%;
-    left: 0;
-    width: 300px;
-    background: white;
+    margin-top: 12px;
     padding: 16px;
+    background: white;
+    border: 1px solid #eee;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    z-index: 999;
 }
 
-/* SHOW POPUP */
+/* SHOW */
 .delete-modal.active {
     display: block;
 }
 
+.delete-section {
+    color: black;
+}
+
+.delete-section p {
+    color: black;
+}
+
+.delete-section strong {
+    color: black;
+}
 
 
 
