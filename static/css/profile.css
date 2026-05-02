@@ -337,6 +337,33 @@
     color: black;
 }
 
+.confirm-delete-btn {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* disabled state (default) */
+.confirm-delete-btn:disabled {
+    background-color: #ccc;
+    color: #777;
+    cursor: not-allowed;
+}
+
+/* ENABLED state */
+.confirm-delete-btn:not(:disabled) {
+    background-color: #e05252;
+    color: white;
+}
+
+.confirm-delete-btn:not(:disabled):hover {
+    background-color: darkred;
+}
 
 
 
