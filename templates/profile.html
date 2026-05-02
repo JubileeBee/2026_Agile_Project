@@ -12,7 +12,10 @@
     <div class="profile-header">
         <div class="profile-avatar-wrap">
             <div class="profile-avatar">
-                <img src="/static/images/default-profile.png" class="profile-img" alt="Profile Image">
+                <img 
+                    src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539"
+                    class="profile-img"
+                    alt="Profile Image">
             </div>
         </div>
 
@@ -53,6 +56,20 @@
                         <span class="material-icons">close</span>
                     </button>
                 </div>
+
+                <div class="form-group image-upload-group">
+                    <div class="form-group">
+                        <label class="form-label">Choose Avatar</label>
+                        <div class="avatar-options">
+                            <img class="avatar-option selected" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 1">
+                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 2">
+                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 3">
+                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 4">
+                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 5">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="form-label">Display Name</label>
                     <input type="text" class="form-input" id="editName" value="{{ user.name }}" placeholder="Enter your name">
@@ -239,6 +256,22 @@
         });
     </script>
 
+    <script>
+    /* This is for the profile image selector:
+       When the user clicks on an avatar option, it will update 
+       the profile image and highlight the selected avatar.
+    */
+        const avatarOptions = document.querySelectorAll('.avatar-option');
+        const profileImg = document.querySelector('.profile-img');
+
+        avatarOptions.forEach(avatar => {
+            avatar.addEventListener('click', function() {
+                avatarOptions.forEach(a => a.classList.remove('selected'));
+                this.classList.add('selected');
+                profileImg.src = this.src;
+            });
+        });
+    </script>
 </div>
 
 {% endblock %}

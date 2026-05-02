@@ -1,13 +1,6 @@
 /* =========================
    Profile Page Layout
    ========================= */
-
-.profile-page {
-    max-width: 1200px;
-    margin: 80px auto 40px auto;
-    padding: 0 20px;
-}
-
 .profile-header {
     display: flex;
     align-items: center;
@@ -264,4 +257,30 @@
 
 .save-btn:hover {
     background-color: var(--primary-brown-dark);
+}
+
+.avatar-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.avatar-option {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: 0.2s;
+}
+
+.avatar-option:hover {
+    border-color: var(--primary-brown);
+}
+
+/* Highlight the selected avatar with a border and outline */
+.avatar-option.selected {
+    border-color: var(--primary-brown);
+    outline: 2px solid var(--primary-brown);
+    outline-offset: 2px;
 }
