@@ -47,11 +47,25 @@
         <!-- Edit Profile Modal -->
         <div class="popup-overlay" id="popupOverlay">
             <div class="popup">
-                <p>User Name</p>
-                <p>Bio</p>
+                <div class="popup-header">
+                    <h2>Edit Profile</h2>
+                    <button class="popup-close-btn" id="closeModal">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Display Name</label>
+                    <input type="text" class="form-input" id="editName" value="{{ user.name }}" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-input form-textarea" id="editBio" placeholder="Tell us about yourself">{{ user.bio }}</textarea>
+                </div>
+
+                <button class="save-btn" id="saveBtn">Save Changes</button>
                 <p>Password Change</p>
                 <p>Delete Account</p>
-                <button id="closeModal">Close</button>
             </div>
         </div>
 
