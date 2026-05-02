@@ -283,6 +283,23 @@
             });
         });
     </script>
+
+    <!-- Handle Profile Updates, and syncs user input with UI and prepares for DB fetch-->>
+    <script>
+        const saveBtn = document.getElementById('saveBtn');
+        const editName = document.getElementById('editName');
+        const editBio = document.getElementById('editBio');
+        const profileName = document.querySelector('.profile-name');
+        const profileBio = document.querySelector('.profile-bio');
+
+        saveBtn.addEventListener('click', () => {
+            profileName.textContent = editName.value;
+            profileBio.textContent = editBio.value;
+
+            overlay.classList.remove('active');
+        });
+    </script>
+    
     <!-- This is for the delete account confirmation modal -->
     <script>
         const deleteToggle = document.getElementById('deleteToggle');
