@@ -1,15 +1,24 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from app.config import Config
+from flask_login import LoginManager
+from config import Config
 
 db = SQLAlchemy()
 migrate = Migrate()
+login = LoginManager()
 
-app = Flask(__name__)
-app.config.from_object(Config)
+# If user visits protected page, redirect to /login 
+login.login_view = 'login'
 
-db.init_app(app)
-migrate.init_app(app, db)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-from app import routes, models
+    db.init_app(app)
+    migrate.init_app(app, db)
+    login.init_app(app)
+
+    from app import routes, models
+
+    return app

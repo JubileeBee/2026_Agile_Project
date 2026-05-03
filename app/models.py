@@ -1,23 +1,267 @@
-from app import db
+```python
+from datetime import datetime, timezone
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+
+from app import db, login
+
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    username = db.Column(
+        db.String(64),
+        unique=True,
+        nullable=False,
+        index=True
+    )
+
+    email = db.Column(
+        db.String(120),
+        unique=True,
+        nullable=False
+    )
+
+    password_hash = db.Column(
+        db.String(256),
+        nullable=False
+    )
+
+    bio = db.Column(
+        db.Text,
+        nullable=True
+    )
+
+    profile_image = db.Column(
+        db.String(50),
+        nullable=False,
+        default='avatar1.png'
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc)
+    )
+
+    recipes = db.relationship(
+        'Recipe',
+        back_populates='author',
+        cascade='all, delete-orphan'
+    )
+
+    comments = db.relationship(
+        'Comment',
+        back_populates='user',
+        cascade='all, delete-orphan'
+    )
+
+    likes = db.relationship(
+        'Like',
+        back_populates='user',
+        cascade='all, delete-orphan'
+    )
+
+    favorites = db.relationship(
+        'Favorite',
+        back_populates='user',
+        cascade='all, delete-orphan'
+    )
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(50), nullable=False)
-    image_url = db.Column(db.String(300), nullable=True)
-    rating = db.Column(db.Float, nullable=True)
-    likes = db.Column(db.Integer, default=0)
-    duration = db.Column(db.String(50), nullable=True)
-    profile = db.Column(db.String(100), nullable=True)
 
-def create_test_data():
-    recipes = [
-        Recipe(title='Chocolate Lava Cake', category='Dessert', image_url='https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400', rating=4.8, likes=231, duration='30 mins', profile='Emma Doe'),
-        Recipe(title='Avocado Toast', category='Breakfast', image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfqIDCCdL5IDo0IOwcXdOx6q8o7V6su_lCg&s', rating=4.5, likes=189, duration='10 mins', profile='Jake Lee'),
-        Recipe(title='Soy Sauce Ramen', category='Dinner', image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s', rating=4.7, likes=312, duration='45 mins', profile='Mia Chen'),
-        Recipe(title='Caesar Salad', category='Lunch', image_url='https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg', rating=4.3, likes=98, duration='15 mins', profile='Tom Hill'),
-        Recipe(title='Mango Smoothie', category='Drinks', image_url='https://twosleevers.com/wp-content/uploads/2025/05/Mango-Smoothie-1.jpg', rating=4.6, likes=145, duration='5 mins', profile='Sara Kim'),
-        Recipe(title='Banana Pancakes', category='Breakfast', image_url='https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg', rating=4.9, likes=278, duration='20 mins', profile='Chris Ray'),
-    ]
-    db.session.add_all(recipes)
-    db.session.commit()
+    title = db.Column(
+        db.String(150),
+        nullable=False
+    )
+
+    description = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    ingredients = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    instructions = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    category = db.Column(
+        db.String(50),
+        nullable=True
+    )
+
+    image_file = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc)
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id'),
+        nullable=False
+    )
+
+    author = db.relationship(
+        'User',
+        back_populates='recipes'
+    )
+
+    comments = db.relationship(
+        'Comment',
+        back_populates='recipe',
+        cascade='all, delete-orphan'
+    )
+
+    likes = db.relationship(
+        'Like',
+        back_populates='recipe',
+        cascade='all, delete-orphan'
+    )
+
+    favorites = db.relationship(
+        'Favorite',
+        back_populates='recipe',
+        cascade='all, delete-orphan'
+    )
+
+    def __repr__(self):
+        return f'<Recipe {self.title}>'
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    content = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc)
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id'),
+        nullable=False
+    )
+
+    recipe_id = db.Column(
+        db.Integer,
+        db.ForeignKey('recipe.id'),
+        nullable=False
+    )
+
+    user = db.relationship(
+        'User',
+        back_populates='comments'
+    )
+
+    recipe = db.relationship(
+        'Recipe',
+        back_populates='comments'
+    )
+
+    def __repr__(self):
+        return f'<Comment {self.id}>'
+
+
+class Like(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id'),
+        nullable=False
+    )
+
+    recipe_id = db.Column(
+        db.Integer,
+        db.ForeignKey('recipe.id'),
+        nullable=False
+    )
+
+    user = db.relationship(
+        'User',
+        back_populates='likes'
+    )
+
+    recipe = db.relationship(
+        'Recipe',
+        back_populates='likes'
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            'user_id',
+            'recipe_id',
+            name='unique_user_recipe_like'
+        ),
+    )
+
+    def __repr__(self):
+        return f'<Like {self.id}>'
+
+
+class Favorite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id'),
+        nullable=False
+    )
+
+    recipe_id = db.Column(
+        db.Integer,
+        db.ForeignKey('recipe.id'),
+        nullable=False
+    )
+
+    user = db.relationship(
+        'User',
+        back_populates='favorites'
+    )
+
+    recipe = db.relationship(
+        'Recipe',
+        back_populates='favorites'
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            'user_id',
+            'recipe_id',
+            name='unique_user_recipe_favorite'
+        ),
+    )
+
+    def __repr__(self):
+        return f'<Favorite {self.id}>'
+```
