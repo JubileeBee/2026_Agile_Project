@@ -10,6 +10,7 @@
 	--card-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 	--global-radius: 16px;
     --card-text-color: #070705;
+    --nav-height: 70px;
 }
 
 /* Global style */
@@ -22,6 +23,10 @@ html, body {
     overflow-x: hidden; 
 }
 
+.page-content {
+    padding-top: var(--nav-height);
+}
+
 /* =========================
    Navigation Bar Layout
    ========================= */
@@ -31,9 +36,12 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 5vw;
-    position: sticky;
+    position: fixed;
+    width:100%;
     top: 0;
     z-index: 1000;
+    transition: transform 0.3s ease;
+    height: var(--nav-height);
 }
 
 .nav-left {
@@ -42,15 +50,12 @@ html, body {
     gap: 15px;
 }
 
-.menu-icon {
-    cursor: pointer;
-    font-size: 28px;
-}
-
 .logo-text {
     font-weight: 700; 
     font-size: 24px;
     letter-spacing: -0.5px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .nav-right {
@@ -59,10 +64,36 @@ html, body {
     gap: 15px;
 }
 
-.logo-text {
+.nav-text {
     text-decoration: none;
-    color: inherit;
+    color: var(--primary-brown);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 2px;
+    position: relative;
+    transition: color 0.2s;
 }
+
+.nav-text::after {
+    width: 0;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: var(--primary-brown-dark);
+    border-radius: 2px;
+    transition: width 0.25s ease;
+}
+
+.nav-text:hover {
+    color: var(--primary-brown-dark);
+}
+
+.nav-text:hover::after {
+    width: 100%;
+}
+
 
 /* =========================
    Post Button Layout
@@ -132,70 +163,52 @@ html, body {
     font-size: 35px;
 }
 
+@media (max-width: 576px) {
+    .topnav {
+        padding: 10px 3vw;
+    }
+
+    .nav-right {
+        gap: 8px;
+    }
+
+    .nav-text {
+        font-size: 13px;
+    }
+
+    .signup-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
 /* =========================
    Recipe Footer Layout
    ========================= */
-
-
-   .site-footer {
+.site-footer {
     background-color: #755d47;
     color: var(--secondary-bg);
     margin-top: 60px;
-    padding: 40px 60px 0 60px;
+    padding: 40px 60px 0px 60px;
 }
 
 .footer-container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1200px; 
-    margin: 0 auto 15px auto;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-.footer-logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--secondary-bg);
-}
-
-.footer-nav-group {
-    display: flex;
-    gap: 60px;
-}
-
-.footer-heading {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--secondary-bg);
-    margin-bottom: 12px;
-}
-
-.footer-links {
-    display: flex;
     flex-direction: column;
-    gap: 8px;
-}
-
-.footer-links a {
-    text-decoration: none;
-    color: var(--secondary-bg);
-    font-size: 0.9rem;
-    opacity: 0.85;
-    transition: 0.3s;
-}
-
-.footer-links a:hover {
-    opacity: 1;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 15px auto;
+    gap: 20px;
 }
 
 .footer-brand {
     display: flex;
-    flex-direction: column;
-    gap: 16px;  
+    justify-content: center;
+}
+
+.footer-brand img {
+    width: 250px;
+    padding-bottom: 10px;
 }
 
 .footer-socials {
@@ -251,6 +264,22 @@ html, body {
 .footer-legal a:hover {
     text-decoration: underline;
 }
+@media (max-width: 576px) {
+    .site-footer {
+        padding: 20px 20px 0px 20px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .footer-legal a {
+        margin-left: 10px;
+    }
+}
 
 /* =========================
    Recipe Detail Page Layout
@@ -282,14 +311,12 @@ html, body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
+    padding-top: 80px;
     height: 300px; 
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     color: var(--primary-brown); 
     text-align: center;
 }
@@ -398,6 +425,7 @@ html, body {
     height: 250px;
     overflow: hidden;
     border-radius: var(--global-radius) var(--global-radius) 0 0;
+    position: relative;
 }
 
 .recipe-card figure img {
@@ -501,6 +529,26 @@ html, body {
 .recipe-card:hover {
     transform: translateY(-6px);
 }
+
+.heart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.heart-btn .material-icons {
+    color: var(--primary-brown);
+}
+
 
 @media (max-width:1024px) {
     .recipe-card {
@@ -651,5 +699,6 @@ html, body {
         height: 11rem;
     }
 }
+
 
 

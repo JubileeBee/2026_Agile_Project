@@ -1,0 +1,243 @@
+{# 
+    User Profile Page Template
+    This template displays the user's profile information, including their name, bio, and statistics
+    I've made a personal style.css because the style.css is getting too long
+#}
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar-wrap">
+            <div class="profile-avatar">
+                <img 
+                    src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539"
+                    class="profile-img"
+                    alt="Profile Image">
+            </div>
+        </div>
+
+        <div class="profile-info">
+
+            <h1 class="profile-name">{{ user.name }}</h1>
+            <p class="profile-bio">{{ user.bio }}</p>
+            <div class="profile-stats">
+                <div class="stat">
+                    <span class="stat-number">{{ user.recipes_count }}</span>
+                    <span class="stat-label">Recipes</span>
+                </div>
+
+                <div class="stat">
+                    <span class="stat-number">{{ user.favourites_count }}</span>
+                    <span class="stat-label">Favourites</span>
+                </div>
+
+                <div class="stat">
+                    <span class="stat-number">{{ user.likes_count }}</span>
+                    <span class="stat-label">Likes</span>
+                </div>
+
+            </div>
+        </div>
+        <a href="#" class="edit-profile-btn" id="openModal">
+            <span class="material-icons">edit</span>
+            Edit Profile
+        </a>
+    </div>
+
+        <!-- Edit Profile Modal -->
+        <div class="popup-overlay" id="popupOverlay">
+            <div class="popup">
+                <div class="popup-header">
+                    <h2>Edit Profile</h2>
+                    <button class="popup-close-btn" id="closeModal">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+
+                <div class="form-group image-upload-group">
+                    <div class="form-group">
+                        <label class="form-label">Choose Avatar</label>
+                        <div class="avatar-options">
+                            <img class="avatar-option selected" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 1">
+                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 2">
+                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 3">
+                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 4">
+                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 5">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Display Name</label>
+                    <input type="text" class="form-input" id="editName" value="{{ user.name }}" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-input form-textarea" id="editBio" placeholder="Tell us about yourself">{{ user.bio }}</textarea>
+                </div>
+
+                <button class="save-btn" id="saveBtn">Save Changes</button>
+
+                <div class="delete-section">
+                    <button class="delete-btn" id="deleteToggle">
+                        Delete Account
+                    </button>
+                    <div class="delete-modal" id="deleteModal">
+                        <p>Are you sure you want to delete your account?</p>
+                        <p>This action cannot be undone.</p>
+                        <div class="delete-confirm-box">
+                            <p>Type <strong>DELETE</strong> below to confirm.</p>
+                            <input type="text" class="form-input" id="deleteConfirmInput" placeholder="Type DELETE to confirm">
+                            <button class="confirm-delete-btn" id="confirmDeleteBtn" disabled>
+                                Yes, Delete My Account
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <div class="profile-tabs">
+        <button class="profile-tab active" data-tab="my-recipes">My Recipes</button>
+        <button class="profile-tab" data-tab="favourites">Favourites</button>
+        <button class="profile-tab" data-tab="likes">Likes</button>
+    </div>
+
+    <!-- The User's recipe part-->
+    <div class="profile-tab-content active" id="my-recipes">
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in user.recipes %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
+                        <div class="recipe-card">
+                            <figure>
+                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                                <button class="heart-btn">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </figure>
+                            <div class="recipe-card-content">
+                                <div class="card-meta">
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">{{ recipe.category }}</span>
+                                    </div>
+                                    <ul class="recipe-stats">
+                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
+                                    </ul>
+                                </div>
+                                <h1>{{ recipe.title }}</h1>
+                                <div class="recipe-footer">
+                                    <div class="user-info">
+                                        <span class="material-icons" style="font-size:16px">account_circle</span>
+                                        <span class="username">{{ user.name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- The User's favourites part-->
+    <div class="profile-tab-content" id="favourites"> <!-- should this be a different name for ids-->
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in user.favourites %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
+                        <div class="recipe-card">
+                            <figure>
+                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                                <button class="heart-btn">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </figure>
+                            <div class="recipe-card-content">
+                                <div class="card-meta">
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">{{ recipe.category }}</span>
+                                    </div>
+                                    <ul class="recipe-stats">
+                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
+                                    </ul>
+                                </div>
+                                <h1>{{ recipe.title }}</h1>
+                                <div class="recipe-footer">
+                                    <div class="user-info">
+                                        <span class="material-icons" style="font-size:16px">account_circle</span>
+                                        <span class="username">{{ user.name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- The User's Likes part-->
+    <div class="profile-tab-content" id="likes"> <!-- should this be a different name for ids-->
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in user.likes %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
+                        <div class="recipe-card">
+                            <figure>
+                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                                <button class="heart-btn">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </figure>
+                            <div class="recipe-card-content">
+                                <div class="card-meta">
+                                    <div class="recipe-tags">
+                                        <span class="recipe-tag">{{ recipe.category }}</span>
+                                    </div>
+                                    <ul class="recipe-stats">
+                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
+                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
+                                    </ul>
+                                </div>
+                                <h1>{{ recipe.title }}</h1>
+                                <div class="recipe-footer">
+                                    <div class="user-info">
+                                        <span class="material-icons" style="font-size:16px">account_circle</span>
+                                        <span class="username">{{ user.name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="bye-popup-overlay" id="byePopupOverlay"></div>
+    <div class="bye-popup" id="byePopup">
+        <p> Bye bye, we'll miss you!</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/profile_script.js') }}"></script>
+
+</div>
+
+{% endblock %}
