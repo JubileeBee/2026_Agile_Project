@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="recipe-form-container">
+    <h2 class="form-title">Edit Recipe</h2>
+
+    <form method="POST">
+
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" value="{{ recipe.title }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" required>{{ recipe.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Ingredients</label>
+            <textarea name="ingredients" required>{{ recipe.ingredients }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Instructions</label>
+            <textarea name="instructions" required>{{ recipe.instructions }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <input type="text" name="category" value="{{ recipe.category }}">
+        </div>
+
+        <div class="form-group">
+            <label>Image URL</label>
+            <input type="text" name="image_url" value="{{ recipe.image_url }}">
+        </div>
+
+        <button type="submit" class="submit-btn">Update Recipe</button>
+
+    </form>
+</div>
+
+{% endblock %}
+
