@@ -13,6 +13,7 @@
     --global-radius: 16px;
     --card-text-color: #070705;
     --nav-height: 70px;
+    --nav-bar: #755d47;
 }
 
 /* =========================
@@ -35,7 +36,7 @@ html, body {
    Navigation Bar
    ========================= */
 .topnav {
-    background-color: var(--secondary-bg); 
+    background-color: var(--nav-bar); 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,7 +60,7 @@ html, body {
     font-size: 24px;
     letter-spacing: -0.5px;
     text-decoration: none;
-    color: inherit;
+    color: var(--secondary-bg);
 }
 
 .nav-right {
@@ -70,7 +71,7 @@ html, body {
 
 .nav-text {
     text-decoration: none;
-    color: var(--primary-brown);
+    color: var(--secondary-bg);
     font-size: 16px;
     font-weight: 600;
     padding: 6px 2px;
@@ -85,13 +86,13 @@ html, body {
     bottom: 0;
     left: 0;
     height: 2px;
-    background-color: var(--primary-brown-dark);
+    background-color: var(--secondary-bg);
     border-radius: 2px;
     transition: width 0.25s ease;
 }
 
 .nav-text:hover {
-    color: var(--primary-brown-dark);
+    color: var(--secondary-bg);
 }
 
 .nav-text:hover::after {
@@ -100,7 +101,7 @@ html, body {
 
 .nav-circle {
     text-decoration: none;
-    color: var(--primary-brown);
+    color: var(--secondary-bg);
     width: 42px;
     height: 42px;
     display: flex;
@@ -121,8 +122,8 @@ html, body {
 
 .signup-btn {
     text-decoration: none;
-    background-color: var(--primary-brown);
-    color: var(--secondary-bg);
+    background-color: var(--secondary-bg);
+    color: var(--primary-brown);
     padding: 8px 20px;
     border-radius: 25px;
     font-size: 14px;
@@ -131,7 +132,8 @@ html, body {
 }
 
 .signup-btn:hover {
-    background-color: var(--primary-brown-dark);
+    background-color: #f0e6cc; 
+    color: var(--primary-brown);
 }
 
 /* =========================
