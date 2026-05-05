@@ -1,5 +1,5 @@
 from flask import render_template
-from app import app
+from app import app, limiter
 from app.models import Recipe
 
 @app.route('/')
@@ -66,6 +66,7 @@ def signup():
     return render_template('signup.html')
 
 @app.route('/login')
+@limiter.limit("5 per minute")
 def login():
     return render_template('login.html')
 
