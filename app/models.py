@@ -1,4 +1,4 @@
-```python
+import enum
 from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -6,11 +6,23 @@ from flask_login import UserMixin
 from app import db, login
 
 
+# ------------------ ENUM ------------------
+class CategoryEnum(enum.Enum):
+    BREAKFAST = "Breakfast"
+    BRUNCH = "Brunch"
+    LUNCH = "Lunch"
+    DINNER = "Dinner"
+    SNACK = "Snack"
+    DRINK = "Drink"
+
+
+# ------------------ USER LOADER ------------------
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
 
+# ------------------ USER ------------------
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -24,7 +36,8 @@ class User(UserMixin, db.Model):
     email = db.Column(
         db.String(120),
         unique=True,
-        nullable=False
+        nullable=False,
+        index=True
     )
 
     password_hash = db.Column(
@@ -32,15 +45,12 @@ class User(UserMixin, db.Model):
         nullable=False
     )
 
-    bio = db.Column(
-        db.Text,
-        nullable=True
-    )
+    bio = db.Column(db.Text)
 
     profile_image = db.Column(
-        db.String(50),
+        db.String(255),
         nullable=False,
-        default='avatar1.png'
+        default='https://api.dicebear.com/7.x/avataaars/svg?seed=default'
     )
 
     created_at = db.Column(
@@ -48,29 +58,10 @@ class User(UserMixin, db.Model):
         default=lambda: datetime.now(timezone.utc)
     )
 
-    recipes = db.relationship(
-        'Recipe',
-        back_populates='author',
-        cascade='all, delete-orphan'
-    )
-
-    comments = db.relationship(
-        'Comment',
-        back_populates='user',
-        cascade='all, delete-orphan'
-    )
-
-    likes = db.relationship(
-        'Like',
-        back_populates='user',
-        cascade='all, delete-orphan'
-    )
-
-    favorites = db.relationship(
-        'Favorite',
-        back_populates='user',
-        cascade='all, delete-orphan'
-    )
+    recipes = db.relationship('Recipe', back_populates='author', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', back_populates='user', cascade='all, delete-orphan')
+    likes = db.relationship('Like', back_populates='user', cascade='all, delete-orphan')
+    favorites = db.relationship('Favorite', back_populates='user', cascade='all, delete-orphan')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -78,190 +69,99 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def __repr__(self):
-        return f'<User {self.username}>'
 
-
+# ------------------ RECIPE ------------------
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    title = db.Column(
-        db.String(150),
-        nullable=False
-    )
-
-    description = db.Column(
-        db.Text,
-        nullable=False
-    )
-
-    ingredients = db.Column(
-        db.Text,
-        nullable=False
-    )
-
-    instructions = db.Column(
-        db.Text,
-        nullable=False
-    )
+    title = db.Column(db.String(150), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    ingredients = db.Column(db.Text, nullable=False)
+    instructions = db.Column(db.Text, nullable=False)
 
     category = db.Column(
-        db.String(50),
-        nullable=True
+        db.Enum(CategoryEnum),
+        nullable=False
     )
 
-    image_file = db.Column(
-        db.String(255),
-        nullable=True
-    )
+    cook_time = db.Column(db.Integer)
+    difficulty = db.Column(db.String(10))
+    servings = db.Column(db.Integer)
+
+    image_file = db.Column(db.String(255))
 
     created_at = db.Column(
         db.DateTime,
         default=lambda: datetime.now(timezone.utc)
     )
 
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey('user.id'),
-        nullable=False
+    updated_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc)
     )
 
-    author = db.relationship(
-        'User',
-        back_populates='recipes'
-    )
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    comments = db.relationship(
-        'Comment',
-        back_populates='recipe',
-        cascade='all, delete-orphan'
-    )
-
-    likes = db.relationship(
-        'Like',
-        back_populates='recipe',
-        cascade='all, delete-orphan'
-    )
-
-    favorites = db.relationship(
-        'Favorite',
-        back_populates='recipe',
-        cascade='all, delete-orphan'
-    )
-
-    def __repr__(self):
-        return f'<Recipe {self.title}>'
+    author = db.relationship('User', back_populates='recipes')
+    comments = db.relationship('Comment', back_populates='recipe', cascade='all, delete-orphan')
+    likes = db.relationship('Like', back_populates='recipe', cascade='all, delete-orphan')
+    favorites = db.relationship('Favorite', back_populates='recipe', cascade='all, delete-orphan')
 
 
+# ------------------ COMMENT ------------------
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    content = db.Column(
-        db.Text,
-        nullable=False
-    )
+    content = db.Column(db.Text, nullable=False)
 
     created_at = db.Column(
         db.DateTime,
         default=lambda: datetime.now(timezone.utc)
     )
 
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey('user.id'),
-        nullable=False
-    )
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), nullable=False)
 
-    recipe_id = db.Column(
-        db.Integer,
-        db.ForeignKey('recipe.id'),
-        nullable=False
-    )
-
-    user = db.relationship(
-        'User',
-        back_populates='comments'
-    )
-
-    recipe = db.relationship(
-        'Recipe',
-        back_populates='comments'
-    )
-
-    def __repr__(self):
-        return f'<Comment {self.id}>'
+    user = db.relationship('User', back_populates='comments')
+    recipe = db.relationship('Recipe', back_populates='comments')
 
 
+# ------------------ LIKE ------------------
 class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey('user.id'),
-        nullable=False
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), nullable=False)
+
+    created_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc)
     )
 
-    recipe_id = db.Column(
-        db.Integer,
-        db.ForeignKey('recipe.id'),
-        nullable=False
-    )
-
-    user = db.relationship(
-        'User',
-        back_populates='likes'
-    )
-
-    recipe = db.relationship(
-        'Recipe',
-        back_populates='likes'
-    )
+    user = db.relationship('User', back_populates='likes')
+    recipe = db.relationship('Recipe', back_populates='likes')
 
     __table_args__ = (
-        db.UniqueConstraint(
-            'user_id',
-            'recipe_id',
-            name='unique_user_recipe_like'
-        ),
+        db.UniqueConstraint('user_id', 'recipe_id', name='unique_user_recipe_like'),
     )
 
-    def __repr__(self):
-        return f'<Like {self.id}>'
 
-
+# ------------------ FAVORITE ------------------
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey('user.id'),
-        nullable=False
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), nullable=False)
+
+    created_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc)
     )
 
-    recipe_id = db.Column(
-        db.Integer,
-        db.ForeignKey('recipe.id'),
-        nullable=False
-    )
-
-    user = db.relationship(
-        'User',
-        back_populates='favorites'
-    )
-
-    recipe = db.relationship(
-        'Recipe',
-        back_populates='favorites'
-    )
+    user = db.relationship('User', back_populates='favorites')
+    recipe = db.relationship('Recipe', back_populates='favorites')
 
     __table_args__ = (
-        db.UniqueConstraint(
-            'user_id',
-            'recipe_id',
-            name='unique_user_recipe_favorite'
-        ),
+        db.UniqueConstraint('user_id', 'recipe_id', name='unique_user_recipe_favorite'),
     )
-
-    def __repr__(self):
-        return f'<Favorite {self.id}>'
-```
