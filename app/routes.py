@@ -1,5 +1,5 @@
-from flask import render_template
-from app import app, limiter
+from flask import render_template, request, redirect, url_for
+from app import app, limiter, db
 from app.models import Recipe
 
 @app.route('/')
@@ -42,6 +42,7 @@ def profile():
         'recipes_count': 12,
         'likes_count': 48,
         'favourites_count': 23,
+        'is_owner': True,
         'recipes': [
             {'id': 1, 'title': 'Chocolate Lava Cake', 'category': 'Dessert', 'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400', 'rating': 4.8, 'likes': 231, 'duration': '30 mins'},
             {'id': 6, 'title': 'Banana Pancakes', 'category': 'Breakfast', 'image_url': 'https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg', 'rating': 4.9, 'likes': 278, 'duration': '20 mins'},
@@ -78,3 +79,20 @@ def post():
 def recipe_detail(id):
     recipe = Recipe.query.get_or_404(id)
     return render_template('recipe.html', recipe=recipe)
+
+@app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
+def edit_recipe(id):
+    recipe = Recipe.query.get_or_404(id)
+
+    if request.method == 'POST':
+        recipe.title = request.form['title']
+        recipe.description = request.form['description']
+        recipe.ingredients = request.form['ingredients']
+        recipe.instructions = request.form['instructions']
+        recipe.category = request.form['category']
+        recipe.image_url = request.form['image_url']
+
+        db.session.commit()
+        return redirect(url_for('recipe_detail', id=recipe.id))
+
+    return render_template('edit_recipe.html', recipe=recipe)
