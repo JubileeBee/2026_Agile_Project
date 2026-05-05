@@ -1,6 +1,6 @@
 {# 
     Main layout template using Jinja2 inheritance.
-    Contains the global navigation bar and the floating post button.
+    Contains the global navigation bar and the floating post button and a footer bar.
     NOTE: Any elements intended to appear on EVERY page should be added here.
 #}
 
@@ -14,16 +14,18 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 </head>
 
 <body>
     <nav class="topnav">
         <div class="nav-left">
-            <span class="material-icons menu-icon">menu</span>
-            <a href="{{ url_for('home')}}" class="logo-text">CozyCravings</span>
+            <span class="logo-text">CozyCravings</span>
         </div>
 
         <div class="nav-right">
+            <a href="{{ url_for('home') }}" class = "nav-text" >Home</a>
+            <a href="{{ url_for('recipes') }}" class = "nav-text">All Recipes</a>
             <a href="{{ url_for('profile') }}" class="nav-circle">
                 <span class="material-icons">account_circle</span>
             </a>
@@ -31,35 +33,19 @@
         </div>
     </nav>
 
-    {% block content %}{% endblock %}
+    <main class="page-content">
+        {% block content %}{% endblock %}
+    </main>
 
     <a href="{{ url_for('post') }}" class="floating-post-btn">
         <span class="material-icons">add</span>
     </a>
 
+
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-brand">
-                <div class="footer-logo">CozyCravings Logo</div>
-            </div>
-
-            <div class="footer-nav-group">
-                <section>
-                    <h3 class="footer-heading">Explore</h3>
-                    <nav class="footer-links">
-                        <a href="{{ url_for('recipes') }}">All Recipes</a>
-                        <a href="{{ url_for('favourites') }}">Favourites</a>
-                        <a href="{{ url_for('history') }}">Recently Visited</a>
-                    </nav>
-                </section>
-
-                <section>
-                    <h3 class="footer-heading">About</h3>
-                    <nav class="footer-links">
-                        <a href="{{ url_for('about_us') }}">About Us</a>
-                        <a href="{{ url_for('contact') }}">Contact</a>
-                    </nav>
-                </section>
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="CozyCravings Logo">
             </div>
 
             <div class="footer-socials">
@@ -80,6 +66,10 @@
             </nav>
         </div>
     </footer>
+
+    <script src="{{ url_for('static', filename='js/recipe_card_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navbar_script.js') }}"></script>
+
 </body> 
 
 </html> 
