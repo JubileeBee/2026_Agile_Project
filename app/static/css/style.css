@@ -35,7 +35,7 @@ html, body {
    Navigation Bar
    ========================= */
 .topnav {
-    background-color: #755d47;
+    background-color: var(--secondary-bg); 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,24 +48,29 @@ html, body {
     height: var(--nav-height);
 }
 
-.nav-left,
-.nav-right {
+.nav-left {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
 .logo-text {
-    font-weight: 700;
+    font-weight: 700; 
     font-size: 24px;
     letter-spacing: -0.5px;
     text-decoration: none;
-    color: var(--secondary-bg);
+    color: inherit;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .nav-text {
     text-decoration: none;
-    color: var(--secondary-bg);
+    color: var(--primary-brown);
     font-size: 16px;
     font-weight: 600;
     padding: 6px 2px;
@@ -80,13 +85,13 @@ html, body {
     bottom: 0;
     left: 0;
     height: 2px;
-    background-color: var(--secondary-bg);
+    background-color: var(--primary-brown-dark);
     border-radius: 2px;
     transition: width 0.25s ease;
 }
 
 .nav-text:hover {
-    color: var(--hover-bg);
+    color: var(--primary-brown-dark);
 }
 
 .nav-text:hover::after {
@@ -95,7 +100,7 @@ html, body {
 
 .nav-circle {
     text-decoration: none;
-    color: var(--secondary-bg);
+    color: var(--primary-brown);
     width: 42px;
     height: 42px;
     display: flex;
@@ -106,7 +111,7 @@ html, body {
 }
 
 .nav-circle:hover {
-    background-color: var(--primary-brown);
+    background-color: var(--hover-bg);
 }
 
 #profile-icon,
@@ -116,8 +121,8 @@ html, body {
 
 .signup-btn {
     text-decoration: none;
-    background-color: var(--secondary-bg);
-    color: var(--primary-brown);
+    background-color: var(--primary-brown);
+    color: var(--secondary-bg);
     padding: 8px 20px;
     border-radius: 25px;
     font-size: 14px;
@@ -126,7 +131,7 @@ html, body {
 }
 
 .signup-btn:hover {
-    background-color: var(--hover-bg);
+    background-color: var(--primary-brown-dark);
 }
 
 /* =========================
@@ -270,6 +275,8 @@ html, body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    padding-top: 80px;
+    height: 300px; 
     height: 300px;
     display: flex;
     flex-direction: column;
@@ -838,3 +845,38 @@ html, body {
         width: 100%;
     }
 }
+
+/* =========================
+   Edit Button (Recipe Card)
+   ========================= */
+
+   .edit-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px; 
+
+    z-index: 1000;
+
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+
+    transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+    transform: scale(1.1);
+}
+
+
+

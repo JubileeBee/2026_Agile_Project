@@ -1,0 +1,115 @@
+{# 
+    Recipe Detail Page
+    Displays full recipe including ingredients, steps, and comments.
+    Extends base layout for consistent navigation and styling.
+#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Card</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
+</head>
+
+<body>
+
+<div class="card">
+
+    <!-- Header -->
+    <div class="header">
+
+        <h1>{{ recipe.title }}</h1>
+
+        <div class="meta-bar">
+
+            <!-- Rating -->
+            <div class="rating">
+                ★★★★☆ <span class="rating-value">{{ recipe.rating }}</span>
+            </div>
+
+            <!-- Likes -->
+            <div class="likes">
+                <span class="heart">♥</span>
+                <span id="like-count">{{ recipe.likes }}</span>
+            </div>
+
+            <!-- Category Tag -->
+            <div class="tag">{{ recipe.category }}</div>
+
+        </div>
+
+    </div>
+
+    <!-- Top Section -->
+    <div class="top-section">
+
+        <!-- Image -->
+        <div class="image-box">
+            <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+        </div>
+
+        <!-- Info -->
+        <div class="info">
+            <div class="info-item">
+                <span>Prep time</span>
+                <strong>{{ recipe.prep_time }} min</strong>
+            </div>
+            <div class="divider"></div>
+
+            <div class="info-item">
+                <span>Cook time</span>
+                <strong>{{ recipe.cook_time }} min</strong>
+            </div>
+            <div class="divider"></div>
+
+            <div class="info-item">
+                <span>Servings</span>
+                <strong>{{ recipe.servings }}</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+        <!-- Preparation -->
+        <div class="left">
+            <h2>Preparation</h2>
+
+            {% for step in recipe.steps %}
+                <p>{{ step }}</p>
+            {% endfor %}
+        </div>
+
+        <!-- Ingredients -->
+        <div class="right">
+            <h2>Ingredients</h2>
+
+            <ul>
+                {% for item in recipe.ingredients %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+
+            {% if recipe.notes %}
+            <div class="notes">
+                <strong>Notes:</strong>
+                <p>{{ recipe.notes }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/recipe.js') }}"></script>
+
+</body>
+</html>
+

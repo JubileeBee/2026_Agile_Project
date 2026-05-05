@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg, #FAF9F6, #F5F3F0, #F0EDE8);
+    color: #8B6655;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 35px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+label {
+    font-weight: 600;
+}
+
+input, textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #E0BE9C;
+    background: #FAF9F6;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.ingredient-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #F0CEAA, #E0BE9C);
+    color: #8B6655;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #EBC49A, #DBB88C);
+}
+
+.remove-btn {
+    background: #D97757;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.optional {
+    font-size: 12px;
+    color: #C19A82;
+}
+
+.time-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.time-display {
+    font-size: 13px;
+    color: #C19A82;
+    margin-top: 4px;
+}
+
+@media (max-width: 700px) {
+    .time-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.char-count {
+    font-size: 12px;
+    color: #C19A82;
+    text-align: right;
+    display: block;
+    margin-top: 4px;
+}
