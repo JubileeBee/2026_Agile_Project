@@ -499,32 +499,6 @@ html, body {
 }
 
 /* =========================
-   Top 6 Layout
-   ========================= */
-.top-6-wrapper {
-    overflow: hidden;
-}
-
-.top-6::-webkit-scrollbar {
-    height: 8px;
-}
-
-.top-6::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.top-6::-webkit-scrollbar-thumb {
-    background-color: var(--primary-brown);
-    border-radius: 10px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-}
-
-.top-6::-webkit-scrollbar-thumb:hover {
-    background-color: var(--primary-brown-dark);
-}
-
-/* =========================
    Horizontal Scroll Row
    ========================= */
 .scroll-row {
@@ -574,51 +548,8 @@ html, body {
     .topnav {
         padding: 10px 3vw;
     }
-
-    .top-6 {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        gap: 0px;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: thin;
-        scrollbar-color: var(--primary-brown-dark) transparent;
-        margin: 0 0px;
-        padding-bottom: 15px;
-    }
-
-    .top-6 .col-6,
-    .top-6 .col-md-6,
-    .top-6 .col-lg-4 {
-        width: auto;
-        max-width: 100%;
-    }
-
-    .top-6::-webkit-scrollbar-button {
-        display: none;
-    }
-
-    .top-6-section .section-header h2 {
-        margin-bottom: 0px;
-    }
 }
 
-@media (min-width: 480px) and (max-width: 768px) {
-    .top-6 {
-        margin: 0 10px;
-    }
-}
-
-@media (min-width: 570px) and (max-width: 770px) {
-    .top-6-section .section-header {
-        padding-left: 12px;
-    }
-
-    .top-6-section .container {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
 
 @media (max-width: 1024px) {
     .recipe-card {
@@ -698,15 +629,6 @@ html, body {
 
     .recipe-card figure {
         height: 11rem;
-    }
-
-    /* Top 6 */
-    .top-6 .col-6,
-    .top-6 .col-md-6,
-    .top-6 .col-lg-4 {
-        flex: 0 0 70vw !important;
-        width: 70vw !important;
-        max-width: 70vw !important;
     }
 
     /* Scroll row */
@@ -830,15 +752,6 @@ html, body {
 
     .recipe-card figure {
         height: 9rem;
-    }
-
-    /* Top 6 */
-    .top-6 .col-6,
-    .top-6 .col-md-6,
-    .top-6 .col-lg-4 {
-        flex: 0 0 88vw !important;
-        width: 88vw !important;
-        max-width: 88vw !important;
     }
 
     /* Scroll row */

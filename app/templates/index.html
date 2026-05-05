@@ -26,11 +26,11 @@
                 <h2>This Week's Comfort Obsessions</h2>
             </div>
 
-            <div class="row g-4 top-6">
+            <div class="scroll-row d-flex gap-4">
                 {% for recipe in trending_recipes %}
-                <div class="col-6 col-md-6 col-lg-4">
-                    {% include "recipe_card.html" %}
-                </div>
+                    <div class="scroll-item">
+                        {% include "recipe_card.html" %}
+                    </div>
                 {% endfor %}
             </div>
 
