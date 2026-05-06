@@ -84,7 +84,6 @@
 
             <div class="section-header mb-3">
                 <h2>All Recipes</h2>
-                <p class="text-muted">Browse everything the community has uploaded</p>
             </div>
 
             <!--<div id="all-recipes-grid" class="row g-4">
@@ -97,13 +96,14 @@
 
         </div>
         <div class="feed-controls">
-            <input id="search-input" type="text" placeholder="Search recipes..." />
 
-            <div class="filters">
-                <button class="filter-btn" data-category="">All</button>
-                <button class="filter-btn" data-category="Dessert">Dessert</button>
-                <button class="filter-btn" data-category="Breakfast">Breakfast</button>
-                <button class="filter-btn" data-category="Dinner">Dinner</button>
+            <div class="filters px-3">
+                <div class = "category-button flex-wrap gap-3 btn-group">
+                    <button class="btn rounded-pill filter-btn category_button" data-category="">All</button>
+                    <button class="btn rounded-pill filter-btn category_button" data-category="Dessert">Dessert</button>
+                    <button class="btn rounded-pill filter-btn category_button" data-category="Breakfast">Breakfast</button>
+                    <button class="btn rounded-pill filter-btn category_button" data-category="Dinner">Dinner</button>
+                </div>
             </div>
         </div>
 

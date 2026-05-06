@@ -1,8 +1,8 @@
 /*CSS varaible */
 :root {
-    --primary-brown: #7F5539;
-    --primary-brown-dark: #9C6644;
-    --background: #FFFCF2;
+    --primary-brown: #8b6655;
+    --primary-brown-dark: rgba(139, 102, 85, 0.6);
+    --background:  rgba(255, 255, 255, 0.8);
     --secondary-bg: #FFF9E3;
     --hover-bg: #EDE0D4;
     --card-color: #ffffff;
@@ -12,13 +12,23 @@
     --card-text-color: #070705;
     --nav-height: 70px;
 }
-
+/*
+:root {
+    --primary:       #f0ceaa;
+    --primary-dark:  #e0be9c;
+    --primary-hover: #ebc49a;
+    --text-main:     #8b6655;
+    --text-muted:    rgba(139, 102, 85, 0.6);
+    --border-soft:   rgba(240, 206, 170, 0.4);
+    --bg-soft:       rgba(255, 255, 255, 0.8);
+    --input-bg:      rgba(255, 255, 255, 0.7);
+}*/
 /* Global style */
 html, body {
     margin: 0;
     padding: 0;
-    font-family: 'Quicksand', sans-serif;
-    background-color: var(--background);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', system-ui, sans-serif;
+    background-color: linear-gradient(135deg, #faf9f6 0%, #f5f3f0 50%, #f0ede8 100%);;
     color: var(--primary-brown); 
     overflow-x: hidden; 
 }
@@ -31,7 +41,7 @@ html, body {
    Navigation Bar Layout
    ========================= */
 .topnav {
-    background-color: var(--secondary-bg); 
+    background-color: white; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -700,5 +710,48 @@ html, body {
     }
 }
 
+/* =========================
+   Edit Button (Recipe Card)
+   ========================= */
 
+   .edit-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px; 
 
+    z-index: 1000;
+
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+
+    transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+    transform: scale(1.1);
+}
+
+/* =========================
+    Category Buttons
+   ========================= */
+
+.category_button {
+    background-color: var(--hover-bg);
+    color: var(--primary-brown)
+}
+
+.category_button:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-brown-dark)
+}
