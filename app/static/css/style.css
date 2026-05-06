@@ -545,32 +545,54 @@ html, body {
 
 /* Tablet */
 @media (max-width: 768px) {
+
     .topnav {
         padding: 10px 3vw;
     }
-}
 
+    .logo-text {
+        font-size: 20px;
+    }
 
-@media (max-width: 1024px) {
-    .recipe-card {
-        width: 100%;
+    .nav-text {
+        font-size: 14px;
+    }
+
+    .signup-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-align: center;
     }
 }
 
 /* Mobile */
 @media (max-width: 576px) {
     /* Navbar */
-    .nav-right {
-        gap: 8px;
+    .logo-text {
+        font-size: 20px;
     }
 
     .nav-text {
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .signup-btn {
-        padding: 6px 12px;
-        font-size: 12px;
+        padding: 5px 12px;
+        font-size: 11px;
+    }
+
+    .nav-circle .material-icons {
+        font-size: 26px;
+    }
+    
+    .nav-right {
+        gap: 6px;
     }
 
     /* Footer */
@@ -656,20 +678,25 @@ html, body {
 /* Small mobile */
 @media (max-width: 375px) {
     /* Navbar */
+    :root {
+        --nav-height: 50px;
+    }
     .topnav {
-        padding: 10px 2vw;
+        height: 50px;
+        padding: 8px 10px;
     }
 
     .nav-right {
-        gap: 4px;
+        gap: 1px;
     }
+    
 
     .logo-text {
         font-size: 14px;
     }
 
     .nav-text {
-        font-size: 9px;
+        font-size: 10px;
     }
 
     .signup-btn {
@@ -720,7 +747,7 @@ html, body {
     }
 
     .footer-brand img {
-        width: 160px;
+        width: 140px;
     }
 
     .footer-bottom {
