@@ -1,8 +1,22 @@
 <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
     <article class="recipe-card">
         <figure class="recipe-image">
-            <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+            <img src="{{ recipe.image_file }}" alt="{{ recipe.title }}">
 
+            {# TODO: uncomment when authentication is implemented - like button should toggle #}
+            {# {% if current_user.is_authenticated %}
+                <form action="{{ url_for('like_recipe', id=recipe.id) }}" method="POST">
+                    <button class="heart-btn" type="submit">
+                        <span class="material-icons">favorite_border</span>
+                    </button>
+                </form>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="heart-btn">
+                    <span class="material-icons">favorite_border</span>
+                </a>
+            {% endif %} #}
+
+            {# Remove this when authentication is implemented #}
             <button class="heart-btn">
                 <span class="material-icons">favorite_border</span>
             </button>
@@ -20,20 +34,20 @@
         <div class="recipe-card-content">
             <div class="card-meta">
                 <div class="recipe-tags">
-                    <span class="recipe-tag">{{ recipe.category }}</span>
+                    <span class="recipe-tag">{{ recipe.category.value }}</span>
                 </div>
                 <ul class="recipe-stats">
                     <li>
-                        <span class="material-icons" style="font-size:14px;">star</span>
-                        {{ recipe.rating }}
-                    </li>
-                    <li>
                         <span class="material-icons" style="font-size:14px;">favorite</span>
-                        {{ recipe.likes }}
+                        {{ recipe.likes | length }}
                     </li>
                     <li>
                         <span class="material-icons" style="font-size:14px;">schedule</span>
-                        {{ recipe.duration }}
+                        {{ recipe.cook_time }} mins
+                    </li>
+                    <li>
+                        <span class="material-icons" style="font-size:14px;">signal_cellular_alt</span>
+                        {{ recipe.difficulty.value }}
                     </li>
                 </ul>
             </div>
@@ -42,7 +56,7 @@
 
             <div class="recipe-footer">
                 <div class="user-info">
-                    <span class="username">{{ recipe.profile }}</span>
+                    <span class="username">{{ recipe.author.username }}</span>
                 </div>
             </div>
         </div>

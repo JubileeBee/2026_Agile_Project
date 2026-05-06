@@ -11,6 +11,15 @@
 <div class="home-container">
 
     <header class="welcome-hero">
+        {# TODO: uncomment when authentication is implemented
+        {% if current_user.is_authenticated %}
+            <h1>Welcome back, {{ current_user.username }}!</h1>
+        {% else %}
+            <h1>Welcome to CozyCravings</h1>
+        {% endif %}
+        #}
+        
+        {# Remove this line when authentication is implemented #}
         <h1>Welcome to CozyCravings</h1>
         <div class="search-container">
             <input type="text" placeholder="What are your cravings for today?"/>
