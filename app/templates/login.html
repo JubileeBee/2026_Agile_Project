@@ -24,6 +24,9 @@
             <div class="soft-blob blob-4"></div>
         </div>
     </div>
+    <a href="{{ url_for('home') }}" class="auth-exit-global d-inline-flex align-items-center">
+        ← Back to home page
+    </a>
 
     <!--Login form container-->
     <div class="login-container">
@@ -38,7 +41,7 @@
             <form class="comfort-form" id="loginForm" novalidate>
                 <!-- Email -->
                 <div class="soft-field mb 2">
-                    <div class="form floating field-container">
+                    <div class="form-floating field-container">
                         <input type="email"
                                 class = "form-control" 
                                 id="email" name="email" 
