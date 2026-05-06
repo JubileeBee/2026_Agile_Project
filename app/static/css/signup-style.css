@@ -196,7 +196,7 @@ body {
     50% { opacity: 0.8; transform: scale(1.1); }
 }
 
-.comfort-title {
+.signup-title {
     color: #8b6655;
     font-size: 2rem;
     font-weight: 600;
@@ -204,7 +204,7 @@ body {
     letter-spacing: -0.02em;
 }
 
-.gentle-subtitle {
+.signup-subtitle {
     color: rgba(139, 102, 85, 0.7);
     font-size: 15px;
     font-weight: 400;
@@ -421,7 +421,7 @@ body {
 }
 
 /* Comfort Button */
-.comfort-button {
+.create_account_button {
     width: 100%;
     background: transparent;
     color: #8b6655;
@@ -593,7 +593,6 @@ body {
     background: rgba(240, 206, 170, 0.1);
 }
 
-.social-soft span,
 .social-soft svg {
     position: relative;
     z-index: 2;
@@ -845,6 +844,7 @@ body {
 .terms-row {
     margin-bottom: 20px;
 }
+
 .grid-form {
     display: grid;
     grid-template-columns: 1fr;

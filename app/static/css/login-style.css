@@ -130,7 +130,7 @@ body {
     background: linear-gradient(90deg, transparent, rgba(240, 206, 170, 0.5), transparent);
 }
 
-.comfort-header {
+.-header {
     text-align: center;
     margin-bottom: 40px;
 }
@@ -330,7 +330,7 @@ body {
 }
 
 /* Comfort Options */
-.comfort-options {
+.remember_me_forgot_pass {
     display: flex;
     justify-content: space-between;
     align-items: center;

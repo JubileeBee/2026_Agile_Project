@@ -86,7 +86,7 @@ class RecipeSharingLoginForm{
 
     addGentleClickEffects() {
         //Add click animations to all interactive elements
-        const interactiveElements = document.querySelectorAll('.comfort-button, .social-soft, .gentle-checkbox');
+        const interactiveElements = document.querySelectorAll('.login-button, .social-soft, .gentle-checkbox');
         interactiveElements.forEach(el => {
             el.addEventListener('mousedown', () => {
                 el.style.transform = 'scale(0.98)';
