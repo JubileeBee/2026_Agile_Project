@@ -3,25 +3,25 @@
         <figure class="recipe-image">
             <img src="{{ recipe.image_file }}" alt="{{ recipe.title }}">
 
-            {# TODO: uncomment when authentication is implemented - like button should toggle #}
-            {# {% if current_user.is_authenticated %}
+            {# Heart button logic:
+               - Not shown if user is the owner of the recipe
+               - Not shown if user is logged out
+               - Shows filled heart if already liked, empty if not #}
+            {% if current_user.is_authenticated and current_user.id != recipe.user_id %}
+                {% set already_liked = recipe.likes | selectattr('user_id', 'equalto', current_user.id) | list %}
                 <form action="{{ url_for('like_recipe', id=recipe.id) }}" method="POST">
-                    <button class="heart-btn" type="submit">
-                        <span class="material-icons">favorite_border</span>
+                    <button class="heart-btn" type="submit" onclick="event.stopPropagation()">
+                        {% if already_liked %}
+                            <span class="material-icons" style="color: red;">favorite</span>
+                        {% else %}
+                            <span class="material-icons">favorite_border</span>
+                        {% endif %}
                     </button>
                 </form>
-            {% else %}
-                <a href="{{ url_for('login') }}" class="heart-btn">
-                    <span class="material-icons">favorite_border</span>
-                </a>
-            {% endif %} #}
+            {% endif %}
 
-            {# Remove this when authentication is implemented #}
-            <button class="heart-btn">
-                <span class="material-icons">favorite_border</span>
-            </button>
-
-            {% if user and user.is_owner %}
+            {# Only show edit button if the logged in user is the author of the recipe #}
+            {% if current_user.is_authenticated and current_user.id == recipe.user_id %}
             <button  
                 class="edit-btn"
                 onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';">
