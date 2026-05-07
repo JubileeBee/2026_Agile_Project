@@ -6,7 +6,7 @@ from app.models import Recipe, CategoryEnum
 import random
 
 
-def get_random_by_category(category, limit=10):
+def get_random_by_category(category, limit=8):
     recipes = Recipe.query.filter_by(category=category).all()
     random.shuffle(recipes)
     return recipes[:limit]
