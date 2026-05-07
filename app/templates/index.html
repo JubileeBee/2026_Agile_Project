@@ -51,24 +51,26 @@
 
 
 {% if sections is defined and sections %}
-{% for section in sections %}
-    {% if section.recipes is defined and section.recipes %}
-        <section class="section-style {{ section.class|default('') }}">
-            <div class="container">
-                <div class="section-header mb-1">
-                    <h2>{{ section.title }}</h2>
+    {% for section in sections %}
+        {% if section.recipes is defined and section.recipes %}
+            <section class="section-style {{ section.class|default('') }}">
+                <div class="container">
+                    <div class="section-header mb-1">
+                        <h2>{{ section.title }}</h2>
+                    </div>
+                    <div class="scroll-row d-flex gap-4">
+                        {% for recipe in section.recipes %}
+                            <div class="scroll-item">
+                                {% include "recipe_card.html" %}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="scroll-row d-flex gap-4">
-                    {% for recipe in section.recipes %}
-                        <div class="scroll-item">
-                            {% include "recipe_card.html" %}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-    {% endif %}
-{% endfor %}
+            </section>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
 
         <!-- ALL RECIPES SECTION -->
     <section id="all-recipes" class="section-style all-recipes py-5">
