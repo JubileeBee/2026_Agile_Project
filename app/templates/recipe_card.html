@@ -45,8 +45,8 @@
                         <span class="material-icons" style="font-size:14px;">schedule</span>
                         {{ recipe.cook_time }} mins
                     </li>
-                    <li>
-                        <span class="material-icons" style="font-size:14px;">signal_cellular_alt</span>
+                    <li class="difficulty {{ recipe.difficulty.value|lower }}">
+                        <span class="material-icons" style="font-size:14px;">local_fire_department</span>
                         {{ recipe.difficulty.value }}
                     </li>
                 </ul>

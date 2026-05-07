@@ -498,6 +498,18 @@ html, body {
     color: var(--primary-brown);
 }
 
+.difficulty.easy {
+    color: #2e7d32; /* green */
+}
+
+.difficulty.medium {
+    color: #f9a825; /* orange */
+}
+
+.difficulty.hard {
+    color: #c62828; /* red */
+}
+
 /* =========================
    Horizontal Scroll Row
    ========================= */
@@ -713,6 +725,7 @@ html, body {
         font-size: 22px;
     }
 
+    
     /* Hero */
     .welcome-hero {
         height: 180px;
