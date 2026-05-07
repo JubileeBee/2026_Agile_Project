@@ -1,18 +1,56 @@
 from flask import render_template, request, redirect, url_for, jsonify
 from app import app, db
 from app.models import Recipe
+from sqlalchemy import desc
+from app.models import Recipe, CategoryEnum
+import random
+
+
+def get_random_by_category(category, limit=10):
+    recipes = Recipe.query.filter_by(category=category).all()
+    random.shuffle(recipes)
+    return recipes[:limit]
 
 
 @app.route('/')
 def home():
-    recipes = Recipe.query.all()
-    return render_template(
-        'index.html',
-        trending_recipes=recipes,
-        recent_recipes=recipes[1:5] if len(recipes) > 1 else [],
-        recommended_recipes=recipes
-    )
+    try:
+        trending_recipes = sorted(
+            Recipe.query.all(),
+            key=lambda r: len(getattr(r, 'likes', [])),
+            reverse=True
+        )[:10]
 
+        recent_recipes = Recipe.query.order_by(desc(Recipe.created_at)).limit(8).all()
+        random.shuffle(recent_recipes)  # shuffle recent
+
+        quick_meals = Recipe.query.filter(Recipe.cook_time <= 30).order_by(desc(Recipe.created_at)).limit(8).all()
+        random.shuffle(quick_meals)  # shuffle quick meals
+
+        dinner_recipes = get_random_by_category(CategoryEnum.DINNER, limit=8)
+        dessert_recipes = get_random_by_category(CategoryEnum.DESSERT, limit=8)
+
+        sections = [
+            {"title": "This Week's Comfort Obsessions", "recipes": trending_recipes, "class": "top-6-section"},
+            {"title": "Recently Added", "recipes": recent_recipes, "class": "recent-history"},
+            {"title": "Quick Meals (Under 30 mins)", "recipes": quick_meals, "class": ""},
+            {"title": "Dinner Ideas", "recipes": dinner_recipes, "class": ""},
+            {"title": "Desserts", "recipes": dessert_recipes, "class": ""},
+        ]
+
+        total_recipes = Recipe.query.count()
+
+        return render_template('index.html',
+                             sections=sections,
+                             total_recipes=total_recipes,
+                             error=None)
+
+    except Exception as e:
+        print("Database Error:", e)
+        return render_template('index.html',
+                             sections=[],
+                             total_recipes=0,
+                             error=None)
 
 @app.route("/recipes")
 def recipes():

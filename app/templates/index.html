@@ -27,65 +27,43 @@
         </div>
     </header>
 
-    {% if trending_recipes %}
-    <section class="section-style top-6-section">
+{% if error %}
+    <div class="alert alert-warning text-center py-4">
+        {{ error }}
+    </div>
+{% endif %}
+
+{% if total_recipes == 0 %}
+<div class="text-center py-5 my-5">
+    <h2>No recipes yet :( </h2>
+    <p class="lead mb-4">Our kitchen is empty right now.<br>
+    Be the first to add some delicious recipes!</p>
+    
+    {# fix broken url_for and match site colours #}
+    <a href="{{ url_for('post') }}" style="color: var(--primary-brown); text-decoration: underline; font-weight: 600;">
+        Add Your First Recipe
+    </a>
+</div>
+{% endif %}
+
+{% for section in sections %}
+    {% if section.recipes and section.recipes|length > 0 %}
+    <section class="section-style {{ section.class|default('') }}">
         <div class="container">
-            
             <div class="section-header mb-1">
-                <h2>This Week's Comfort Obsessions</h2>
+                <h2>{{ section.title }}</h2>
             </div>
-
             <div class="scroll-row d-flex gap-4">
-                {% for recipe in trending_recipes %}
+                {% for recipe in section.recipes %}
                     <div class="scroll-item">
                         {% include "recipe_card.html" %}
                     </div>
                 {% endfor %}
             </div>
-
         </div>
     </section>
     {% endif %}
-
-    {% if recent_recipes %}
-    <section class="section-style recent-history">
-        <div class="container">
-
-            <div class="section-header">
-                <h2>Your Recent Recipes</h2>
-            </div>
-
-            <div class="scroll-row d-flex gap-4">
-                {% for recipe in recent_recipes %}
-                    <div class="scroll-item">
-                        {% include "recipe_card.html" %}
-                    </div>
-                {% endfor %}
-            </div>
-
-        </div>
-    </section>
-    {% endif %}
-
-    {% if recommended_recipes %}
-    <section class="section-style recommendations py-3">
-        <div class="container">
-
-            <div class="section-header mb-1">
-                <h2>Recipes Picked For You</h2>
-            </div>
-
-            <div class="scroll-row d-flex gap-4">
-                {% for recipe in recommended_recipes %}
-                    <div class="scroll-item">
-                        {% include "recipe_card.html" %}
-                    </div>
-                {% endfor %}
-            </div>
-
-        </div>
-    </section>
-    {% endif %}
+{% endfor %}
 
         <!-- ALL RECIPES SECTION -->
     <section id="all-recipes" class="section-style all-recipes py-5">
