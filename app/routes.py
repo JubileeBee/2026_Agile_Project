@@ -1,34 +1,65 @@
 from flask import render_template, request, redirect, url_for, jsonify
 from app import app, db
 from app.models import Recipe
-from sqlalchemy import desc
-from app.models import Recipe, CategoryEnum
+from sqlalchemy import desc, func
+from app.models import Recipe, CategoryEnum, Like
 import random
 
-
-def get_random_by_category(category, limit=8):
-    recipes = Recipe.query.filter_by(category=category).all()
+# Helper functions: This can be added to other pages if you want to implement it
+def get_random_by_category(category, limit=10):
+    """Get random recipes by category"""
+    if category is None:
+        return []
+    recipes = Recipe.query.filter(Recipe.category == category).all()
     random.shuffle(recipes)
     return recipes[:limit]
 
 
+def get_trending_recipes(limit=10):
+    """Get top recipes by most likes"""
+    results = (
+        db.session.query(
+            Recipe,
+            func.count(Like.id).label("like_count")
+        )
+        .outerjoin(Like, Recipe.id == Like.recipe_id)
+        .group_by(Recipe.id)
+        .order_by(func.count(Like.id).desc())
+        .limit(limit)
+        .all()
+    )
+    # extract just the Recipe objects from the tuples
+    return [recipe for recipe, like_count in results]
+
+
+def get_recent_recipes(limit=10):
+    """Get most recently added recipes, shuffled"""
+    recipes = Recipe.query.order_by(desc(Recipe.created_at)).limit(limit).all()
+    random.shuffle(recipes)
+    return recipes
+
+
+def get_quick_meals(limit=10):
+    """Get recipes with cook time under 30 mins, shuffled"""
+    recipes = (
+        Recipe.query
+        .filter(Recipe.cook_time != None)
+        .filter(Recipe.cook_time <= 30)
+        .order_by(desc(Recipe.created_at))
+        .limit(limit)
+        .all()
+    )
+    random.shuffle(recipes)
+    return recipes
+
 @app.route('/')
 def home():
     try:
-        trending_recipes = sorted(
-            Recipe.query.all(),
-            key=lambda r: len(getattr(r, 'likes', [])),
-            reverse=True
-        )[:10]
-
-        recent_recipes = Recipe.query.order_by(desc(Recipe.created_at)).limit(8).all()
-        random.shuffle(recent_recipes)  # shuffle recent
-
-        quick_meals = Recipe.query.filter(Recipe.cook_time <= 30).order_by(desc(Recipe.created_at)).limit(8).all()
-        random.shuffle(quick_meals)  # shuffle quick meals
-
-        dinner_recipes = get_random_by_category(CategoryEnum.DINNER, limit=8)
-        dessert_recipes = get_random_by_category(CategoryEnum.DESSERT, limit=8)
+        trending_recipes = get_trending_recipes(limit=10)
+        recent_recipes = get_recent_recipes(limit=10)
+        quick_meals = get_quick_meals(limit=10)
+        dinner_recipes = get_random_by_category(CategoryEnum.DINNER, limit=10)
+        dessert_recipes = get_random_by_category(CategoryEnum.DESSERT, limit=10)
 
         sections = [
             {"title": "This Week's Comfort Obsessions", "recipes": trending_recipes, "class": "top-6-section"},
