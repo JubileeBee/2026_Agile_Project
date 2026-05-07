@@ -16,6 +16,7 @@ class CategoryEnum(enum.Enum):
     DINNER = "Dinner"
     SNACK = "Snack"
     DRINK = "Drink"
+    DESSERT = "Dessert"
 
 
 class DifficultyEnum(enum.Enum):
@@ -139,7 +140,7 @@ class Recipe(db.Model):
     user_id = db.Column(
         db.Integer,
         db.ForeignKey('user.id'),
-        nullable=False
+        nullable=True # temporary compatible change
     )
 
     author = db.relationship(
