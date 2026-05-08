@@ -1,18 +1,87 @@
 from flask import render_template, request, redirect, url_for, jsonify
 from app import app, db
 from app.models import Recipe
+from sqlalchemy import desc, func
+from app.models import Recipe, CategoryEnum, Like
+import random
 
+# Helper functions: This can be added to other pages if you want to implement it
+def get_random_by_category(category, limit=10):
+    """Get random recipes by category"""
+    if category is None:
+        return []
+    recipes = Recipe.query.filter(Recipe.category == category).all()
+    random.shuffle(recipes)
+    return recipes[:limit]
+
+
+def get_trending_recipes(limit=10):
+    """Get top recipes by most likes"""
+    results = (
+        db.session.query(
+            Recipe,
+            func.count(Like.id).label("like_count")
+        )
+        .outerjoin(Like, Recipe.id == Like.recipe_id)
+        .group_by(Recipe.id)
+        .order_by(func.count(Like.id).desc())
+        .limit(limit)
+        .all()
+    )
+    # extract just the Recipe objects from the tuples
+    return [recipe for recipe, like_count in results]
+
+
+def get_recent_recipes(limit=10):
+    """Get most recently added recipes, shuffled"""
+    recipes = Recipe.query.order_by(desc(Recipe.created_at)).limit(limit).all()
+    random.shuffle(recipes)
+    return recipes
+
+
+def get_quick_meals(limit=10):
+    """Get recipes with cook time under 30 mins, shuffled"""
+    recipes = (
+        Recipe.query
+        .filter(Recipe.cook_time != None)
+        .filter(Recipe.cook_time <= 30)
+        .order_by(desc(Recipe.created_at))
+        .limit(limit)
+        .all()
+    )
+    random.shuffle(recipes)
+    return recipes
 
 @app.route('/')
 def home():
-    recipes = Recipe.query.all()
-    return render_template(
-        'index.html',
-        trending_recipes=recipes,
-        recent_recipes=recipes[1:5] if len(recipes) > 1 else [],
-        recommended_recipes=recipes
-    )
+    try:
+        trending_recipes = get_trending_recipes(limit=10)
+        recent_recipes = get_recent_recipes(limit=10)
+        quick_meals = get_quick_meals(limit=10)
+        dinner_recipes = get_random_by_category(CategoryEnum.DINNER, limit=10)
+        dessert_recipes = get_random_by_category(CategoryEnum.DESSERT, limit=10)
 
+        sections = [
+            {"title": "This Week's Comfort Obsessions", "recipes": trending_recipes, "class": "top-6-section"},
+            {"title": "Recently Added", "recipes": recent_recipes, "class": "recent-history"},
+            {"title": "Quick Meals (Under 30 mins)", "recipes": quick_meals, "class": ""},
+            {"title": "Dinner Ideas", "recipes": dinner_recipes, "class": ""},
+            {"title": "Desserts", "recipes": dessert_recipes, "class": ""},
+        ]
+
+        total_recipes = Recipe.query.count()
+
+        return render_template('index.html',
+                             sections=sections,
+                             total_recipes=total_recipes,
+                             error=None)
+
+    except Exception as e:
+        print("Database Error:", e)
+        return render_template('index.html',
+                             sections=[],
+                             total_recipes=0,
+                             error=None)
 
 @app.route("/recipes")
 def recipes():
