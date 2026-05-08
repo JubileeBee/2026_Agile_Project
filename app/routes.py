@@ -1,8 +1,13 @@
 from flask import render_template, request, redirect, url_for, jsonify
 from app import app, db
-from app.models import Recipe
 from sqlalchemy import desc, func
-from app.models import Recipe, CategoryEnum, Like
+from app.models import (
+    Recipe,
+    Comment,
+    CategoryEnum,
+    Like
+)
+from flask_login import current_user
 import random
 
 # Helper functions: This can be added to other pages if you want to implement it
@@ -179,10 +184,30 @@ def login():
 def post():
     return render_template('post.html')
 
-
-@app.route('/recipe/<int:id>')
+@app.route('/recipe/<int:id>', methods=['GET', 'POST'])
 def recipe_detail(id):
+
     recipe = Recipe.query.get_or_404(id)
+
+    if request.method == 'POST':
+
+        if not current_user.is_authenticated:
+            return redirect(url_for('login'))
+
+        comment_text = request.form.get('comment')
+
+        if comment_text and comment_text.strip():
+
+            new_comment = Comment(
+                content=comment_text.strip(),
+                user_id=current_user.id,
+                recipe_id=recipe.id
+            )
+
+            db.session.add(new_comment)
+            db.session.commit()
+
+        return redirect(url_for('recipe_detail', id=recipe.id))
 
     related_recipes = Recipe.query.filter(
         Recipe.id != recipe.id

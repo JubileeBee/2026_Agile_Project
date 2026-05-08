@@ -95,3 +95,16 @@ const commentsSection = document.querySelector(".comments-wrapper");
 if (commentsSection) {
     commentsSection.style.scrollBehavior = "smooth";
 }
+.login-comment-prompt {
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.login-comment-prompt a {
+    font-weight: 600;
+    text-decoration: none;
+}
+.comment-card {
+    padding-top: 1rem;
+}
