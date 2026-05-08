@@ -114,8 +114,16 @@ def post():
 @app.route('/recipe/<int:id>')
 def recipe_detail(id):
     recipe = Recipe.query.get_or_404(id)
-    return render_template('recipe.html', recipe=recipe)
 
+    related_recipes = Recipe.query.filter(
+        Recipe.id != recipe.id
+    ).limit(4).all()
+
+    return render_template(
+        'recipe.html',
+        recipe=recipe,
+        related_recipes=related_recipes
+    )
 
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
 def edit_recipe(id):
