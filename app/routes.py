@@ -2,7 +2,8 @@ from flask import render_template, request, redirect, url_for, jsonify
 from app import app, db
 from app.models import Recipe
 from sqlalchemy import desc, func
-from app.models import Recipe, CategoryEnum, Like
+from flask_login import login_required, current_user, logout_user
+from app.models import Recipe, CategoryEnum, Like, User, Favourite
 import random
 
 # Helper functions: This can be added to other pages if you want to implement it
@@ -28,7 +29,6 @@ def get_trending_recipes(limit=10):
         .limit(limit)
         .all()
     )
-    # extract just the Recipe objects from the tuples
     return [recipe for recipe, like_count in results]
 
 
@@ -88,16 +88,6 @@ def recipes():
     return render_template("browse_recipes.html")
 
 
-@app.route("/favourites")
-def favourites():
-    return render_template("favourites.html")
-
-
-@app.route("/history")
-def history():
-    return render_template("history.html")
-
-
 @app.route("/privacy_policy")
 def privacy():
     return render_template("privacy.html")
@@ -109,60 +99,91 @@ def terms():
 
 
 @app.route('/profile')
+# TODO: uncomment @login_required and replace test_user with current_user when auth is complete
+# @login_required
 def profile():
-    user = {
-        'name': 'Emma Doe',
-        'bio': 'This is where the bio goes.',
-        'recipes_count': 12,
-        'likes_count': 48,
-        'favourites_count': 23,
-        'is_owner': True,
-        'recipes': [
-            {
-                'id': 1,
-                'title': 'Chocolate Lava Cake',
-                'category': 'Dessert',
-                'image_url': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400',
-                'rating': 4.8,
-                'likes': 231,
-                'duration': '30 mins'
-            },
-            {
-                'id': 6,
-                'title': 'Banana Pancakes',
-                'category': 'Breakfast',
-                'image_url': 'https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg',
-                'rating': 4.9,
-                'likes': 278,
-                'duration': '20 mins'
-            },
-        ],
-        'favourites': [
-            {
-                'id': 4,
-                'title': 'Caesar Salad',
-                'category': 'Lunch',
-                'image_url': 'https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg',
-                'rating': 4.3,
-                'likes': 98,
-                'duration': '15 mins'
-            },
-        ],
-        'likes': [
-            {
-                'id': 3,
-                'title': 'Soy Sauce Ramen',
-                'category': 'Dinner',
-                'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s',
-                'rating': 4.7,
-                'likes': 312,
-                'duration': '45 mins',
-                'profile': 'Mia Chen'
-            },
-        ]
-    }
+    # TEMP: hardcoded seed user for testing
+    # TODO: replace with --> test_user = current_user
+    test_user = User.query.filter_by(email='emma@example.com').first()
 
+    # Gather all recipes owned by user, liked by user and favourited by users via relationships
+    user_recipes = Recipe.query.filter_by(user_id=test_user.id).all()
+    liked_recipes = [like.recipe for like in test_user.likes]
+    fav_recipes = [fav.recipe for fav in test_user.favourites]
+
+    # Helper function to convert DB recipe to frontend-friendly card format
+    def format_recipe_card(recipe):
+        is_liked = recipe in liked_recipes
+        return {
+            'id': recipe.id,
+            'title': recipe.title,
+            'category': recipe.category.value,
+            'image_url': recipe.image_file or url_for('static', filename='images/default.png'),
+            'rating': 0,
+            'likes': len(recipe.likes),
+            'duration': f"{recipe.cook_time} mins" if recipe.cook_time else "N/A",
+            'difficulty': recipe.difficulty.value if recipe.difficulty else "N/A",
+            'is_liked': is_liked,
+        }
+
+    user = {
+        'name': test_user.username,
+        'bio': test_user.bio or '',
+        'profile_image': test_user.profile_image,
+        'is_owner': True,
+        'recipes_count': len(user_recipes),
+        'likes_count': len(liked_recipes),
+        'favourites_count': len(fav_recipes),
+        'recipes': [format_recipe_card(r) for r in user_recipes],
+        'likes': [format_recipe_card(r) for r in liked_recipes],
+        'favourites': [format_recipe_card(r) for r in fav_recipes],
+    }
     return render_template('profile.html', user=user)
+
+@app.route('/profile/update', methods=['POST'])
+# TODO: uncomment @login_required and replace test_user with current_user when auth is complete
+# @login_required
+def update_profile():
+    # TEMP: hardcoded seed user for testing
+    # TODO: replace with --> test_user = current_user
+    test_user = User.query.filter_by(email='emma@example.com').first()
+    
+    #JSON payload from frontend edit profile modal
+    data = request.get_json()
+    new_name = data.get('name', '').strip()
+    new_bio = data.get('bio', '').strip()
+    new_avatar = data.get('profile_image', '').strip()
+
+    # Ensure username is unique, but allow the user to keep their own username
+    if new_name != test_user.username:
+        existing = User.query.filter_by(username=new_name).first()
+        if existing:
+            return jsonify({'success': False, 'error': 'Username already taken'}), 409
+
+    #update fields
+    test_user.username = new_name
+    test_user.bio = new_bio
+    if new_avatar:
+        test_user.profile_image = new_avatar
+
+    db.session.commit()
+    return jsonify({'success': True})
+
+
+@app.route('/profile/delete', methods=['POST'])
+# TODO: uncomment @login_required and replace test_user with current_user when auth is complete
+# @login_required
+def delete_account():
+    # TEMP: hardcoded seed user for testing
+    # TODO: replace with:
+    # --> user = current_user._get_current_object()
+    # --> logout_user()
+    test_user = User.query.filter_by(email='emma@example.com').first()
+
+    # Cascade in models.py handles deleting related recipes, likes, favourites, comments
+    db.session.delete(test_user)
+    db.session.commit()
+    return jsonify({'success': True, 'redirect': url_for('home')})
 
 
 @app.route('/signup')
@@ -184,6 +205,32 @@ def post():
 def recipe_detail(id):
     recipe = Recipe.query.get_or_404(id)
     return render_template('recipe.html', recipe=recipe)
+
+
+@app.route('/recipe/<int:id>/like', methods=['POST'])
+def toggle_like(id):
+    # Handles like button interactions by adding/removing a like record
+    # and synchronising frontend state with updated like count
+
+    # TEMP: hardcoded seed user for testing
+    # TODO: replace with --> test_user = current_user
+    test_user = User.query.filter_by(email='emma@example.com').first()  # swap for current_user later
+    
+    existing_like = Like.query.filter_by(user_id=test_user.id, recipe_id=id).first()
+    
+    if existing_like:
+        # Like exists — user is unliking the recipe
+        db.session.delete(existing_like)
+        db.session.commit()
+        return jsonify({'liked': False, 'likes': Like.query.filter_by(recipe_id=id).count()})
+    else:
+        # No like exists — user is liking the recipe
+        new_like = Like(user_id=test_user.id, recipe_id=id)
+        db.session.add(new_like)
+        db.session.commit()
+
+        # return updated state and new like count
+        return jsonify({'liked': True, 'likes': Like.query.filter_by(recipe_id=id).count()})
 
 
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
