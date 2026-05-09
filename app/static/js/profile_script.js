@@ -88,11 +88,6 @@ saveBtn.addEventListener('click', async () => {
         const err = document.createElement('p')
         err.id = 'nameError'
         err.textContent = data.error || 'Something went wrong'
-        err.style.cssText = `
-            color: red;
-            font-size: 12px;
-            margin-top: 4px;
-        `
         editName.after(err)
 
         // Remove error when user starts typing (runs once per error display)
