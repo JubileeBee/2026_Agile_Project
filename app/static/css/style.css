@@ -498,16 +498,34 @@ html, body {
     color: var(--primary-brown);
 }
 
+/* Context-specific override:
+   Guarantees consistent liked-state styling inside profile-card and recipe-card layouts
+   where inheritance or other CSS rules may otherwise override the heart colour */
+.profile-card .heart-btn.liked .material-icons,
+.recipe-card .heart-btn.liked .material-icons {
+    color: red !important;
+}
+
+
 .difficulty.easy {
-    color: #2e7d32; /* green */
+    color: green; 
 }
 
 .difficulty.medium {
-    color: #f9a825; /* orange */
+    color: orange; 
 }
 
 .difficulty.hard {
-    color: #c62828; /* red */
+    color: red; 
+}
+
+/* Global icon sizes for material icons used in recipe cards */
+.icon-sm {
+    font-size: 14px;
+}
+
+.icon-md {
+    font-size: 16px;
 }
 
 /* =========================
