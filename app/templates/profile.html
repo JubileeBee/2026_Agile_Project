@@ -1,28 +1,100 @@
 {# 
     User Profile Page Template
-    This template displays the user's profile information, including their name, bio, and statistics
-    I've made a personal style.css because the style.css is getting too long
+    Displays the user's profile information including avatar, name, bio, and stats.
+    
+    Macro:
+        - recipe_cards(recipes, is_owner=False): reusable recipe card grid
+          used across My Recipes, Favourites, and Likes tabs
+          - recipes: list of recipe dicts to display
+          - is_owner: if True shows edit button and hides heart button (default False)
 #}
-
 {% extends "base.html" %}
 
 {% block content %}
 
+
+{% macro recipe_cards(recipes, is_owner=False) %}
+<div class="container">
+    <div class="row g-4">
+        {% for recipe in recipes %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
+                <div class="recipe-card" data-recipe-id="{{ recipe.id }}">
+                    <figure style="position: relative;">
+                        <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                        
+                        {# Heart button: only shown on other people's recipes, not your own #}
+                        {% if not is_owner %}
+                        <button class="heart-btn {% if recipe.is_liked %}liked{% endif %}">
+                            <span class="material-icons">
+                                {% if recipe.is_liked %}favorite{% else %}favorite_border{% endif %}
+                            </span>
+                        </button>
+                        {% endif %}
+                        
+                        {# Edit button: only shown on the owner's own recipes #}
+                        {% if is_owner %}
+                        <button class="edit-btn"
+                            onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';">
+                            <span class="material-icons">edit</span>
+                        </button>
+                        {% endif %}
+                    </figure>
+                    <div class="recipe-card-content">
+                        <div class="card-meta">
+                            <div class="recipe-tags">
+                                <span class="recipe-tag">{{ recipe.category }}</span>
+                            </div>
+
+                            {# Recipe stats: rating, likes, duration, difficulty #}
+                            <ul class="recipe-stats">
+                                <li><span class="material-icons icon-sm" >star</span> {{ recipe.rating }}</li>
+                                <li><span class="material-icons icon-sm" >favorite</span> {{ recipe.likes }}</li>
+                                <li><span class="material-icons icon-sm" >schedule</span> {{ recipe.duration }}</li>
+                                <li>
+                                    <span class="difficulty {{ recipe.difficulty | lower }}">
+                                        <span class="material-icons icon-sm" >local_fire_department</span>
+                                        {{ recipe.difficulty }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <h1>{{ recipe.title }}</h1>
+                        <div class="recipe-footer">
+                            <div class="user-info">
+                                <span class="material-icons icon-md" >account_circle</span>
+                                <span class="username">{{ user.name }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+
 <div class="profile-container">
+    
+    {# Profile Header: avatar, name, bio, and stats #}
     <div class="profile-header">
         <div class="profile-avatar-wrap">
             <div class="profile-avatar">
+                {# Avatar image pulled from DB, defaults set in models.py #}
                 <img 
-                    src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539"
+                    src="{{ user.profile_image }}"
                     class="profile-img"
                     alt="Profile Image">
             </div>
         </div>
 
         <div class="profile-info">
-
             <h1 class="profile-name">{{ user.name }}</h1>
             <p class="profile-bio">{{ user.bio }}</p>
+
+            {# Stats: recipe count, favourites count, likes count #}
             <div class="profile-stats">
                 <div class="stat">
                     <span class="stat-number">{{ user.recipes_count }}</span>
@@ -41,13 +113,15 @@
 
             </div>
         </div>
+
+        {# Opens the edit profile modal #}
         <a href="#" class="edit-profile-btn" id="openModal">
             <span class="material-icons">edit</span>
             Edit Profile
         </a>
     </div>
 
-        <!-- Edit Profile Modal -->
+        {# Edit Profile Modal: update display name, bio, and avatar #}
         <div class="popup-overlay" id="popupOverlay">
             <div class="popup">
                 <div class="popup-header">
@@ -70,11 +144,13 @@
                     </div>
                 </div>
 
+                {# Display name input: must be unique, validated on backend #}
                 <div class="form-group">
                     <label class="form-label">Display Name</label>
                     <input type="text" class="form-input" id="editName" value="{{ user.name }}" placeholder="Enter your name">
                 </div>
 
+                {# Bio input: no uniqueness constraint #}
                 <div class="form-group">
                     <label class="form-label">Bio</label>
                     <textarea class="form-input form-textarea" id="editBio" placeholder="Tell us about yourself">{{ user.bio }}</textarea>
@@ -82,6 +158,7 @@
 
                 <button class="save-btn" id="saveBtn">Save Changes</button>
 
+                {# Delete account section: requires typing DELETE to confirm, removes user from DB #}
                 <div class="delete-section">
                     <button class="delete-btn" id="deleteToggle">
                         Delete Account
@@ -97,149 +174,32 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
+    
+    {# Profile Tabs: switch between My Recipes, Favourites, and Likes #}
     <div class="profile-tabs">
         <button class="profile-tab active" data-tab="my-recipes">My Recipes</button>
         <button class="profile-tab" data-tab="favourites">Favourites</button>
         <button class="profile-tab" data-tab="likes">Likes</button>
     </div>
 
-    <!-- The User's recipe part-->
+    {# Tab content: each section uses the recipe_cards macro #}
     <div class="profile-tab-content active" id="my-recipes">
-        <div class="container">
-            <div class="row g-4">
-                {% for recipe in user.recipes %}
-                <div class="col-12 col-md-6 col-lg-4">
-                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
-                        <div class="recipe-card">
-                            <figure style="position: relative;">
-                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
-                            
-                                <button class="heart-btn">
-                                    <span class="material-icons">favorite_border</span>
-                                </button>
-                            
-                                {% if user.is_owner %}
-                                <button 
-                                    class="edit-btn"
-                                    onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';">
-                                    <span class="material-icons">edit</span>
-                                </button>
-                                {% endif %}
-                            </figure>
-                            <div class="recipe-card-content">
-                                <div class="card-meta">
-                                    <div class="recipe-tags">
-                                        <span class="recipe-tag">{{ recipe.category }}</span>
-                                    </div>
-                                    <ul class="recipe-stats">
-                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
-                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
-                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
-                                    </ul>
-                                </div>
-                                <h1>{{ recipe.title }}</h1>
-                                <div class="recipe-footer">
-                                    <div class="user-info">
-                                        <span class="material-icons" style="font-size:16px">account_circle</span>
-                                        <span class="username">{{ user.name }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+        {# is_owner=True hides heart button and shows edit button #}
+        {{ recipe_cards(user.recipes, is_owner=user.is_owner) }}
     </div>
 
-    <!-- The User's favourites part-->
-    <div class="profile-tab-content" id="favourites"> <!-- should this be a different name for ids-->
-        <div class="container">
-            <div class="row g-4">
-                {% for recipe in user.favourites %}
-                <div class="col-12 col-md-6 col-lg-4">
-                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
-                        <div class="recipe-card">
-                            <figure>
-                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
-                                <button class="heart-btn">
-                                    <span class="material-icons">favorite_border</span>
-                                </button>
-                            </figure>
-                            <div class="recipe-card-content">
-                                <div class="card-meta">
-                                    <div class="recipe-tags">
-                                        <span class="recipe-tag">{{ recipe.category }}</span>
-                                    </div>
-                                    <ul class="recipe-stats">
-                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
-                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
-                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
-                                    </ul>
-                                </div>
-                                <h1>{{ recipe.title }}</h1>
-                                <div class="recipe-footer">
-                                    <div class="user-info">
-                                        <span class="material-icons" style="font-size:16px">account_circle</span>
-                                        <span class="username">{{ user.name }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+    <div class="profile-tab-content" id="favourites">
+        {{ recipe_cards(user.favourites) }}
     </div>
 
-    <!-- The User's Likes part-->
-    <div class="profile-tab-content" id="likes"> <!-- should this be a different name for ids-->
-        <div class="container">
-            <div class="row g-4">
-                {% for recipe in user.likes %}
-                <div class="col-12 col-md-6 col-lg-4">
-                    <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
-                        <div class="recipe-card">
-                            <figure>
-                                <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
-                                <button class="heart-btn">
-                                    <span class="material-icons">favorite_border</span>
-                                </button>
-                            </figure>
-                            <div class="recipe-card-content">
-                                <div class="card-meta">
-                                    <div class="recipe-tags">
-                                        <span class="recipe-tag">{{ recipe.category }}</span>
-                                    </div>
-                                    <ul class="recipe-stats">
-                                        <li><span class="material-icons" style="font-size:14px">star</span> {{ recipe.rating }}</li>
-                                        <li><span class="material-icons" style="font-size:14px">favorite</span> {{ recipe.likes }}</li>
-                                        <li><span class="material-icons" style="font-size:14px">schedule</span> {{ recipe.duration }}</li>
-                                    </ul>
-                                </div>
-                                <h1>{{ recipe.title }}</h1>
-                                <div class="recipe-footer">
-                                    <div class="user-info">
-                                        <span class="material-icons" style="font-size:16px">account_circle</span>
-                                        <span class="username">{{ user.name }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+    <div class="profile-tab-content" id="likes">
+        {{ recipe_cards(user.likes) }}
     </div>
     
+    {# Bye popup: shown briefly after account deletion before redirecting home #}
     <div class="bye-popup-overlay" id="byePopupOverlay"></div>
     <div class="bye-popup" id="byePopup">
         <p> Bye bye, we'll miss you!</p>
