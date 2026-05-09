@@ -135,11 +135,11 @@
                     <div class="form-group">
                         <label class="form-label">Choose Avatar</label>
                         <div class="avatar-options">
-                            <img class="avatar-option selected" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 1">
-                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 2">
-                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 3">
-                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 4">
-                            <img class="avatar-option" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 5">
+                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 1">
+                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 2">
+                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 3">
+                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 4">
+                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 5">
                         </div>
                     </div>
                 </div>

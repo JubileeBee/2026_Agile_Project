@@ -61,8 +61,6 @@ saveBtn.addEventListener('click', async () => {
     const bio = editBio.value.trim()
     const avatar = document.querySelector('.avatar-option.selected')?.src
 
-    console.log('Saving:', { name, bio, avatar }) 
-    
     // Send update request to backend (JSON payload with name, bio, and avatar URL)
     const res = await fetch('/profile/update', {
         method: 'POST',
