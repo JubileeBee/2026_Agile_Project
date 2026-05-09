@@ -1,111 +1,113 @@
-{# 
-    This is the home page template for CozyCravings, a recipe sharing platform. 
-    It extends the base.html template and fills in the content block with a welcome hero 
-    and a section showcasing variety of recipes.
-#}
-
-{% extends "base.html" %}
-
+{# This is the home page template for CozyCravings, a recipe sharing platform.
+It extends the base.html template and fills in the content block with a welcome
+hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
 {% block content %}
 
 <div class="home-container">
+  <header class="welcome-hero">
+    {% if current_user and current_user.is_authenticated %}
+    <h1>Welcome back, {{ current_user.username }}!</h1>
+    {% else %}
+    <h1>Welcome to CozyCravings</h1>
+    {% endif %}
 
-    <header class="welcome-hero">
-        {% if current_user and current_user.is_authenticated %}
-            <h1>Welcome back, {{ current_user.username }}!</h1>
-        {% else %}
-            <h1>Welcome to CozyCravings</h1>
-        {% endif %}
-        
-        <div class="search-container">
-            <input type="text" placeholder="What are your cravings for today?"/>
-            <button>Search</button>
-        </div>
-    </header>
+    <form
+      action="{{ url_for('search_recipes') }}"
+      method="GET"
+      class="search-container"
+    >
+      <input
+        type="text"
+        name="q"
+        placeholder="What are your cravings for today?"
+        value="{{ request.args.get('q', '') }}"
+        required
+      />
+      <button type="submit">Search</button>
+    </form>
+  </header>
 
-{% if error %}
-    <div class="alert alert-warning text-center py-4">
-        {{ error }}
+  {% if error %}
+  <div class="alert alert-warning text-center py-4">{{ error }}</div>
+  {% endif %} {% if not total_recipes %}
+  <div class="text-center py-5 my-5">
+    <h2>No recipes yet :(</h2>
+    <p class="lead mb-4">
+      Our kitchen is empty right now.<br />
+      Be the first to add some delicious recipes!
+    </p>
+
+    {% if current_user is defined and current_user.is_authenticated %}
+    <a
+      href="{{ url_for('post') }}"
+      style="
+        color: var(--primary-brown);
+        text-decoration: underline;
+        font-weight: 600;
+      "
+    >
+      Add Your First Recipe
+    </a>
+    {% else %}
+    <a
+      href="{{ url_for('login') }}"
+      style="
+        color: var(--primary-brown);
+        text-decoration: underline;
+        font-weight: 600;
+      "
+    >
+      Login to Add Your First Recipe
+    </a>
+    {% endif %}
+  </div>
+  {% endif %} {% if sections is defined and sections %} {% for section in
+  sections %} {% if section.recipes is defined and section.recipes %}
+  <section class="section-style {{ section.class|default('') }}">
+    <div class="container">
+      <div class="section-header mb-1">
+        <h2>{{ section.title }}</h2>
+      </div>
+      <div class="scroll-row d-flex gap-4">
+        {% for recipe in section.recipes %}
+        <div class="scroll-item">{% include "recipe_card.html" %}</div>
+        {% endfor %}
+      </div>
     </div>
-{% endif %}
+  </section>
+  {% endif %} {% endfor %} {% endif %}
 
-{% if not total_recipes %}
-    <div class="text-center py-5 my-5">
-        <h2>No recipes yet :( </h2>
-        <p class="lead mb-4">Our kitchen is empty right now.<br>
-        Be the first to add some delicious recipes!</p>
-        
-        {% if current_user is defined and current_user.is_authenticated %}
-            <a href="{{ url_for('post') }}"
-            style="color: var(--primary-brown); text-decoration: underline; font-weight: 600;">
-                Add Your First Recipe
-            </a>
-        {% else %}
-            <a href="{{ url_for('login') }}"
-            style="color: var(--primary-brown); text-decoration: underline; font-weight: 600;">
-                Login to Add Your First Recipe
-            </a>
-        {% endif %}
-    </div>
-{% endif %}
+  <!-- ALL RECIPES SECTION -->
+  <section id="all-recipes" class="section-style all-recipes py-5">
+    <div class="container">
+      <div class="section-header mb-3">
+        <h2>All Recipes</h2>
+        <p class="text-muted">Browse everything the community has uploaded</p>
+      </div>
 
-
-{% if sections is defined and sections %}
-    {% for section in sections %}
-        {% if section.recipes is defined and section.recipes %}
-            <section class="section-style {{ section.class|default('') }}">
-                <div class="container">
-                    <div class="section-header mb-1">
-                        <h2>{{ section.title }}</h2>
-                    </div>
-                    <div class="scroll-row d-flex gap-4">
-                        {% for recipe in section.recipes %}
-                            <div class="scroll-item">
-                                {% include "recipe_card.html" %}
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </section>
-        {% endif %}
-    {% endfor %}
-{% endif %}
-
-
-        <!-- ALL RECIPES SECTION -->
-    <section id="all-recipes" class="section-style all-recipes py-5">
-        <div class="container">
-
-            <div class="section-header mb-3">
-                <h2>All Recipes</h2>
-                <p class="text-muted">Browse everything the community has uploaded</p>
-            </div>
-
-            <!--<div id="all-recipes-grid" class="row g-4">
+      <!--<div id="all-recipes-grid" class="row g-4">
                 {% for recipe in all_recipes %}
                     <div class="col-6 col-md-6 col-lg-4">
                         {% include "recipe_card.html" %}
                     </div>
                 {% endfor %}
             </div>-->
+    </div>
+    <div class="feed-controls">
+      <input id="search-input" type="text" placeholder="Search recipes..." />
 
-        </div>
-        <div class="feed-controls">
-            <input id="search-input" type="text" placeholder="Search recipes..." />
+      <div class="filters">
+        <button class="filter-btn" data-category="">All</button>
+        <button class="filter-btn" data-category="Dessert">Dessert</button>
+        <button class="filter-btn" data-category="Breakfast">Breakfast</button>
+        <button class="filter-btn" data-category="Dinner">Dinner</button>
+      </div>
+    </div>
 
-            <div class="filters">
-                <button class="filter-btn" data-category="">All</button>
-                <button class="filter-btn" data-category="Dessert">Dessert</button>
-                <button class="filter-btn" data-category="Breakfast">Breakfast</button>
-                <button class="filter-btn" data-category="Dinner">Dinner</button>
-            </div>
-        </div>
+    <div id="feed-grid" class="row g-4"></div>
 
-        <div id="feed-grid" class="row g-4"></div>
-
-        <div id="loading" class="text-center py-3">Loading...</div>
-    </section>
-
+    <div id="loading" class="text-center py-3">Loading...</div>
+  </section>
 </div>
 
 <script src="{{ url_for('static', filename='js/feed.js') }}"></script>

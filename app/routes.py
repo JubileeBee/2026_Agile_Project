@@ -285,6 +285,24 @@ def edit_recipe(id):
 
     return render_template('edit_recipe.html', recipe=recipe)
 
+@app.route('/search')
+def search_recipes():
+
+    query = request.args.get('q', '').strip()
+
+    results = []
+
+    if query:
+        results = Recipe.query.filter(
+            Recipe.title.ilike(f'%{query}%')
+        ).all()
+
+    return render_template(
+        'search_results.html',
+        query=query,
+        results=results
+    )
+
 # Vanessa's route added by Nabeel
 
 @app.route('/api/recipes')
