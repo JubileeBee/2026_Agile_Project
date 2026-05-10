@@ -23,6 +23,36 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
         value="{{ request.args.get('q', '') }}"
         required
       />
+
+      <select name="difficulty">
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+
+      <select name="category">
+        <option value="">All Categories</option>
+        <option value="BREAKFAST">Breakfast</option>
+        <option value="BRUNCH">Brunch</option>
+        <option value="LUNCH">Lunch</option>
+        <option value="DINNER">Dinner</option>
+        <option value="SNACK">Snack</option>
+        <option value="DRINK">Drink</option>
+        <option value="DESSERT"
+        {% if request.args.get('category') == 'DESSERT' %}selected{% endif %}>
+        Dessert
+        </option>
+      </select>
+
+      <select name="sort">
+        <option value="">Sort By</option>
+        <option value="alphabetical">Alphabetical</option>
+        <option value="newest"
+        {% if request.args.get('sort') == 'newest' %}selected{% endif %}>
+        Newest
+        </option>
+      </select>
+
       <button type="submit">Search</button>
     </form>
   </header>

@@ -6,6 +6,7 @@ from app.models import (
     Recipe,
     Comment,
     CategoryEnum,
+    DifficultyEnum
     Like,
     Favourite,
     User
@@ -289,20 +290,44 @@ def edit_recipe(id):
 def search_recipes():
 
     query = request.args.get('q', '').strip()
+    difficulty = request.args.get('difficulty', '')
+    category = request.args.get('category', '')
+    sort = request.args.get('sort', '')
 
-    results = []
+    results_query = Recipe.query
 
     if query:
-        results = Recipe.query.filter(
+        results_query = results_query.filter(
             Recipe.title.ilike(f'%{query}%')
-        ).all()
+        )
+
+    if difficulty:
+        results_query = results_query.filter(
+            Recipe.difficulty == DifficultyEnum[difficulty]
+        )
+
+    if category:
+        results_query = results_query.filter(
+            Recipe.category == CategoryEnum[category]
+        )
+
+    if sort == 'alphabetical':
+        results_query = results_query.order_by(
+            Recipe.title.asc()
+        )
+
+    elif sort == 'newest':
+        results_query = results_query.order_by(
+            Recipe.created_at.desc()
+        )
+
+    results = results_query.all()
 
     return render_template(
         'search_results.html',
         query=query,
         results=results
     )
-
 # Vanessa's route added by Nabeel
 
 @app.route('/api/recipes')
