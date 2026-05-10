@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, jsonify
 from app import app, db
 from sqlalchemy import desc, func
-from flask_login import login_required, current_user, logout_user
+from flask_login import login_user, login_required, current_user, logout_user
 from app.models import (
     Recipe,
     Comment,
@@ -112,25 +112,13 @@ def profile():
     # TODO: replace with --> test_user = current_user
     test_user = User.query.filter_by(email='emma@example.com').first()
 
+    if not current_user.is_authenticated:
+        login_user(test_user)
+
     # Gather all recipes owned by user, liked by user and favourited by users via relationships
     user_recipes = Recipe.query.filter_by(user_id=test_user.id).all()
     liked_recipes = [like.recipe for like in test_user.likes]
     fav_recipes = [fav.recipe for fav in test_user.favourites]
-
-    # Helper function to convert DB recipe to frontend-friendly card format
-    def format_recipe_card(recipe):
-        is_liked = recipe in liked_recipes
-        return {
-            'id': recipe.id,
-            'title': recipe.title,
-            'category': recipe.category.value,
-            'image_url': recipe.image_file or url_for('static', filename='images/default.png'),
-            'rating': 0,
-            'likes': len(recipe.likes),
-            'duration': f"{recipe.cook_time} mins" if recipe.cook_time else "N/A",
-            'difficulty': recipe.difficulty.value if recipe.difficulty else "N/A",
-            'is_liked': is_liked,
-        }
 
     user = {
         'name': test_user.username,
@@ -140,11 +128,14 @@ def profile():
         'recipes_count': len(user_recipes),
         'likes_count': len(liked_recipes),
         'favourites_count': len(fav_recipes),
-        'recipes': [format_recipe_card(r) for r in user_recipes],
-        'likes': [format_recipe_card(r) for r in liked_recipes],
-        'favourites': [format_recipe_card(r) for r in fav_recipes],
+        'recipes': user_recipes,
+        'likes': liked_recipes,
+        'favourites': fav_recipes,
     }
-    return render_template('profile.html', user=user)
+
+    liked_recipe_ids = [like.recipe_id for like in test_user.likes]
+
+    return render_template('profile.html', user=user, liked_recipe_ids=liked_recipe_ids)
 
 @app.route('/profile/update', methods=['POST'])
 # TODO: uncomment @login_required and replace test_user with current_user when auth is complete
@@ -213,7 +204,7 @@ def post():
     return render_template('post.html')
 
 @app.route('/recipe/<int:id>', methods=['GET', 'POST'])
-def recipe_detail(id):
+def recipe(id):
 
     recipe = Recipe.query.get_or_404(id)
 
@@ -235,7 +226,7 @@ def recipe_detail(id):
             db.session.add(new_comment)
             db.session.commit()
 
-        return redirect(url_for('recipe_detail', id=recipe.id))
+        return redirect(url_for('recipe', id=recipe.id))
 
     related_recipes = Recipe.query.filter(
         Recipe.id != recipe.id
@@ -248,7 +239,7 @@ def recipe_detail(id):
     )
 
 @app.route('/recipe/<int:id>/like', methods=['POST'])
-def toggle_like(id):
+def like_recipe(id):
     # Handles like button interactions by adding/removing a like record
     # and synchronising frontend state with updated like count
 
@@ -287,7 +278,7 @@ def edit_recipe(id):
 
         db.session.commit()
 
-        return redirect(url_for('recipe_detail', id=recipe.id))
+        return redirect(url_for('recipe', id=recipe.id))
 
     return render_template('edit_recipe.html', recipe=recipe)
 
