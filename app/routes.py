@@ -277,13 +277,13 @@ def edit_recipe(id):
         recipe.ingredients = request.form['ingredients']
         recipe.instructions = request.form['instructions']
         recipe.category = request.form['category']
-        recipe.image_url = request.form['image_url']
+        recipe.image_file = request.form['image_url']
 
         db.session.commit()
 
         return redirect(url_for('recipe_detail', id=recipe.id))
 
-    return render_template('edit_recipe.html', recipe=recipe)
+    return render_template('edit_recipe_page.html', recipe=recipe)
 
 # Vanessa's route added by Nabeel
 
