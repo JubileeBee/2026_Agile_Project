@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, jsonify
 from app import app, db
-from sqlalchemy import desc, func
+from sqlalchemy import desc, func, or_
 from flask_login import login_required, current_user, logout_user
 from app.models import (
     Recipe,
@@ -298,9 +298,12 @@ def search_recipes():
 
     if query:
         results_query = results_query.filter(
-            Recipe.title.ilike(f'%{query}%')
+            or_(
+                Recipe.title.ilike(f'%{query}%'),
+                Recipe.description.ilike(f'%{query}%'),
+                Recipe.ingredients.ilike(f'%{query}%')
+            )
         )
-
     if difficulty:
         results_query = results_query.filter(
             Recipe.difficulty == DifficultyEnum[difficulty]
