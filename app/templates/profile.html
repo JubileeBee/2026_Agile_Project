@@ -13,69 +13,6 @@
 {% block content %}
 
 
-{% macro recipe_cards(recipes, is_owner=False) %}
-<div class="container">
-    <div class="row g-4">
-        {% for recipe in recipes %}
-        <div class="col-12 col-md-6 col-lg-4">
-            <a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
-                <div class="recipe-card" data-recipe-id="{{ recipe.id }}">
-                    <figure style="position: relative;">
-                        <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
-                        
-                        {# Heart button: only shown on other people's recipes, not your own #}
-                        {% if not is_owner %}
-                        <button class="heart-btn {% if recipe.is_liked %}liked{% endif %}">
-                            <span class="material-icons">
-                                {% if recipe.is_liked %}favorite{% else %}favorite_border{% endif %}
-                            </span>
-                        </button>
-                        {% endif %}
-                        
-                        {# Edit button: only shown on the owner's own recipes #}
-                        {% if is_owner %}
-                        <button class="edit-btn"
-                            onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';">
-                            <span class="material-icons">edit</span>
-                        </button>
-                        {% endif %}
-                    </figure>
-                    <div class="recipe-card-content">
-                        <div class="card-meta">
-                            <div class="recipe-tags">
-                                <span class="recipe-tag">{{ recipe.category }}</span>
-                            </div>
-
-                            {# Recipe stats: rating, likes, duration, difficulty #}
-                            <ul class="recipe-stats">
-                                <li><span class="material-icons icon-sm" >star</span> {{ recipe.rating }}</li>
-                                <li><span class="material-icons icon-sm" >favorite</span> {{ recipe.likes }}</li>
-                                <li><span class="material-icons icon-sm" >schedule</span> {{ recipe.duration }}</li>
-                                <li>
-                                    <span class="difficulty {{ recipe.difficulty | lower }}">
-                                        <span class="material-icons icon-sm" >local_fire_department</span>
-                                        {{ recipe.difficulty }}
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                        <h1>{{ recipe.title }}</h1>
-                        <div class="recipe-footer">
-                            <div class="user-info">
-                                <span class="material-icons icon-md" >account_circle</span>
-                                <span class="username">{{ user.name }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endmacro %}
-
-
 <div class="profile-container">
     
     {# Profile Header: avatar, name, bio, and stats #}
@@ -179,25 +116,32 @@
         </div>
     
     {# Profile Tabs: switch between My Recipes, Favourites, and Likes #}
+    
+    {% set tabs = [
+        ('my-recipes', user.recipes, True),
+        ('favourites', user.favourites, False),
+        ('likes', user.likes, False)
+    ] %}
+
     <div class="profile-tabs">
         <button class="profile-tab active" data-tab="my-recipes">My Recipes</button>
         <button class="profile-tab" data-tab="favourites">Favourites</button>
         <button class="profile-tab" data-tab="likes">Likes</button>
     </div>
 
-    {# Tab content: each section uses the recipe_cards macro #}
-    <div class="profile-tab-content active" id="my-recipes">
-        {# is_owner=True hides heart button and shows edit button #}
-        {{ recipe_cards(user.recipes, is_owner=user.is_owner) }}
+    {% for tab_id, recipes, is_active in tabs %}
+    <div class="profile-tab-content {% if is_active %}active{% endif %}" id="{{ tab_id }}">
+        <div class="container">
+            <div class="row g-4">
+                {% for recipe in recipes %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    {% include "recipe_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-
-    <div class="profile-tab-content" id="favourites">
-        {{ recipe_cards(user.favourites) }}
-    </div>
-
-    <div class="profile-tab-content" id="likes">
-        {{ recipe_cards(user.likes) }}
-    </div>
+    {% endfor %}
     
     {# Bye popup: shown briefly after account deletion before redirecting home #}
     <div class="bye-popup-overlay" id="byePopupOverlay"></div>

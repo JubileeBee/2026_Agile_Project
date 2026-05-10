@@ -322,7 +322,7 @@ block content %}
           {% if related_recipes %} {% for related in related_recipes %}
 
           <a
-            href="{{ url_for('recipe_detail', id=related.id) }}"
+            href="{{ url_for('recipe', id=related.id) }}"
             class="related-recipe text-decoration-none"
           >
             <!-- IMAGE -->

@@ -20,7 +20,7 @@
 <body>
     <nav class="topnav">
         <div class="nav-left">
-            <span class="logo-text">CozyCravings</span>
+            <a href="{{ url_for('home') }}" class = "logo-text" >CozyCravings</a>
         </div>
 
         <div class="nav-right">
@@ -31,11 +31,12 @@
                 <a href="{{ url_for('profile') }}" class="nav-circle">
                     <span class="material-icons">account_circle</span>
                 </a>
+                <a href="{{ url_for('logout') }}" class="signup-btn">Logout</a>
             {% else %}
                 <a href="{{ url_for('login') }}" class="nav-circle">
                     <span class="material-icons">account_circle</span>
                 </a>
-                <a href="{{ url_for('signup') }}" class="signup-btn">Signup</a>
+                <a href="{{ url_for('signup') }}" class="signup-btn">Sign up</a>
             {% endif %}
         </div>
     </nav>
