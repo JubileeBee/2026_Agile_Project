@@ -6,7 +6,7 @@ from app.models import (
     Recipe,
     Comment,
     CategoryEnum,
-    DifficultyEnum
+    DifficultyEnum,
     Like,
     Favourite,
     User

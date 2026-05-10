@@ -854,5 +854,28 @@ html, body {
     transform: scale(1.1);
 }
 
+/* =========================
+   Search form by Khanuwa
+   ========================= */
 
+.search-field {
+  height: 48px;
+  border-radius: 24px;
+  border: none;
+  padding: 0 16px;
+  font-size: 1rem;
+  background-color: white;
+}
 
+.search-field:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(127, 85, 57, 0.2);
+}
+
+.search-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

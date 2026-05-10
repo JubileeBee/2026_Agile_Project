@@ -16,7 +16,7 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
       method="GET"
       class="search-container"
     >
-      <input
+      <input class="search-field"
         type="text"
         name="q"
         placeholder="What are your cravings for today?"
@@ -24,13 +24,17 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
         required
       />
 
-      <select name="difficulty">
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
+      <select class="search-field" name="difficulty">
+        <option value="">All Difficulties</option>
+        <option value="EASY">Easy</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="HARD"
+        {% if request.args.get('difficulty') == 'HARD' %}selected{% endif %}>
+        Hard
+        </option>
       </select>
-
-      <select name="category">
+      
+      <select class="search-field" name="category">
         <option value="">All Categories</option>
         <option value="BREAKFAST">Breakfast</option>
         <option value="BRUNCH">Brunch</option>
@@ -44,7 +48,7 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
         </option>
       </select>
 
-      <select name="sort">
+      <select class="search-field" name="sort">
         <option value="">Sort By</option>
         <option value="alphabetical">Alphabetical</option>
         <option value="newest"
