@@ -1,4 +1,4 @@
-<a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
+<a href="{{ url_for('recipe', id=recipe.id) }}" class="recipe-link">
   <article class="recipe-card">
     <figure class="recipe-image">
       <img
@@ -28,7 +28,7 @@
       == recipe.user_id %}
       <button
         class="edit-btn"
-        onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';"
+        onclick="event.preventDefault(); event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';"
       >
         <span class="material-icons">edit</span>
       </button>
