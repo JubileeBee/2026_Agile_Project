@@ -61,7 +61,7 @@ class User(UserMixin, db.Model):
     profile_image = db.Column(
         db.String(255),
         nullable=False,
-        default='https://api.dicebear.com/7.x/avataaars/svg?seed=default'
+        default='https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539'
     )
 
     created_at = db.Column(
@@ -94,7 +94,10 @@ class User(UserMixin, db.Model):
     )
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = generate_password_hash(
+        password,
+        method='pbkdf2:sha256'
+    )
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

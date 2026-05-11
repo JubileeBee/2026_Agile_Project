@@ -1,115 +1,371 @@
-{# 
-    Recipe Detail Page
-    Displays full recipe including ingredients, steps, and comments.
-    Extends base layout for consistent navigation and styling.
-#}
+{% extends "base.html" %} {% block title %}{{ recipe.title }}{% endblock %} {%
+block content %}
 
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/recipe-detail.css') }}"
+/>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Card</title>
+<div class="recipe-page container py-4">
+  <!-- HERO SECTION -->
+  <section class="recipe-hero card border-0 shadow-sm overflow-hidden mb-4">
+    <div class="row g-0 align-items-stretch">
+      <!-- IMAGE -->
+      <div class="col-lg-6">
+        <div class="recipe-image-wrapper h-100">
+          {% if recipe.image_file and recipe.image_file.startswith('http') %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
-</head>
+          <img
+            src="{{ recipe.image_file }}"
+            alt="{{ recipe.title }}"
+            class="recipe-hero-image"
+          />
 
-<body>
+          {% else %}
 
-<div class="card">
+          <img
+            src="{{ url_for('static', filename=recipe.image_file if recipe.image_file else 'images/default_recipe.jpg') }}"
+            alt="{{ recipe.title }}"
+            class="recipe-hero-image"
+          />
 
-    <!-- Header -->
-    <div class="header">
-
-        <h1>{{ recipe.title }}</h1>
-
-        <div class="meta-bar">
-
-            <!-- Rating -->
-            <div class="rating">
-                ★★★★☆ <span class="rating-value">{{ recipe.rating }}</span>
-            </div>
-
-            <!-- Likes -->
-            <div class="likes">
-                <span class="heart">♥</span>
-                <span id="like-count">{{ recipe.likes }}</span>
-            </div>
-
-            <!-- Category Tag -->
-            <div class="tag">{{ recipe.category }}</div>
-
+          {% endif %}
         </div>
+      </div>
 
+      <!-- HERO CONTENT -->
+      <div class="col-lg-6">
+        <div class="recipe-hero-content p-4 p-lg-5 d-flex flex-column h-100">
+          <!-- CATEGORY -->
+          <div class="mb-3">
+            <span class="recipe-category-badge">
+              {{ recipe.category.name.title() if recipe.category else 'Recipe'
+              }}
+            </span>
+          </div>
+
+          <!-- TITLE -->
+          <h1 class="recipe-title mb-3">{{ recipe.title }}</h1>
+
+          <!-- DESCRIPTION -->
+          <p class="recipe-description mb-4">{{ recipe.description }}</p>
+
+          <!-- META -->
+          <div class="recipe-meta-grid mb-4">
+            <!-- AUTHOR -->
+            <div class="meta-item">
+              <span class="meta-label">Author</span>
+
+              <span class="meta-value">
+                {{ recipe.author.username if recipe.author else 'Unknown Chef'
+                }}
+              </span>
+            </div>
+
+            <!-- COOK TIME -->
+            <div class="meta-item">
+              <span class="meta-label">Cook Time</span>
+
+              <span class="meta-value">
+                {{ recipe.cook_time if recipe.cook_time else 'N/A' }} mins
+              </span>
+            </div>
+
+            <!-- SERVINGS -->
+            <div class="meta-item">
+              <span class="meta-label">Servings</span>
+
+              <span class="meta-value">
+                {{ recipe.servings if recipe.servings else 'N/A' }}
+              </span>
+            </div>
+
+            <!-- DIFFICULTY -->
+            <div class="meta-item">
+              <span class="meta-label">Difficulty</span>
+
+              <span class="meta-value">
+                {{ recipe.difficulty.name.title() if recipe.difficulty else
+                'Medium' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="recipe-actions mt-auto d-flex flex-wrap gap-3">
+            <!-- LIKE -->
+            <button class="btn btn-danger action-btn" id="likeBtn">
+              ❤️
+              <span id="likeCount">
+                {{ recipe.likes|length if recipe.likes else 0 }}
+              </span>
+            </button>
+
+            <!-- FAVOURITE -->
+            <button class="btn btn-outline-dark action-btn" id="favouriteBtn">
+              ⭐ Favourite
+            </button>
+
+            <!-- SHARE -->
+            <button class="btn btn-outline-secondary action-btn" id="shareBtn">
+              🔗 Share
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Top Section -->
-    <div class="top-section">
+  <!-- MAIN CONTENT -->
+  <div class="row g-4">
+    <!-- LEFT COLUMN -->
+    <div class="col-lg-8">
+      <!-- INGREDIENTS -->
+      <section class="content-card card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <div
+            class="section-header d-flex justify-content-between align-items-center mb-4"
+          >
+            <h2 class="section-title mb-0">Ingredients</h2>
 
-        <!-- Image -->
-        <div class="image-box">
-            <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
-        </div>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              id="toggleIngredientsBtn"
+            >
+              Collapse
+            </button>
+          </div>
 
-        <!-- Info -->
-        <div class="info">
-            <div class="info-item">
-                <span>Prep time</span>
-                <strong>{{ recipe.prep_time }} min</strong>
-            </div>
-            <div class="divider"></div>
+          <div id="ingredientsSection">
+            <ul class="ingredients-list">
+              {% if recipe.ingredients %} {% for ingredient in
+              recipe.ingredients.split(',') %} {% if ingredient.strip() %}
 
-            <div class="info-item">
-                <span>Cook time</span>
-                <strong>{{ recipe.cook_time }} min</strong>
-            </div>
-            <div class="divider"></div>
+              <li>{{ ingredient.strip() }}</li>
 
-            <div class="info-item">
-                <span>Servings</span>
-                <strong>{{ recipe.servings }}</strong>
-            </div>
-        </div>
+              {% endif %} {% endfor %} {% else %}
 
-    </div>
+              <li>No ingredients available.</li>
 
-    <!-- Content -->
-    <div class="content">
-
-        <!-- Preparation -->
-        <div class="left">
-            <h2>Preparation</h2>
-
-            {% for step in recipe.steps %}
-                <p>{{ step }}</p>
-            {% endfor %}
-        </div>
-
-        <!-- Ingredients -->
-        <div class="right">
-            <h2>Ingredients</h2>
-
-            <ul>
-                {% for item in recipe.ingredients %}
-                    <li>{{ item }}</li>
-                {% endfor %}
+              {% endif %}
             </ul>
-
-            {% if recipe.notes %}
-            <div class="notes">
-                <strong>Notes:</strong>
-                <p>{{ recipe.notes }}</p>
-            </div>
-            {% endif %}
+          </div>
         </div>
+      </section>
 
+      <!-- INSTRUCTIONS -->
+      <section class="content-card card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <div class="section-header mb-4">
+            <h2 class="section-title mb-0">Instructions</h2>
+          </div>
+
+          <div class="instructions-wrapper" id="instructionsWrapper">
+            {% if recipe.instructions %} {% for step in
+            recipe.instructions.split('\n') %} {% if step.strip() %}
+
+            <div class="instruction-step">
+              <div class="step-number">{{ loop.index }}</div>
+
+              <div class="step-text">{{ step }}</div>
+            </div>
+
+            {% endif %} {% endfor %} {% else %}
+
+            <p>No instructions provided.</p>
+
+            {% endif %}
+          </div>
+        </div>
+      </section>
+
+      <!-- COMMENTS -->
+      <section class="content-card card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <!-- HEADER -->
+          <div
+            class="section-header d-flex justify-content-between align-items-center mb-4"
+          >
+            <h2 class="section-title mb-0">
+              Comments
+
+              <span class="comment-count">
+                ({{ recipe.comments|length if recipe.comments else 0 }})
+              </span>
+            </h2>
+          </div>
+
+          <!-- COMMENT FORM -->
+          {% if current_user.is_authenticated %}
+
+          <div class="comment-form-card mb-5">
+            <form method="POST">
+              <textarea
+                id="commentTextarea"
+                name="comment"
+                class="form-control"
+                rows="3"
+                maxlength="300"
+                placeholder="Share your thoughts about this recipe..."
+                required
+              ></textarea>
+
+              <div
+                class="d-flex justify-content-between align-items-center mt-2"
+              >
+                <small class="text-muted">
+                  <span id="commentCounter">0</span>/300
+                </small>
+
+                <button type="submit" class="btn btn-dark">Post Comment</button>
+              </div>
+            </form>
+          </div>
+
+          {% else %}
+
+          <p class="login-comment-prompt">
+            <a href="{{ url_for('login') }}"> Login </a>
+
+            to leave a comment.
+          </p>
+
+          {% endif %}
+          <!-- COMMENTS LIST -->
+          <div class="comments-wrapper">
+            {% if recipe.comments %} {% for comment in recipe.comments %}
+
+            <div class="comment-card">
+              <!-- AVATAR -->
+              <div class="comment-avatar">
+                {{ comment.user.username[0]|upper if comment.user else 'U' }}
+              </div>
+
+              <!-- CONTENT -->
+              <div class="comment-content">
+                <div class="comment-header">
+                  <span class="comment-username">
+                    {{ comment.user.username if comment.user else 'Anonymous' }}
+                  </span>
+
+                  <span class="comment-date">
+                    {{ comment.created_at.strftime('%d %b %Y') if
+                    comment.created_at else 'Recently' }}
+                  </span>
+                </div>
+
+                <p class="comment-text">{{ comment.content }}</p>
+              </div>
+            </div>
+
+            {% endfor %} {% else %}
+
+            <div class="empty-comments-state text-center py-5">
+              <h5>No comments yet</h5>
+
+              <p class="text-muted mb-0">
+                Be the first to comment on this recipe.
+              </p>
+            </div>
+
+            {% endif %}
+          </div>
+        </div>
+      </section>
     </div>
 
+    <!-- SIDEBAR -->
+    <div class="col-lg-4">
+      <!-- SUMMARY -->
+      <section class="sidebar-card card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <h3 class="sidebar-title mb-4">Recipe Summary</h3>
+
+          <div class="summary-item">
+            <span>Difficulty</span>
+
+            <strong>
+              {{ recipe.difficulty.name.title() if recipe.difficulty else
+              'Medium' }}
+            </strong>
+          </div>
+
+          <div class="summary-item">
+            <span>Cook Time</span>
+
+            <strong>
+              {{ recipe.cook_time if recipe.cook_time else 'N/A' }} mins
+            </strong>
+          </div>
+
+          <div class="summary-item">
+            <span>Likes</span>
+
+            <strong> {{ recipe.likes|length if recipe.likes else 0 }} </strong>
+          </div>
+
+          <div class="summary-item border-0 pb-0">
+            <span>Favourites</span>
+
+            <strong>
+              {{ recipe.favourites|length if recipe.favourites else 0 }}
+            </strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- RELATED RECIPES -->
+      <section class="sidebar-card card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <h3 class="sidebar-title mb-4">Related Recipes</h3>
+
+          {% if related_recipes %} {% for related in related_recipes %}
+
+          <a
+            href="{{ url_for('recipe', id=related.id) }}"
+            class="related-recipe text-decoration-none"
+          >
+            <!-- IMAGE -->
+            {% if related.image_file and related.image_file.startswith('http')
+            %}
+
+            <img
+              src="{{ related.image_file }}"
+              class="related-image"
+              alt="{{ related.title }}"
+            />
+
+            {% else %}
+
+            <img
+              src="{{ url_for('static', filename=related.image_file if related.image_file else 'images/default_recipe.jpg') }}"
+              class="related-image"
+              alt="{{ related.title }}"
+            />
+
+            {% endif %}
+
+            <!-- CONTENT -->
+            <div class="related-content">
+              <h6>{{ related.title }}</h6>
+
+              <small>
+                {{ related.author.username if related.author else 'Chef' }}
+              </small>
+            </div>
+          </a>
+
+          {% endfor %} {% else %}
+
+          <p class="text-muted mb-0">No related recipes available.</p>
+
+          {% endif %}
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/recipe.js') }}"></script>
+<script src="{{ url_for('static', filename='js/recipe-detail.js') }}"></script>
 
-</body>
-</html>
-
+{% endblock %}
