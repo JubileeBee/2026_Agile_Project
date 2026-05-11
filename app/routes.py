@@ -77,9 +77,17 @@ def home():
 
         total_recipes = Recipe.query.count()
 
+        liked_recipe_ids = []
+
+        if current_user.is_authenticated:
+            liked_recipe_ids = [
+                like.recipe_id for like in current_user.likes
+            ]
+
         return render_template('index.html',
                              sections=sections,
                              total_recipes=total_recipes,
+                             liked_recipe_ids=liked_recipe_ids,
                              error=None)
 
     except Exception as e:
@@ -87,6 +95,7 @@ def home():
         return render_template('index.html',
                              sections=[],
                              total_recipes=0,
+                             liked_recipe_ids=[],
                              error=None)
 
 @app.route("/recipes")
