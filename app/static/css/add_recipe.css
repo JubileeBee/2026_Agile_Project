@@ -76,7 +76,8 @@ label {
    ========================= */
 
 input,
-textarea {
+textarea,
+select {
     width: 100%;
 
     padding: 13px 14px;
@@ -100,7 +101,8 @@ textarea {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     outline: none;
 
     border-color: #C89F7A;
