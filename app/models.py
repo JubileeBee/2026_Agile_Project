@@ -117,7 +117,9 @@ class Recipe(db.Model):
         db.Enum(CategoryEnum),
         nullable=False
     )
-
+    
+    prep_time = db.Column(db.Integer)
+    notes = db.Column(db.Text)
     cook_time = db.Column(db.Integer)
 
     difficulty = db.Column(

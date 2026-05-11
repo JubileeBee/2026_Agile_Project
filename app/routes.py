@@ -323,3 +323,15 @@ def api_recipes():
         'recipes': recipes_data,
         'has_more': pagination.has_next
     })
+    
+@app.route('/add_recipe', methods=['GET', 'POST'])
+def add_recipe():
+
+    if request.method == 'POST':
+
+        # temporary placeholder
+        print("Recipe submitted!")
+
+        return redirect(url_for('home'))
+
+    return render_template('add_recipe.html')
