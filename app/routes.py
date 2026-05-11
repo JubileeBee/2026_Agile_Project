@@ -105,16 +105,9 @@ def terms():
 
 
 @app.route('/profile')
-# TODO: uncomment @login_required and replace test_user with current_user when auth is complete
-# @login_required
+@login_required
 def profile():
-    # TEMP: hardcoded seed user for testing
-    # TODO: replace with --> test_user = current_user
-    test_user = User.query.filter_by(email='emma@example.com').first()
-
-    if not current_user.is_authenticated:
-        login_user(test_user)
-
+    test_user = current_user
     # Gather all recipes owned by user, liked by user and favourited by users via relationships
     user_recipes = Recipe.query.filter_by(user_id=test_user.id).all()
     liked_recipes = [like.recipe for like in test_user.likes]
@@ -138,13 +131,10 @@ def profile():
     return render_template('profile.html', user=user, liked_recipe_ids=liked_recipe_ids)
 
 @app.route('/profile/update', methods=['POST'])
-# TODO: uncomment @login_required and replace test_user with current_user when auth is complete
-# @login_required
+@login_required
 def update_profile():
-    # TEMP: hardcoded seed user for testing
-    # TODO: replace with --> test_user = current_user
-    test_user = User.query.filter_by(email='emma@example.com').first()
-    
+    test_user = current_user
+      
     #JSON payload from frontend edit profile modal
     data = request.get_json()
     new_name = data.get('name', '').strip()
@@ -168,15 +158,9 @@ def update_profile():
 
 
 @app.route('/profile/delete', methods=['POST'])
-# TODO: uncomment @login_required and replace test_user with current_user when auth is complete
-# @login_required
+@login_required
 def delete_account():
-    # TEMP: hardcoded seed user for testing
-    # TODO: replace with:
-    # --> user = current_user._get_current_object()
-    # --> logout_user()
-    test_user = User.query.filter_by(email='emma@example.com').first()
-
+    test_user = current_user
     # Cascade in models.py handles deleting related recipes, likes, favourites, comments
     db.session.delete(test_user)
     db.session.commit()
@@ -187,10 +171,31 @@ def delete_account():
 def signup():
     return render_template('signup.html')
 
-
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+
+    if request.method == 'GET':
+        return render_template('login.html')
+
+    data = request.get_json()
+
+    email = data.get('email', '').strip().lower()
+    password = data.get('password', '')
+
+    user = User.query.filter_by(email=email).first()
+
+    if user and user.check_password(password):
+        login_user(user)
+
+        return jsonify({
+            'success': True,
+            'redirect': url_for('home')
+        })
+
+    return jsonify({
+        'success': False,
+        'error': 'Invalid email or password'
+    }), 401
 
 @app.route('/logout')
 @login_required
@@ -239,13 +244,12 @@ def recipe(id):
     )
 
 @app.route('/recipe/<int:id>/like', methods=['POST'])
+@login_required
 def like_recipe(id):
     # Handles like button interactions by adding/removing a like record
     # and synchronising frontend state with updated like count
 
-    # TEMP: hardcoded seed user for testing
-    # TODO: replace with --> test_user = current_user
-    test_user = User.query.filter_by(email='emma@example.com').first()  # swap for current_user later
+    test_user = current_user
     
     existing_like = Like.query.filter_by(user_id=test_user.id, recipe_id=id).first()
     
