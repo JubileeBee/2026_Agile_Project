@@ -1,6 +1,11 @@
 from flask import render_template
-from app import app, limiter
-from app.models import Recipe
+from app import app
+from app.models import Recipe, User
+from flask import, request, redirect
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, logout_user
+from app import db
+from app.auth import auth_bp
 
 @app.route('/')
 def home():
@@ -25,12 +30,10 @@ def history():
     return render_template("history.html")
 
 @app.route("/privacy_policy")
-@limiter.exempt  # Exempt privacy policy from rate limiting to ensure accessibility
 def privacy():
     return render_template("privacy.html")
 
 @app.route("/terms_and_condition")
-@limiter.exempt  # Exempt terms and conditions from rate limiting to ensure accessibility
 def terms():
     return render_template("terms.html")
 
@@ -56,25 +59,19 @@ def profile():
     return render_template('profile.html', user=user)
 
 @app.route('/signup')
-# Apply rate limit to the signup route for anti-spam and abuse prevention
-@limiter.limit("3 per minute")
 def signup():
     return render_template('signup.html')
 
 @app.route('/login')
-# Apply rate limit to the login route to prevent brute force attacks
-@limiter.limit("5 per minute")
 def login():
     return render_template('login.html')
 
 @app.route('/post')
-# Apply rate limit to the post route to prevent spam
-@limiter.limit("10 per hour")
 def post():
     return render_template('post.html')
 
 @app.route('/recipe/<int:id>')
-@limiter.limit("60 per minute")  # Limit recipe detail views to prevent scraping
 def recipe_detail(id):
     recipe = Recipe.query.get_or_404(id)
     return render_template('recipe.html', recipe=recipe)
+
