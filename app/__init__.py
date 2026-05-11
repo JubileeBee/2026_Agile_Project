@@ -1,25 +1,23 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+from flask_login import LoginManager
+
 from app.config import Config
 
 db = SQLAlchemy()
 migrate = Migrate()
+login_manager = LoginManager()
 
-app = Flask(__name__)
-app.config.from_object(Config)
+def create_app():      
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-db.init_app(app)
-migrate.init_app(app, db)
+    db.init_app(app)
+    migrate.init_app(app, db)
+    login_manager.init_app(app)
 
-# Set up rate limiting with Flask-Limiter
-limiter = Limiter(
-    key_func=get_remote_address,
-    app=app,
-    default_limits=["200 per hour", "50 per minute"]
-)
+    login_manager.login-view = "auth.login"
 
 @app.errorhandler(429)
 def ratelimit_handler(e):
@@ -28,4 +26,19 @@ def ratelimit_handler(e):
         "message": "You have exceeded your rate limit. Please try again later."
     }), 429
 
+#register blueprints
+
+from app.auth import auth_bp
+from app.main import main_bp
+
+app.register_blueprint(auth_bp)
+app.register_blueprint(main_bp)
+
+return app
+
 from app import routes, models
+
+from flask import Blueprint
+from flask import Blueprint
+
+auth_bp = Blueprint("auth", __name__)
