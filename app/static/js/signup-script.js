@@ -95,16 +95,53 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     const btn = document.querySelector('.comfort-button');
     btn.classList.add('loading');
 
-    // Replace this with your actual fetch/form submission logic e.g.:
-    // const response = await fetch('/signup', { method: 'POST', ... });
-    await new Promise(r => setTimeout(r, 1500));
+try {
+
+    const response = await fetch('/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: `${firstName} ${lastName}`,
+            email: email,
+            password: password
+        })
+    });
+
+    const data = await response.json();
+
     btn.classList.remove('loading');
 
-    // Show success state
-    document.getElementById('signupForm').style.display = 'none';
-    document.querySelectorAll('.gentle-divider, .comfort-social, .comfort-signup')
-        .forEach(el => el.style.display = 'none');
-    const success = document.getElementById('successMessage');
-    success.style.display = 'block';
-    requestAnimationFrame(() => success.classList.add('show'));
+    if (data.success) {
+
+        // Show success state
+        document.getElementById('signupForm').style.display = 'none';
+
+        document.querySelectorAll('.gentle-divider, .comfort-social, .comfort-signup')
+            .forEach(el => el.style.display = 'none');
+
+        const success = document.getElementById('successMessage');
+
+        success.style.display = 'block';
+
+        requestAnimationFrame(() => success.classList.add('show'));
+
+        // Redirect after short delay
+        setTimeout(() => {
+            window.location.href = data.redirect;
+        }, 1500);
+
+    } else {
+
+        showError('emailError', data.error || 'Signup failed.');
+
+    }
+
+} catch (error) {
+
+    btn.classList.remove('loading');
+
+    showError('emailError', 'Something went wrong. Please try again.');
+}
 });

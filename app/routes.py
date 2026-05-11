@@ -107,16 +107,16 @@ def terms():
 @app.route('/profile')
 @login_required
 def profile():
-    test_user = current_user
+   
     # Gather all recipes owned by user, liked by user and favourited by users via relationships
-    user_recipes = Recipe.query.filter_by(user_id=test_user.id).all()
-    liked_recipes = [like.recipe for like in test_user.likes]
-    fav_recipes = [fav.recipe for fav in test_user.favourites]
+    user_recipes = Recipe.query.filter_by(user_id=current_user.id).all()
+    liked_recipes = [like.recipe for like in current_user.likes]
+    fav_recipes = [fav.recipe for fav in current_user.favourites]
 
     user = {
-        'name': test_user.username,
-        'bio': test_user.bio or '',
-        'profile_image': test_user.profile_image,
+        'name': current_user.username,
+        'bio': current_user.bio or '',
+        'profile_image': current_user.profile_image,
         'is_owner': True,
         'recipes_count': len(user_recipes),
         'likes_count': len(liked_recipes),
@@ -126,15 +126,14 @@ def profile():
         'favourites': fav_recipes,
     }
 
-    liked_recipe_ids = [like.recipe_id for like in test_user.likes]
+    liked_recipe_ids = [like.recipe_id for like in current_user.likes]
 
     return render_template('profile.html', user=user, liked_recipe_ids=liked_recipe_ids)
 
 @app.route('/profile/update', methods=['POST'])
 @login_required
 def update_profile():
-    test_user = current_user
-      
+         
     #JSON payload from frontend edit profile modal
     data = request.get_json()
     new_name = data.get('name', '').strip()
@@ -142,16 +141,16 @@ def update_profile():
     new_avatar = data.get('profile_image', '').strip()
 
     # Ensure username is unique, but allow the user to keep their own username
-    if new_name != test_user.username:
+    if new_name != current_user.username:
         existing = User.query.filter_by(username=new_name).first()
         if existing:
             return jsonify({'success': False, 'error': 'Username already taken'}), 409
 
     #update fields
-    test_user.username = new_name
-    test_user.bio = new_bio
+    current_user.username = new_name
+    current_user.bio = new_bio
     if new_avatar:
-        test_user.profile_image = new_avatar
+        current_user.profile_image = new_avatar
 
     db.session.commit()
     return jsonify({'success': True})
@@ -160,16 +159,69 @@ def update_profile():
 @app.route('/profile/delete', methods=['POST'])
 @login_required
 def delete_account():
-    test_user = current_user
+    
     # Cascade in models.py handles deleting related recipes, likes, favourites, comments
-    db.session.delete(test_user)
+    db.session.delete(current_user)
     db.session.commit()
     return jsonify({'success': True, 'redirect': url_for('home')})
 
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+
+    if request.method == 'GET':
+        return render_template('signup.html')
+
+    data = request.get_json()
+
+    username = data.get('username', '').strip()
+    email = data.get('email', '').strip().lower()
+    password = data.get('password', '')
+
+    # Validation
+    if not username or not email or not password:
+        return jsonify({
+            'success': False,
+            'error': 'All fields are required'
+        }), 400
+
+    # Check existing username
+    existing_username = User.query.filter_by(username=username).first()
+
+    if existing_username:
+        return jsonify({
+            'success': False,
+            'error': 'Username already taken'
+        }), 409
+
+    # Check existing email
+    existing_email = User.query.filter_by(email=email).first()
+
+    if existing_email:
+        return jsonify({
+            'success': False,
+            'error': 'Email already registered'
+        }), 409
+
+    # Create user
+    user = User(
+        username=username,
+        email=email
+    )
+
+    # Hash password
+    user.set_password(password)
+
+    db.session.add(user)
+    db.session.commit()
+
+    # Auto login after signup
+    login_user(user)
+
+    return jsonify({
+        'success': True,
+        'redirect': url_for('home')
+    })
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -205,6 +257,7 @@ def logout():
 
 
 @app.route('/post')
+@login_required
 def post():
     return render_template('post.html')
 
@@ -249,9 +302,8 @@ def like_recipe(id):
     # Handles like button interactions by adding/removing a like record
     # and synchronising frontend state with updated like count
 
-    test_user = current_user
-    
-    existing_like = Like.query.filter_by(user_id=test_user.id, recipe_id=id).first()
+     
+    existing_like = Like.query.filter_by(user_id=current_user.id, recipe_id=id).first()
     
     if existing_like:
         # Like exists — user is unliking the recipe
@@ -260,7 +312,7 @@ def like_recipe(id):
         return jsonify({'liked': False, 'likes': Like.query.filter_by(recipe_id=id).count()})
     else:
         # No like exists — user is liking the recipe
-        new_like = Like(user_id=test_user.id, recipe_id=id)
+        new_like = Like(user_id=current_user.id, recipe_id=id)
         db.session.add(new_like)
         db.session.commit()
 
@@ -269,8 +321,11 @@ def like_recipe(id):
 
 
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_recipe(id):
     recipe = Recipe.query.get_or_404(id)
+    if recipe.user_id != current_user.id:
+        return redirect(url_for('home'))
 
     if request.method == 'POST':
         recipe.title = request.form['title']
