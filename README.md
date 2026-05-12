@@ -101,10 +101,10 @@ python myapp.py
 ```
 Then open your browser and navigate to `http://127.0.0.1:5000`
 
-> Tip: You can also `Ctrl+Click` the link that appears in your terminal after running the app.
+> Tip: You can also `Ctrl+Click` the link that appears in your terminal after running the app. To stop the app, press `Ctrl+C` in the terminal.
 
 ### 6. Run the tests
 ```bash
 python tests.py
 ```
-> Note: Make sure your virtual environment is activated and the database is set up before running the tests.
+> Note: Make sure the app is stopped (`Ctrl+C`) and your virtual environment is activated.
