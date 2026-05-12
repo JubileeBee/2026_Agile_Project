@@ -1,64 +1,76 @@
 <a href="{{ url_for('recipe', id=recipe.id) }}" class="recipe-link">
-    <article class="recipe-card">
-        <figure class="recipe-image">
-            <img src="{{ recipe.image_file or '/static/images/default.jpg' }}" alt="{{ recipe.title }}">
+  <article class="recipe-card">
+    <figure class="recipe-image">
+      <img
+        src="{{ recipe.image_file or '/static/images/default.jpg' }}"
+        alt="{{ recipe.title }}"
+      />
 
-            {# Heart button logic:
-               - Not shown if user is the owner of the recipe
-               - Not shown if user is logged out
-               - Shows filled heart if already liked, empty if not #}
-            {% if current_user.is_authenticated and current_user.id != recipe.user_id %}
-                {% set already_liked = recipe.id in liked_recipe_ids %}
-                <form action="{{ url_for('like_recipe', id=recipe.id) }}" method="POST">
-                    <button class="heart-btn" type="submit" onclick="event.stopPropagation()">
-                        {% if already_liked %}
-                            <span class="material-icons" style="color: red;">favorite</span>
-                        {% else %}
-                            <span class="material-icons">favorite_border</span>
-                        {% endif %}
-                    </button>
-                </form>
-            {% endif %}
+      {# Heart button logic: - Not shown if user is the owner of the recipe -
+      Not shown if user is logged out - Shows filled heart if already liked,
+      empty if not #} {% if current_user.is_authenticated and current_user.id !=
+      recipe.user_id %} {% set already_liked = recipe.id in liked_recipe_ids %}
+      <form action="{{ url_for('like_recipe', id=recipe.id) }}" method="POST">
+        <button
+          class="heart-btn"
+          type="submit"
+          onclick="event.stopPropagation()"
+        >
+          {% if already_liked %}
+          <span class="material-icons" style="color: red">favorite</span>
+          {% else %}
+          <span class="material-icons">favorite_border</span>
+          {% endif %}
+        </button>
+      </form>
+      {% endif %} {# Only show edit button if the logged in user is the author
+      of the recipe #} {% if current_user.is_authenticated and current_user.id
+      == recipe.user_id %}
+      <button
+        class="edit-btn"
+        onclick="event.preventDefault(); event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';"
+      >
+        <span class="material-icons">edit</span>
+      </button>
+      {% endif %}
+    </figure>
 
-            {# Only show edit button if the logged in user is the author of the recipe #}
-            {% if current_user.is_authenticated and current_user.id == recipe.user_id %}
-            <button  
-                class="edit-btn"
-                onclick="event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';">
-                <span class="material-icons">edit</span>
-            </button>   
-            {% endif %}
-
-        </figure>
-
-        <div class="recipe-card-content">
-            <div class="card-meta">
-                <div class="recipe-tags">
-                    <span class="recipe-tag">{{ recipe.category.value if recipe.category else 'Uncategorised' }}</span>
-                </div>
-                <ul class="recipe-stats">
-                    <li>
-                        <span class="material-icons" style="font-size:14px;">favorite</span>
-                        {{ recipe.likes|length if recipe.likes else 0 }}
-                    </li>
-                    <li>
-                        <span class="material-icons" style="font-size:14px;">schedule</span>
-                        {{ recipe.cook_time or 0}} mins
-                    </li>
-                    <li class="difficulty {{ recipe.difficulty.value|lower }}">
-                        <span class="material-icons" style="font-size:14px;">local_fire_department</span>
-                        {{ recipe.difficulty.value if recipe.difficulty else 'Unknown' }}
-                    </li>
-                </ul>
-            </div>
-
-            <h1 class="recipe-title">{{ recipe.title or 'Untitled Recipe' }}</h1>
-
-            <div class="recipe-footer">
-                <div class="user-info">
-                    <span class="username">{{ recipe.author.username if recipe.author and recipe.author.username else "Unknown user" }}</span>
-                </div>
-            </div>
+    <div class="recipe-card-content">
+      <div class="card-meta">
+        <div class="recipe-tags">
+          <span class="recipe-tag"
+            >{{ recipe.category.value if recipe.category else 'Uncategorised'
+            }}</span
+          >
         </div>
-    </article>
+        <ul class="recipe-stats">
+          <li>
+            <span class="material-icons" style="font-size: 14px">favorite</span>
+            {{ recipe.likes|length if recipe.likes else 0 }}
+          </li>
+          <li>
+            <span class="material-icons" style="font-size: 14px">schedule</span>
+            {{ recipe.cook_time or 0}} mins
+          </li>
+          <li class="difficulty {{ recipe.difficulty.value|lower }}">
+            <span class="material-icons" style="font-size: 14px"
+              >local_fire_department</span
+            >
+            {{ recipe.difficulty.value if recipe.difficulty else 'Unknown' }}
+          </li>
+        </ul>
+      </div>
+
+      <h1 class="recipe-title">{{ recipe.title or 'Untitled Recipe' }}</h1>
+
+      <div class="recipe-footer">
+        <div class="user-info">
+          <span class="username"
+            >{{ recipe.author.username if recipe.author and
+            recipe.author.username else "Unknown user" }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </article>
 </a>
