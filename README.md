@@ -1,5 +1,14 @@
-# 2026_Agile_Project
+# CITS3403_Group_Project
 Our 2026 group Agile Web Development Project
+
+Contributors:
+| UWA ID | Name | Github Username |
+|--------|------|----------------|
+| 23957309 | Abbey Boyle | JubileeBee |
+| 24342062 | Vanessa Do | vanessado2005 |
+| 22524461 | Nabeel Khan | Khanuwa |
+| 24270483 | Ivy Qi | ivqly |
+
 
 ## Project Overview
 
@@ -27,3 +36,75 @@ The project is built using:
 - Bootstrap 5
 
 The goal of the project is to develop a scalable full-stack web application while applying Agile development practices, collaborative workflows, version control, and modern frontend/backend design principles.
+
+## How to run CozyCravings:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/JubileeBee/2026_Agile_Project.git
+cd 2026_Agile_Project
+```
+
+### 2. Set up virtual environment
+
+Make sure you are in the project root directory, then copy and paste the following into your terminal:
+
+```bash
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Mac/Linux
+```
+
+This activates the virtual environment. Once activated, install all dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+> Note: If you install any new libraries, make sure you are inside the virtual environment and manually add the package and version to `requirements.txt`. Do NOT run `pip freeze > requirements.txt` as this may overwrite other versions.
+
+To exit the virtual environment:
+
+```bash
+deactivate
+```
+
+### 3. Set up secret key
+
+Generate a secret key by running:
+
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Create a `.env` file in the project root and add:
+```bash
+SECRET_KEY=your-generated-key-here
+```
+> Note: `.env` is already listed in `.gitignore` so Git will not track it — your secret key stays on your machine only.
+
+
+### 4. Set up the database
+
+```bash
+flask db init
+flask db migrate
+flask db upgrade
+python seeds.py
+```
+
+> Note: `flask db init` only needs to be run once when setting up for the first time. If you have already done this before, just run `flask db upgrade` and `python seeds.py`.
+
+### 5. Run the app
+```bash
+python myapp.py
+```
+Then open your browser and navigate to `http://127.0.0.1:5000`
+
+> Tip: You can also `Ctrl+Click` the link that appears in your terminal after running the app.
+
+### 6. Run the tests
+```bash
+python tests.py
+```
+> Note: Make sure your virtual environment is activated and the database is set up before running the tests.
