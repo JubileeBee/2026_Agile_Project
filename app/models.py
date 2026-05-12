@@ -95,13 +95,12 @@ class User(UserMixin, db.Model):
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(
-        password,
-        method='pbkdf2:sha256'
-    )
+            password,
+            method='pbkdf2:sha256'
+        )
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
 
 # ------------------ RECIPE ------------------
 
@@ -117,7 +116,9 @@ class Recipe(db.Model):
         db.Enum(CategoryEnum),
         nullable=False
     )
-
+    
+    prep_time = db.Column(db.Integer)
+    notes = db.Column(db.Text)
     cook_time = db.Column(db.Integer)
 
     difficulty = db.Column(

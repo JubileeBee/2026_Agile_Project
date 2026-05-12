@@ -141,12 +141,14 @@ document.querySelectorAll('.heart-btn').forEach(btn => {
         e.preventDefault()
         e.stopPropagation()
 
-        // Get recipe ID from parent card (data-recipe-id attribute)
-        const card = btn.closest('[data-recipe-id]')
-        const recipeId = card.dataset.recipeId
+        // Get the form's action URL which has the recipe id
+        const form = btn.closest('form')
+        const url = form.action
+        const card = btn.closest('[data-recipe-id]') || btn.closest('article')
+        const recipeId = url.split('/')[2] // extracts id from /recipe/id/like
 
         // Send POST request to toggle like/unlike in backend
-        const res = await fetch(`/recipe/${recipeId}/like`, { method: 'POST' })
+        const res = await fetch(url, { method: 'POST' })
         const data = await res.json()
         
         // Icon inside heart button
@@ -162,7 +164,7 @@ document.querySelectorAll('.heart-btn').forEach(btn => {
             const clonedCard = card.closest('.col-12').cloneNode(true)
             likesTab.appendChild(clonedCard)
 
-            // INcrement likes counter in profile stats
+            // Increment likes counter in profile stats
             const likesCount = document.querySelector('.stat:nth-child(3) .stat-number')
             likesCount.textContent = parseInt(likesCount.textContent) + 1
 

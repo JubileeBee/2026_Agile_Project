@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="recipe-form-container">
+<div class="container">
     <h2 class="form-title">Edit Recipe</h2>
 
     <form method="POST">
@@ -29,15 +29,15 @@
 
         <div class="form-group">
             <label>Category</label>
-            <input type="text" name="category" value="{{ recipe.category }}">
+            <input type="text" name="category" value="{{ recipe.category.value }}">
         </div>
 
         <div class="form-group">
             <label>Image URL</label>
-            <input type="text" name="image_url" value="{{ recipe.image_url }}">
+            <input type="text" name="image_file" value="{{ recipe.image_file }}">
         </div>
 
-        <button type="submit" class="submit-btn">Update Recipe</button>
+        <button type="submit" class="btn">Update Recipe</button>
 
     </form>
 </div>
