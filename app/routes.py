@@ -348,7 +348,7 @@ def edit_recipe(id):
 
         return redirect(url_for('recipe', id=recipe.id))
 
-    return render_template('edit_recipe_page.html', recipe=recipe)
+    return render_template('edit_recipe.html', recipe=recipe)
 
 # Vanessa's route added by Nabeel
 
