@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, jsonify
 from app import app, db
 from sqlalchemy import desc, func, or_
-from flask_login import login_required, current_user, logout_user
+from flask_login import login_user,login_required, current_user, logout_user
 from app.models import (
     Recipe,
     Comment,
@@ -299,22 +299,14 @@ def search_recipes():
     
     if query:
 
-        filters = [
-            Recipe.title.ilike(f'%{query}%'),
-            Recipe.description.ilike(f'%{query}%'),
-            Recipe.ingredients.ilike(f'%{query}%')
-        ]
-
-        query_upper = query.upper()
-
-        if query_upper in CategoryEnum.__members__:
-            filters.append(
-                Recipe.category == CategoryEnum[query_upper]
-            )
-
         results_query = results_query.filter(
-            or_(*filters)
-    )
+            or_(
+                Recipe.title.ilike(f'%{query}%'),
+                Recipe.description.ilike(f'%{query}%'),
+                Recipe.ingredients.ilike(f'%{query}%'),
+                Recipe.category.cast(db.String).ilike(f'%{query}%')
+            )
+        )
     if difficulty:
         results_query = results_query.filter(
             Recipe.difficulty == DifficultyEnum[difficulty]
