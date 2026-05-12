@@ -13,6 +13,7 @@
     --global-radius: 16px;
     --card-text-color: #070705;
     --nav-height: 70px;
+    --nav-bar: #755d47;
 }
  
 /* =========================
@@ -45,6 +46,7 @@ html, body {
     align-items: center;
     padding: 12px 5vw;
     position: fixed;
+    width: 100%;
     width: 100%;
     top: 0;
     z-index: 1000;
@@ -146,6 +148,9 @@ html, body {
     position: fixed;
     bottom: 30px;
     right: 30px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
     width: 65px;
     height: 65px;
     background-color: var(--primary-brown);
@@ -156,6 +161,7 @@ html, body {
     justify-content: center;
     box-shadow: 0 6px 20px rgba(127, 85, 57, 0.3);
     text-decoration: none;
+    z-index: 9999;
     z-index: 9999;
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -274,6 +280,7 @@ html, body {
  
 /* =========================
    Home Page / Hero
+   Home Page / Hero
    ========================= */
 .welcome-hero {
     background-color: #F2EADC;
@@ -281,11 +288,11 @@ html, body {
     background-position: center;
     background-repeat: no-repeat;
     height: 300px;
-    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: var(--primary-brown);
     color: var(--primary-brown);
     text-align: center;
 }
@@ -343,12 +350,14 @@ html, body {
  
 .section-header {
     padding-left: -12px;
+    padding-left: -12px;
 }
  
 .section-header h2 {
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 50px;
+    color: var(--primary-brown-dark);
     color: var(--primary-brown-dark);
 }
  
@@ -361,6 +370,7 @@ html, body {
     border-radius: var(--global-radius);
     color: var(--primary-brown-dark);
     width: 100%;
+    max-width: 100%;
     max-width: 100%;
     height: auto;
     font-family: 'Quicksand', sans-serif;
@@ -408,9 +418,11 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    align-items: center;
     margin: 0;
     font-size: 13px;
     flex-wrap: nowrap;
+    gap: 8px;
     gap: 8px;
 }
  
@@ -454,10 +466,12 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    white-space: nowrap;
 }
  
 .recipe-footer {
     display: flex;
+    justify-content: flex-end;
     justify-content: flex-end;
 }
  
@@ -534,9 +548,14 @@ html, body {
     display: flex;
     overflow-x: auto;
     gap: 20px;
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
     padding: 7px 0 15px 0;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-brown-dark) transparent;
+    cursor: grab;
+    scroll-snap-type: x mandatory;
     cursor: grab;
     scroll-snap-type: x mandatory;
 }
@@ -563,6 +582,7 @@ html, body {
 }
  
 .scroll-item {
+    flex: 0 0 auto;
     flex: 0 0 auto;
     width: 22rem;
     scroll-snap-align: start;
@@ -686,16 +706,21 @@ html, body {
     .scroll-row {
         gap: 12px;
         padding-left: 15px;
+        gap: 12px;
+        padding-left: 15px;
         padding-right: 15px;
         scroll-padding: 0 20px;
+        margin: 0 10px;
         margin: 0 10px;
     }
  
     .scroll-item {
         width: 70vw;
+        width: 70vw;
     }
  
     .recipe-card {
+        width: 100%;
         width: 100%;
     }
  

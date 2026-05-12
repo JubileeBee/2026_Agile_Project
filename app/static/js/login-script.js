@@ -183,11 +183,29 @@ class RecipeSharingLoginForm{
         
         try {
             // Simulate gentle authentication process
-            await new Promise(resolve => setTimeout(resolve, 2500));
-            
-            // Show soft success
-            this.showGentleSuccess();
-        } catch (error) {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: this.emailInput.value.trim(),
+                    password: this.passwordInput.value
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                this.showGentleSuccess();
+
+                setTimeout(() => {
+                    window.location.href = result.redirect;
+                }, 1800);
+
+            } else {
+                this.showError('password', result.error || 'Login failed.');
+}        } catch (error) {
             this.showError('password', 'Sign in failed. Please try again.');
         } finally {
             this.setLoading(false);
