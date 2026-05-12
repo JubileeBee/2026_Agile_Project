@@ -296,14 +296,25 @@ def search_recipes():
 
     results_query = Recipe.query
 
+    
     if query:
-        results_query = results_query.filter(
-            or_(
-                Recipe.title.ilike(f'%{query}%'),
-                Recipe.description.ilike(f'%{query}%'),
-                Recipe.ingredients.ilike(f'%{query}%')
+
+        filters = [
+            Recipe.title.ilike(f'%{query}%'),
+            Recipe.description.ilike(f'%{query}%'),
+            Recipe.ingredients.ilike(f'%{query}%')
+        ]
+
+        query_upper = query.upper()
+
+        if query_upper in CategoryEnum.__members__:
+            filters.append(
+                Recipe.category == CategoryEnum[query_upper]
             )
-        )
+
+        results_query = results_query.filter(
+            or_(*filters)
+    )
     if difficulty:
         results_query = results_query.filter(
             Recipe.difficulty == DifficultyEnum[difficulty]

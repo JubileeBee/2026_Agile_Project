@@ -11,55 +11,64 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
     <h1>Welcome to CozyCravings</h1>
     {% endif %}
 
-    <form
-      action="{{ url_for('search_recipes') }}"
-      method="GET"
-      class="search-container"
-    >
-      <input class="search-field"
-        type="text"
-        name="q"
-        placeholder="What are your cravings for today?"
-        value="{{ request.args.get('q', '') }}"
-        required
-      />
+<form
+  action="{{ url_for('search_recipes') }}"
+  method="GET"
+  class="search-container"
+>
 
-      <select class="search-field" name="difficulty">
-        <option value="">All Difficulties</option>
-        <option value="EASY">Easy</option>
-        <option value="MEDIUM">Medium</option>
-        <option value="HARD"
-        {% if request.args.get('difficulty') == 'HARD' %}selected{% endif %}>
-        Hard
-        </option>
-      </select>
-      
-      <select class="search-field" name="category">
-        <option value="">All Categories</option>
-        <option value="BREAKFAST">Breakfast</option>
-        <option value="BRUNCH">Brunch</option>
-        <option value="LUNCH">Lunch</option>
-        <option value="DINNER">Dinner</option>
-        <option value="SNACK">Snack</option>
-        <option value="DRINK">Drink</option>
-        <option value="DESSERT"
-        {% if request.args.get('category') == 'DESSERT' %}selected{% endif %}>
-        Dessert
-        </option>
-      </select>
+  <div class="search-main-row">
+    <input
+      class="search-field"
+      type="text"
+      name="q"
+      placeholder="What are your cravings for today?"
+      value="{{ request.args.get('q', '') }}"
+      required
+    />
 
-      <select class="search-field" name="sort">
-        <option value="">Sort By</option>
-        <option value="alphabetical">Alphabetical</option>
-        <option value="newest"
-        {% if request.args.get('sort') == 'newest' %}selected{% endif %}>
-        Newest
-        </option>
-      </select>
+    <button type="submit">Search</button>
+  </div>
 
-      <button type="submit">Search</button>
-    </form>
-  </header>
+  <div class="search-filter-row">
+
+    <select class="search-field" name="difficulty">
+      <option value="">All Difficulties</option>
+      <option value="EASY">Easy</option>
+      <option value="MEDIUM">Medium</option>
+      <option value="HARD"
+      {% if request.args.get('difficulty') == 'HARD' %}selected{% endif %}>
+      Hard
+      </option>
+    </select>
+
+    <select class="search-field" name="category">
+      <option value="">All Categories</option>
+      <option value="BREAKFAST">Breakfast</option>
+      <option value="BRUNCH">Brunch</option>
+      <option value="LUNCH">Lunch</option>
+      <option value="DINNER">Dinner</option>
+      <option value="SNACK">Snack</option>
+      <option value="DRINK">Drink</option>
+      <option value="DESSERT"
+      {% if request.args.get('category') == 'DESSERT' %}selected{% endif %}>
+      Dessert
+      </option>
+    </select>
+
+    <select class="search-field" name="sort">
+      <option value="">Sort By</option>
+      <option value="alphabetical">Alphabetical</option>
+      <option value="newest"
+      {% if request.args.get('sort') == 'newest' %}selected{% endif %}>
+      Newest
+      </option>
+    </select>
+
+  </div>
+
+</form>
+</header>
 
   {% if error %}
   <div class="alert alert-warning text-center py-4">{{ error }}</div>
@@ -111,39 +120,6 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
   </section>
   {% endif %} {% endfor %} {% endif %}
 
-  <!-- ALL RECIPES SECTION -->
-  <section id="all-recipes" class="section-style all-recipes py-5">
-    <div class="container">
-      <div class="section-header mb-3">
-        <h2>All Recipes</h2>
-        <p class="text-muted">Browse everything the community has uploaded</p>
-      </div>
-
-      <!--<div id="all-recipes-grid" class="row g-4">
-                {% for recipe in all_recipes %}
-                    <div class="col-6 col-md-6 col-lg-4">
-                        {% include "recipe_card.html" %}
-                    </div>
-                {% endfor %}
-            </div>-->
-    </div>
-    <div class="feed-controls">
-      <input id="search-input" type="text" placeholder="Search recipes..." />
-
-      <div class="filters">
-        <button class="filter-btn" data-category="">All</button>
-        <button class="filter-btn" data-category="Dessert">Dessert</button>
-        <button class="filter-btn" data-category="Breakfast">Breakfast</button>
-        <button class="filter-btn" data-category="Dinner">Dinner</button>
-      </div>
-    </div>
-
-    <div id="feed-grid" class="row g-4"></div>
-
-    <div id="loading" class="text-center py-3">Loading...</div>
-  </section>
+  
 </div>
-
-<script src="{{ url_for('static', filename='js/feed.js') }}"></script>
-
 {% endblock %}
