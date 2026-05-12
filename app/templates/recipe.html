@@ -255,6 +255,22 @@ block content %}
                 </div>
 
                 <p class="comment-text">{{ comment.content }}</p>
+
+                {% if current_user.is_authenticated and current_user.id ==
+                comment.user_id %}
+
+                <div class="mt-2">
+                  <form
+                    method="POST"
+                    action="{{ url_for('delete_comment', comment_id=comment.id) }}"
+                  >
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                      Delete
+                    </button>
+                  </form>
+                </div>
+
+                {% endif %}
               </div>
             </div>
 

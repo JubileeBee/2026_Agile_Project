@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, jsonify
+from flask import render_template, request, redirect, url_for, jsonify, abort, flash
 from app import app, db
 from sqlalchemy import desc, func
 from flask_login import login_user, login_required, current_user, logout_user
@@ -304,6 +304,24 @@ def recipe(id):
         recipe=recipe,
         related_recipes=related_recipes
     )
+
+@app.route('/comment/<int:comment_id>/delete', methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+
+    comment = Comment.query.get_or_404(comment_id)
+
+    if comment.user_id != current_user.id:
+        abort(403)
+
+    recipe_id = comment.recipe_id
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    flash("Comment deleted successfully.", "success")
+
+    return redirect(url_for('recipe', id=recipe_id))
 
 @app.route('/recipe/<int:id>/like', methods=['POST'])
 @login_required
