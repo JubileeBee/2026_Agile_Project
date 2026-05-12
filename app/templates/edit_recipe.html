@@ -1,46 +1,52 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="container">
-    <h2 class="form-title">Edit Recipe</h2>
+  <h2 class="form-title">Edit Recipe</h2>
 
-    <form method="POST">
+  <form method="POST">
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" name="title" value="{{ recipe.title }}" required />
+    </div>
 
-        <div class="form-group">
-            <label>Title</label>
-            <input type="text" name="title" value="{{ recipe.title }}" required>
-        </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea name="description" required>{{ recipe.description }}</textarea>
+    </div>
 
-        <div class="form-group">
-            <label>Description</label>
-            <textarea name="description" required>{{ recipe.description }}</textarea>
-        </div>
+    <div class="form-group">
+      <label>Ingredients</label>
+      <textarea name="ingredients" required>{{ recipe.ingredients }}</textarea>
+    </div>
 
-        <div class="form-group">
-            <label>Ingredients</label>
-            <textarea name="ingredients" required>{{ recipe.ingredients }}</textarea>
-        </div>
+    <div class="form-group">
+      <label>Instructions</label>
+      <textarea name="instructions" required>
+{{ recipe.instructions }}</textarea
+      >
+    </div>
 
-        <div class="form-group">
-            <label>Instructions</label>
-            <textarea name="instructions" required>{{ recipe.instructions }}</textarea>
-        </div>
+    <div class="form-group">
+      <label>Category</label>
 
-        <div class="form-group">
-            <label>Category</label>
-            <input type="text" name="category" value="{{ recipe.category.value }}">
-        </div>
+      <select name="category" required>
+        <option value="BREAKFAST">Breakfast</option>
+        <option value="BRUNCH">Brunch</option>
+        <option value="LUNCH">Lunch</option>
+        <option value="DINNER">Dinner</option>
+        <option value="DESSERT">Dessert</option>
+        <option value="DRINK">Drink</option>
+        <option value="SNACK">Snack</option>
+      </select>
+    </div>
 
-        <div class="form-group">
-            <label>Image URL</label>
-            <input type="text" name="image_file" value="{{ recipe.image_file }}">
-        </div>
+    <div class="form-group">
+      <label>Image URL</label>
+      <input type="text" name="image_file" value="{{ recipe.image_file }}" />
+    </div>
 
-        <button type="submit" class="btn">Update Recipe</button>
-
-    </form>
+    <button type="submit" class="btn">Update Recipe</button>
+  </form>
 </div>
 
 {% endblock %}
-

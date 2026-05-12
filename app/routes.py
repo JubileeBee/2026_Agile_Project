@@ -341,8 +341,8 @@ def edit_recipe(id):
         recipe.description = request.form['description']
         recipe.ingredients = request.form['ingredients']
         recipe.instructions = request.form['instructions']
-        recipe.category = request.form['category']
-        recipe.image_file = request.form['image_url']
+        recipe.category = CategoryEnum[request.form['category']]
+        recipe.image_file = request.form['image_file']
 
         db.session.commit()
 
