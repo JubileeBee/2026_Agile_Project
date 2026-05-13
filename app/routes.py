@@ -142,10 +142,15 @@ def recipes():
 
     results = results_query.all()
 
+    liked_recipe_ids = []
+    if current_user.is_authenticated:
+        liked_recipe_ids = [like.recipe_id for like in current_user.likes]
+
     return render_template(
         'search_results.html',
         query=query,
-        results=results
+        results=results,
+        liked_recipe_ids=liked_recipe_ids,
     )
 
 @app.route("/privacy_policy")
