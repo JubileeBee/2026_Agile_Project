@@ -10,13 +10,13 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
 
 <div class="home-container">
   <header class="welcome-hero">
-    {% if current_user and current_user.is_authenticated %} {% if
-    current_user.recipes|length == 0 and current_user.likes|length == 0 %}
-    <h1>Welcome, {{ current_user.username }}!</h1>
+    {% if current_user and current_user.is_authenticated %} 
+    {% if current_user.recipes|length == 0 and current_user.likes|length == 0 %}
+      <h1>Welcome, {{ current_user.username }}!</h1>
     {% else %}
-    <h1>Welcome back, {{ current_user.username }}!</h1>
+      <h1>Welcome back, {{ current_user.username }}!</h1>
     {% endif %} {% else %}
-    <h1>Welcome to CozyCravings</h1>
+      <h1>Welcome to CozyCravings</h1>
     {% endif %}
 
     <form
@@ -76,7 +76,7 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
   {% endif %} {% if sections is defined and sections %} {% for section in
   sections %} {% if section.recipes is defined and section.recipes %}
   <section class="section-style {{ section.class|default('') }}">
-    <div class="container">
+    <div class="section-header mb-1 px-4">
       <div class="section-header mb-1">
         <h2>{{ section.title }}</h2>
       </div>

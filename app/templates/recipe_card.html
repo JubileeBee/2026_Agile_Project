@@ -1,5 +1,5 @@
 <a href="{{ url_for('recipe', id=recipe.id) }}" class="recipe-link">
-  <article class="recipe-card">
+  <article class="recipe-card" data-recipe-id="{{ recipe.id }}">
     <figure class="recipe-image">
       <img
         src="{{ recipe.image_file or '/static/images/default.jpg' }}"
@@ -12,9 +12,8 @@
 
       {% if current_user.is_authenticated and current_user.id != recipe.user_id %} 
       {% set already_liked = recipe.id in liked_recipe_ids %}
-        <button class="heart-btn" type="submit"
+        <button class="heart-btn" type="button"
           data-url="{{ url_for('like_recipe', id=recipe.id) }}"
-          type="button" 
           onclick="event.preventDefault(); event.stopPropagation();"
         >
           {% if already_liked %}
