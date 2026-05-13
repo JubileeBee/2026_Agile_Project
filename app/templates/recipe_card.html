@@ -1,4 +1,4 @@
-<a href="{{ url_for('recipe', id=recipe.id) }}" class="recipe-link">
+<a href="{{ url_for('recipe_detail', id=recipe.id) }}" class="recipe-link">
   <article class="recipe-card">
     <figure class="recipe-image">
       <img
@@ -10,7 +10,7 @@
       Not shown if user is logged out - Shows filled heart if already liked,
       empty if not #} {% if current_user.is_authenticated and current_user.id !=
       recipe.user_id %} {% set already_liked = recipe.id in liked_recipe_ids %}
-      <form action="{{ url_for('like_recipe', id=recipe.id) }}" method="POST">
+      <form action="{{ url_for('toggle_like', id=recipe.id) }}" method="POST">
         <button
           class="heart-btn"
           type="submit"
