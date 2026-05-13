@@ -46,6 +46,20 @@ avatarOptions.forEach(avatar => {
     });
 });
 
+// Syncs modal avatar selection with the currently saved profile image
+// so the correct preset avatar is highlighted when the modal opens.
+openModal.addEventListener('click', () => {
+    const currentSrc = profileImg.src;
+
+    avatarOptions.forEach(avatar => {
+        avatar.classList.remove('selected');   
+        
+        if (avatar.src === currentSrc) {
+            avatar.classList.add('selected');
+        }
+    });
+});
+
 
 //Handles profile updates: sends data to backend and synchronises UI state
 
@@ -55,10 +69,17 @@ const editBio = document.getElementById('editBio');
 const profileName = document.querySelector('.profile-name');
 const profileBio = document.querySelector('.profile-bio');
 
+// bio counter
+const bioCounter = document.getElementById('bioCounter');
+bioCounter.textContent = `${editBio.value.length}/250`;
+editBio.addEventListener('input', () => {
+    bioCounter.textContent = `${editBio.value.length}/250`;
+})
+
 saveBtn.addEventListener('click', async () => {
     // Collect user input and selected avatar
-    const name = editName.value.trim()
-    const bio = editBio.value.trim()
+    const name = editName.value
+    const bio = editBio.value
     const avatar = document.querySelector('.avatar-option.selected')?.src
 
     // Send update request to backend (JSON payload with name, bio, and avatar URL)
@@ -72,9 +93,15 @@ saveBtn.addEventListener('click', async () => {
 
     // If update successful, update profile UI with new info and close modal
     if (res.ok && data.success) {
-        profileName.textContent = name
-        profileBio.textContent = bio
+        const cleanName = name.trim()
+        const cleanBio = bio.trim()
+
+        profileName.textContent = cleanName
+        profileBio.textContent = cleanBio
         profileImg.src = avatar
+
+        editName.value = cleanName 
+        editBio.value = cleanBio
         overlay.classList.remove('active')
     } else {
         

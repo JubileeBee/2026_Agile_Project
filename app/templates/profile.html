@@ -84,13 +84,14 @@
                 {# Display name input: must be unique, validated on backend #}
                 <div class="form-group">
                     <label class="form-label">Display Name</label>
-                    <input type="text" class="form-input" id="editName" value="{{ user.name }}" placeholder="Enter your name">
+                    <input type="text" class="form-input" id="editName" value="{{ user.name }}" placeholder="Enter your name" minlength="3" maxlength="64" pattern="^[a-zA-Z0-9_]+$" required>
                 </div>
 
                 {# Bio input: no uniqueness constraint #}
                 <div class="form-group">
                     <label class="form-label">Bio</label>
-                    <textarea class="form-input form-textarea" id="editBio" placeholder="Tell us about yourself">{{ user.bio }}</textarea>
+                    <textarea class="form-input form-textarea" id="editBio" placeholder="Tell us about yourself" maxlength="250">{{ user.bio }}</textarea>
+                    <small id="bioCounter" class="char-counter">0/250</small>
                 </div>
 
                 <button class="save-btn" id="saveBtn">Save Changes</button>

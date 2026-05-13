@@ -4,12 +4,16 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
 {% block content %}
 
 <div class="home-container">
-  <header class="welcome-hero">
-    {% if current_user and current_user.is_authenticated %}
-    <h1>Welcome back, {{ current_user.username }}!</h1>
-    {% else %}
-    <h1>Welcome to CozyCravings</h1>
-    {% endif %}
+    <header class="welcome-hero">
+        {% if current_user and current_user.is_authenticated %}
+            {% if current_user.recipes|length == 0 and current_user.likes|length == 0 %}
+                <h1>Welcome, {{ current_user.username }}!</h1>
+            {% else %}
+                <h1>Welcome back, {{ current_user.username }}!</h1>
+            {% endif %}
+        {% else %}
+            <h1>Welcome to CozyCravings</h1>
+        {% endif %}
 
 <form
   action="{{ url_for('search_recipes') }}"
