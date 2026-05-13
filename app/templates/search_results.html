@@ -1,16 +1,23 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/search_results.css') }}"
+/>
+{% endblock %} {% block content %}
 
 <div class="container py-5">
+  {% if query %}
   <h1 class="mb-4">Search Results for "{{ query }}"</h1>
-
   <p class="text-muted mb-4">{{ results|length }} recipe(s) found</p>
+  {% else %}
+  <h1 class="mb-4">Browse All Recipes</h1>
+  <p class="text-muted mb-4">{{ results|length }} recipe(s) available</p>
+  {% endif %} {% if results %}
 
-  {% if results %}
-
-  <div class="row g-4">
+  <div class="row g-4 search-results-grid">
     {% for recipe in results %}
 
-    <div class="col-12 col-md-6 col-lg-4">{% include "recipe_card.html" %}</div>
+    <div class="col-12 col-md-6">{% include "recipe_card.html" %}</div>
 
     {% endfor %}
   </div>
