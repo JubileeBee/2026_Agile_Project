@@ -71,6 +71,15 @@ block content %}
               </span>
             </div>
 
+            <!-- PREP TIME -->
+            <div class="meta-item">
+              <span class="meta-label">Prep Time</span>
+
+              <span class="meta-value">
+                {{ recipe.prep_time if recipe.prep_time else 'N/A' }} mins
+              </span>
+            </div>
+
             <!-- SERVINGS -->
             <div class="meta-item">
               <span class="meta-label">Servings</span>
@@ -178,6 +187,18 @@ block content %}
           </div>
         </div>
       </section>
+      <!-- NOTES -->
+      {% if recipe.notes %}
+      <section class="content-card card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <div class="section-header mb-4">
+            <h2 class="section-title mb-0">Notes</h2>
+          </div>
+
+          <p>{{ recipe.notes }}</p>
+        </div>
+      </section>
+      {% endif %}
 
       <!-- COMMENTS -->
       <section class="content-card card border-0 shadow-sm">
@@ -307,13 +328,20 @@ block content %}
           </div>
 
           <div class="summary-item">
+            <span>Prep Time</span>
+
+            <strong>
+              {{ recipe.prep_time if recipe.prep_time else 'N/A' }} mins
+            </strong>
+          </div>
+
+          <div class="summary-item">
             <span>Cook Time</span>
 
             <strong>
               {{ recipe.cook_time if recipe.cook_time else 'N/A' }} mins
             </strong>
           </div>
-
           <div class="summary-item">
             <span>Likes</span>
 
