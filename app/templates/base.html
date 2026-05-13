@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/add_recipe.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -33,7 +34,10 @@
                 <a href="{{ url_for('profile') }}" class="nav-circle">
                     <span class="material-icons">account_circle</span>
                 </a>
-                <a href="{{ url_for('logout') }}" class="signup-btn">Logout</a>
+                <form method ="POST" action="{{ url_for('logout') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-link">Logout</button>
+                </form>
             {% else %}
                 <a href="{{ url_for('login') }}" class="nav-circle">
                     <span class="material-icons">account_circle</span>
