@@ -31,124 +31,109 @@ The form will be submitted to the server for processing and validation.
     </a>
     <!-- Sign-up card -->
     <div class="signup-container">
-        <div class="soft-card d-flex flex-direction-column">
+        <div class="soft-card d-flex">
             <!-- Form -->
             <form class="comfort-form" id="signupForm" novalidate>
+                <div classs = "signup-header">
+                    <h1 class = "signup-title text-center">Create account</h1>
+                    <p class = "signup-subtitle text-center">Join our cooking community</p>
+                </div>
+                <div class = "row g-3">
+                    <div class = "col-6 soft-field">
+                        <div class = "form-floating field-container">
+                            <input type="text" class="form-control" id="firstName" placeholder="First name" required>
+                            <label for="firstName">First name</label>
+                            <div class="field-accent"></div>
+                        </div>
+                        <span class="gentle-error" id="firstNameError"></span>
+                    </div>
 
-                <!-- Splits card layout into 2 -->
-                <div class="row g-4 g-lg-5 align-items-stretch h-100">
-                     <!-- ░░ LEFT COLUMN — form fields ░░ -->
-                    <div class="col-12 col-md-6 auth-left">
-                        <!-- Header -->
-                        <div class="signup-header mb-4">
-                            <h1 class="signup-title">Create account</h1>
-                            <p class="signup-subtitle">Join our cooking community</p>
+                    <div class = "col-6 soft-field">
+                        <div class = "form-floating field-container">
+                            <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
+                            <label for="lastName">Last name</label>
+                            <div class="field-accent"></div>
                         </div>
-                         <!-- First name & Last name — side by side -->
-                        <div class="row g-3 mb-2">
-                            <div class="col-6 soft-field">
-                                <div class="form-floating field-container">
-                                    <input type="text"
-                                           class="form-control"
-                                           id="firstName"
-                                           placeholder="First name"
-                                           required>
-                                    <label for="firstName">First name</label>
-                                    <div class="field-accent"></div>
-                                </div>
-                                <span class="gentle-error" id="firstNameError"></span>
-                            </div>
+                        <span class="gentle-error" id="lastNameError"></span>
+                    </div>
+                    <!-- Email -->
+                    <div class="soft-field">
+                        <div class="form-floating field-container">
+                            <input type="email"
+                                    class="form-control"
+                                    id="email"
+                                    placeholder="Email"
+                                    required>
+                            <label for="email">Email address</label>
+                            <div class="field-accent"></div>
+                        </div>
+                        <span class="gentle-error" id="emailError"></span>
+                    </div>
 
-                            <div class="col-6 soft-field">
-                                <div class="form-floating field-container">
-                                    <input type="text"
-                                           class="form-control"
-                                           id="lastName"
-                                           placeholder="Last name"
-                                           required>
-                                    <label for="lastName">Last name</label>
-                                    <div class="field-accent"></div>
-                                </div>
-                                <span class="gentle-error" id="lastNameError"></span>
-                            </div>
+                    <!-- Password -->
+                    <div class="soft-field">
+                        <div class="form-floating field-container">
+                            <input type="password"
+                                    class="form-control"
+                                    id="password"
+                                    placeholder="Password"
+                                    required>
+                            <label for="password">Password</label>
+                            <button type="button"
+                                    class="gentle-toggle"
+                                    id="passwordToggle"
+                                    aria-label="Toggle password visibility"
+                                    aria-pressed="false">
+                                <span class="toggle-icon">
+                                    <i class="bi bi-eye eye-open"></i>
+                                    <i class="bi bi-eye-slash eye-closed"></i>
+                                </span>
+                            </button>
+                            <div class="field-accent"></div>
                         </div>
-                        <!-- Email -->
-                        <div class="soft-field mb-1">
-                            <div class="form-floating field-container">
-                                <input type="email"
-                                       class="form-control"
-                                       id="email"
-                                       placeholder="Email"
-                                       required>
-                                <label for="email">Email address</label>
-                                <div class="field-accent"></div>
-                            </div>
-                            <span class="gentle-error" id="emailError"></span>
-                        </div>
+                        <div class="strength-bar-wrap mt-1" id="strengthBar"></div>
+                        <div class="strength-label" id="strengthLabel"></div>
+                        <span class="gentle-error" id="passwordError"></span>
+                    </div>
 
-                         <!-- Password -->
-                        <div class="soft-field mb-1">
-                            <div class="form-floating field-container">
-                                <input type="password"
-                                       class="form-control"
-                                       id="password"
-                                       placeholder="Password"
-                                       required>
-                                <label for="password">Password</label>
-                                <button type="button"
-                                        class="gentle-toggle"
-                                        id="passwordToggle"
-                                        aria-label="Toggle password visibility"
-                                        aria-pressed="false">
-                                    <span class="toggle-icon">
-                                        <i class="bi bi-eye eye-open"></i>
-                                        <i class="bi bi-eye-slash eye-closed"></i>
-                                    </span>
-                                </button>
-                                <div class="field-accent"></div>
-                            </div>
-                            <div class="strength-bar-wrap mt-1" id="strengthBar"></div>
-                            <div class="strength-label" id="strengthLabel"></div>
-                            <span class="gentle-error" id="passwordError"></span>
+                    <!-- Confirm password -->
+                    <div class="soft-field">                                  
+                        <div class="form-floating field-container">
+                            <input type="password"
+                                    class="form-control"
+                                    id="confirmPassword"
+                                    placeholder="Confirm password"
+                                    required>
+                            <label for="confirmPassword">Confirm password</label>
+                            <button type="button"
+                                class="gentle-toggle"
+                                id="confirmToggle"
+                                aria-label="Toggle confirm password visibility"
+                                aria-pressed="false">
+                                <span class="toggle-icon">
+                                    <i class="bi bi-eye eye-open"></i>
+                                    <i class="bi bi-eye-slash eye-closed"></i>
+                                </span>
+                            </button>
+                            <div class="field-accent"></div>
                         </div>
+                        <span class="gentle-error" id="confirmError"></span>
+                    </div>
 
-                        <!-- Confirm password -->
-                        <div class="soft-field mb-3">
-                            <div class="form-floating field-container">
-                                <input type="password"
-                                       class="form-control"
-                                       id="confirmPassword"
-                                       placeholder="Confirm password"
-                                       required>
-                                <label for="confirmPassword">Confirm password</label>
-                                <button type="button"
-                                        class="gentle-toggle"
-                                        id="confirmToggle"
-                                        aria-label="Toggle confirm password visibility"
-                                        aria-pressed="false">
-                                    <span class="toggle-icon">
-                                        <i class="bi bi-eye eye-open"></i>
-                                        <i class="bi bi-eye-slash eye-closed"></i>
-                                    </span>
-                                </button>
-                                <div class="field-accent"></div>
-                            </div>
-                            <span class="gentle-error" id="confirmError"></span>
-                        </div>
-
-                        <!-- Terms checkbox -->
-                        <div class="form-check gentle-checkbox-wrap mb-1">
-                            <input class="form-check-input gentle-check-input"
-                                   type="checkbox"
-                                   id="terms">
-                            <label class="form-check-label gentle-check-label" for="terms">
-                                I agree to the
-                                <a href="{{ url_for('terms') }}#terms" class="comfort-link">Terms</a>
-                                and
-                                <a href="{{ url_for('privacy') }}#privacy" class="comfort-link">Privacy Policy</a>
-                            </label>
-                        </div>
-                        <span class="gentle-error d-block mb-3" id="termsError"></span>
+                    <!-- Terms checkbox -->
+                     <div class="soft-field">
+                         <div class="form-check gentle-checkbox-wrap">
+                             <input class="form-check-input gentle-check-input"
+                                     type="checkbox"
+                                     id="terms">
+                             <label class="form-check-label gentle-check-label" for="terms">
+                                 I agree to the
+                                 <a href="{{ url_for('terms') }}#terms" class="comfort-link">Terms</a>
+                                 and
+                                 <a href="{{ url_for('privacy') }}#privacy" class="comfort-link">Privacy Policy</a>
+                             </label>
+                         </div>
+                         <span class="gentle-error d-block" id="termsError"></span>
 
                         <!-- Create account button -->
                         <button type="submit" class="create_account_button comfort-button w-100">
@@ -161,52 +146,14 @@ The form will be submitted to the server for processing and validation.
                             </div>
                             <div class="button-glow"></div>
                         </button>
+                     </div>
 
-                    </div><!-- /col left -->
-
-                    <!-- ░░ RIGHT COLUMN — social + sign-in link ░░ -->
-                    <div class="col-12 col-md-6 auth-right d-flex flex-column align-items-center justify-content-center text-center gap-4 h-100">
-
-                        <!-- Divider -->
-                        <div class="gentle-divider d-flex align-items-center gap-3 w-100">
-                            <div class="divider-line"></div>
-                            <span class="divider-text">or sign up with</span>
-                            <div class="divider-line"></div>
-                        </div>
-
-                        <!-- Social buttons stacked -->
-                        <div class="comfort-social d-flex flex-column gap-3 w-100" style="max-width:260px;">
-                            <button type="button" class="social-soft">
-                                <div class="social-background"></div>
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                    <path d="M9 7.4v3.2h4.6c-.2 1-.8 1.8-1.6 2.4v2h2.6c1.5-1.4 2.4-3.4 2.4-5.8 0-.6 0-1.1-.1-1.6H9z" fill="#4285F4"/>
-                                    <path d="M9 17c2.2 0 4-.7 5.4-1.9l-2.6-2c-.7.5-1.6.8-2.8.8-2.1 0-3.9-1.4-4.6-3.4H1.7v2.1C3.1 15.2 5.8 17 9 17z" fill="#34A853"/>
-                                    <path d="M4.4 10.5c-.2-.5-.2-1.1 0-1.6V6.8H1.7c-.6 1.2-.6 2.6 0 3.8l2.7-2.1z" fill="#FBBC04"/>
-                                    <path d="M9 4.2c1.2 0 2.3.4 3.1 1.2l2.3-2.3C12.9 1.8 11.1 1 9 1 5.8 1 3.1 2.8 1.7 5.4l2.7 2.1C5.1 5.6 6.9 4.2 9 4.2z" fill="#EA4335"/>
-                                </svg>
-                                <span>Google</span>
-                                <div class="social-glow"></div>
-                            </button>
-
-                            <button type="button" class="social-soft">
-                                <div class="social-background"></div>
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="#1877F2">
-                                    <path d="M18 9C18 4.03 13.97 0 9 0S0 4.03 0 9c0 4.49 3.29 8.21 7.59 9v-6.37H5.31V9h2.28V7.02c0-2.25 1.34-3.49 3.39-3.49.98 0 2.01.18 2.01.18v2.21h-1.13c-1.11 0-1.46.69-1.46 1.4V9h2.49l-.4 2.63H10.4V18C14.71 17.21 18 13.49 18 9z"/>
-                                </svg>
-                                <span>Facebook</span>
-                                <div class="social-glow"></div>
-                            </button>
-                        </div>
-
-                        <!-- Already have account -->
-                        <div class="comfort-signup">
-                            <span class="signup-text">Already have an account?</span>
+                    <!-- Already have account -->
+                    <div class="comfort-signup text-center mt-3">
+                            <span class="signup-text ">Already have an account?</span>
                             <a href="{{ url_for('login') }}" class="comfort-link signup-link ms-1">Sign in</a>
-                        </div>
-
-                    </div><!-- /col right -->
-
-                </div><!-- /row -->
+                    </div>
+                </div>
             </form>
 
             <!-- Success state -->
