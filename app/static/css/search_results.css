@@ -24,3 +24,18 @@
 .search-results-grid .col-12 {
     margin-bottom: 1rem;
 }
+
+.recipes-search-hero {
+    background-color: #e9dfcf;
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    margin: 2rem 0 3rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.recipes-search-hero .search-container {
+    background: transparent;
+    width: 100%;
+    max-width: 700px;
+}

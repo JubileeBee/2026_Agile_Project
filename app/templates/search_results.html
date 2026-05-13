@@ -1,9 +1,11 @@
-{% extends "base.html" %} {% block extra_css %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/search_results.css') }}"
-/>
-{% endblock %} {% block content %}
+{% extends "base.html" %} 
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/search_results.css') }}">
+{% endblock %}
+
+{% block content %}
 
 <div class="container py-5">
   {% if query %}
@@ -12,7 +14,80 @@
   {% else %}
   <h1 class="mb-4">Browse All Recipes</h1>
   <p class="text-muted mb-4">{{ results|length }} recipe(s) available</p>
-  {% endif %} {% if results %}
+  {% endif %}
+<div class="recipes-search-hero">
+  <form
+  action="{{ url_for('recipes') }}"
+  method="GET"
+  class="search-container mb-5"
+>
+
+  <div class="search-main-row">
+    <input
+      class="search-field"
+      type="text"
+      name="q"
+      placeholder="Search recipes..."
+      value="{{ request.args.get('q', '') }}"
+    />
+
+    <button type="submit">Search</button>
+  </div>
+
+  <div class="search-filter-row">
+
+    <select class="search-field" name="difficulty">
+      <option value="">All Difficulties</option>
+      <option value="EASY"
+      {% if request.args.get('difficulty') == 'EASY' %}selected{% endif %}>
+      Easy
+      </option>
+
+      <option value="MEDIUM"
+      {% if request.args.get('difficulty') == 'MEDIUM' %}selected{% endif %}>
+      Medium
+      </option>
+
+      <option value="HARD"
+      {% if request.args.get('difficulty') == 'HARD' %}selected{% endif %}>
+      Hard
+      </option>
+    </select>
+
+    <select class="search-field" name="category">
+      <option value="">All Categories</option>
+      <option value="BREAKFAST">Breakfast</option>
+      <option value="BRUNCH">Brunch</option>
+      <option value="LUNCH">Lunch</option>
+      <option value="DINNER">Dinner</option>
+      <option value="SNACK">Snack</option>
+      <option value="DRINK">Drink</option>
+
+      <option value="DESSERT"
+      {% if request.args.get('category') == 'DESSERT' %}selected{% endif %}>
+      Dessert
+      </option>
+    </select>
+
+    <select class="search-field" name="sort">
+      <option value="">Sort By</option>
+
+      <option value="alphabetical"
+      {% if request.args.get('sort') == 'alphabetical' %}selected{% endif %}>
+      Alphabetical
+      </option>
+
+      <option value="newest"
+      {% if request.args.get('sort') == 'newest' %}selected{% endif %}>
+      Newest
+      </option>
+    </select>
+
+  </div>
+</form>
+</div>
+
+  {% if results %}
 
   <div class="row g-4 search-results-grid">
     {% for recipe in results %}
