@@ -1,3 +1,4 @@
+import re
 from flask import render_template, request, redirect, url_for, jsonify, abort, flash
 from app import app, db
 from sqlalchemy import desc, func, or_
@@ -145,11 +146,48 @@ def profile():
 def update_profile():
          
     #JSON payload from frontend edit profile modal
-    data = request.get_json()
+    data = request.get_json() or {}
     new_name = data.get('name', '').strip()
     new_bio = data.get('bio', '').strip()
-    new_avatar = data.get('profile_image', '').strip()
+    new_avatar = data.get('profile_image')
 
+    # Avatar Validation:
+    # Whitelist the 5 preset avatars on backend to prevent malicious URLs 
+    # being saved via direct API requests.
+    ALLOWED_AVATARS = {
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539"
+    }
+
+    if new_avatar and new_avatar not in ALLOWED_AVATARS:
+        return jsonify({'success': False, 'error': 'Invalid avatar selected'}), 400
+
+    # Username validation must not be empty
+    if not new_name:
+        return jsonify({'success': False, 'error': 'Username cannot be empty'}), 400
+
+    # Username validation should be above 3 and under 64 characters
+    if len(new_name) < 3:
+        return jsonify({'success': False, 'error': 'Username must be at least 3 characters long'}), 400
+
+    if len(new_name) > 64:
+        return jsonify({'success': False, 'error': 'Username cannot exceed 64 characters'}), 400
+
+    #Username must not contain spaces or special characters (only letters, numbers, underscores)
+    if not re.match(r'^[a-zA-Z0-9_]+$', new_name):
+        return jsonify({'success': False, 'error': 'Username cannot contain spaces or special characters (only letters, numbers, underscores)'}), 400
+    
+    #Username must not be only underscores
+    if new_name.strip('_') == '':
+        return jsonify({'success': False, 'error': 'Username cannot be only underscores'}), 400
+
+    # Bio validation should be under 250 characters
+    if len(new_bio) > 250:
+        return jsonify({'success': False,'error': 'Bio cannot exceed 250 characters'}), 400
+    
     # Ensure username is unique, but allow the user to keep their own username
     if new_name != current_user.username:
         existing = User.query.filter_by(username=new_name).first()
