@@ -63,12 +63,14 @@
     font-weight: 700;
     color: var(--primary-brown);
     margin-bottom: 6px;
+    text-align: left;
 }
 
 .profile-bio {
     font-size: 0.95rem;
     color: var(--meta-type-color);
     margin-bottom: 16px;
+    text-align: left;
 }
 
 .profile-stats {
