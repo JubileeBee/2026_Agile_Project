@@ -180,7 +180,9 @@ content %}
     <p>Bye bye, we'll miss you!</p>
   </div>
 
-  <script src="{{ url_for('static', filename='js/profile_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profile_script.js') }}"></script>
 </div>
 
 {% endblock %}
+
+{% block scripts %}{% endblock %}

@@ -80,13 +80,13 @@ to appear on EVERY page should be added here. #}
         <div class="footer-socials">
           {# SECURITY EDGE CASE: add rel="noopener noreferrer" for all external
           links #}
-          <a
-            href="https://www.instagram.com/"
+          <a href="https://www.instagram.com/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
             ><i class="fa-brands fa-instagram"></i
           ></a>
+          
           <a
             href="https://www.tiktok.com/"
             target="_blank"
@@ -122,11 +122,12 @@ to appear on EVERY page should be added here. #}
       </div>
     </footer>
 
-    {# Edge case: defer prevents DOM race conditions #}
+    {% block scripts %}
     <script
       defer
       src="{{ url_for('static', filename='js/recipe_card_script.js') }}"
     ></script>
+    {% endblock %}
     <script
       defer
       src="{{ url_for('static', filename='js/navbar_script.js') }}"

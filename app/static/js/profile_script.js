@@ -1,3 +1,11 @@
+// Set initial liked state on page load
+document.querySelectorAll('.heart-btn').forEach(btn => {
+    const icon = btn.querySelector('.material-icons')
+    if (icon.textContent.trim() === 'favorite') {
+        btn.classList.add('liked')
+    }
+})
+
 // Profile Tab functionality: handles switching between "My Recipes", "Favourites", and "Likes"
 const tabs = document.querySelectorAll('.profile-tab');
 const contents = document.querySelectorAll('.profile-tab-content');
@@ -170,7 +178,7 @@ document.querySelectorAll('.heart-btn').forEach(btn => {
 
         // Get the form's action URL which has the recipe id
         const form = btn.closest('form')
-        const url = form.action
+        const url = btn.dataset.url
         const card = btn.closest('[data-recipe-id]') || btn.closest('article')
         const recipeId = url.split('/')[2] // extracts id from /recipe/id/like
 
