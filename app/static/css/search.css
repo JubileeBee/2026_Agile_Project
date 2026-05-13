@@ -1,0 +1,62 @@
+/* =========================
+   Homepage Search
+   Scoped to home page only
+   ========================= */
+
+.home-container .search-field {
+    height: 48px;
+    border-radius: 24px;
+    border: none;
+    padding: 0 16px;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.home-container .search-field:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(127, 85, 57, 0.2);
+}
+
+.home-container .search-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.home-container .search-main-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+    flex-wrap: nowrap;
+}
+
+.home-container .search-main-row input.search-field {
+    border-radius: 24px 0 0 24px;
+}
+
+.home-container .search-main-row button {
+    border-radius: 0 24px 24px 0;
+    height: 48px;
+    border: none;
+    padding: 0 20px;
+}
+
+.home-container .search-main-row .search-field {
+    width: 420px;
+}
+
+.home-container .search-filter-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.home-container .search-filter-row select.search-field {
+    width: 140px !important;
+    padding-right: 28px;
+}
