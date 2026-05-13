@@ -1,82 +1,43 @@
 {# This is the home page template for CozyCravings, a recipe sharing platform.
 It extends the base.html template and fills in the content block with a welcome
-hero and a section showcasing variety of recipes. #} 
-{% extends "base.html" %}
+hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
-{% endblock %}
-{% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/search.css') }}"
+/>
+{% endblock %} {% block content %}
 
 <div class="home-container">
-    <header class="welcome-hero">
-        {% if current_user and current_user.is_authenticated %}
-            {% if current_user.recipes|length == 0 and current_user.likes|length == 0 %}
-                <h1>Welcome, {{ current_user.username }}!</h1>
-            {% else %}
-                <h1>Welcome back, {{ current_user.username }}!</h1>
-            {% endif %}
-        {% else %}
-            <h1>Welcome to CozyCravings</h1>
-        {% endif %}
+  <header class="welcome-hero">
+    {% if current_user and current_user.is_authenticated %} {% if
+    current_user.recipes|length == 0 and current_user.likes|length == 0 %}
+    <h1>Welcome, {{ current_user.username }}!</h1>
+    {% else %}
+    <h1>Welcome back, {{ current_user.username }}!</h1>
+    {% endif %} {% else %}
+    <h1>Welcome to CozyCravings</h1>
+    {% endif %}
 
-<form
-  action="{{ url_for('search_recipes') }}"
-  method="GET"
-  class="search-container"
->
+    <form
+      action="{{ url_for('search_recipes') }}"
+      method="GET"
+      class="search-container"
+    >
+      <div class="search-main-row">
+        <input
+          class="search-field"
+          type="text"
+          name="q"
+          placeholder="What are your cravings for today?"
+          value="{{ request.args.get('q', '') }}"
+          required
+        />
 
-  <div class="search-main-row">
-    <input
-      class="search-field"
-      type="text"
-      name="q"
-      placeholder="What are your cravings for today?"
-      value="{{ request.args.get('q', '') }}"
-      required
-    />
-
-    <button type="submit">Search</button>
-  </div>
-
-  <div class="search-filter-row">
-
-    <select class="search-field" name="difficulty">
-      <option value="">All Difficulties</option>
-      <option value="EASY">Easy</option>
-      <option value="MEDIUM">Medium</option>
-      <option value="HARD"
-      {% if request.args.get('difficulty') == 'HARD' %}selected{% endif %}>
-      Hard
-      </option>
-    </select>
-
-    <select class="search-field" name="category">
-      <option value="">All Categories</option>
-      <option value="BREAKFAST">Breakfast</option>
-      <option value="BRUNCH">Brunch</option>
-      <option value="LUNCH">Lunch</option>
-      <option value="DINNER">Dinner</option>
-      <option value="SNACK">Snack</option>
-      <option value="DRINK">Drink</option>
-      <option value="DESSERT"
-      {% if request.args.get('category') == 'DESSERT' %}selected{% endif %}>
-      Dessert
-      </option>
-    </select>
-
-    <select class="search-field" name="sort">
-      <option value="">Sort By</option>
-      <option value="alphabetical">Alphabetical</option>
-      <option value="newest"
-      {% if request.args.get('sort') == 'newest' %}selected{% endif %}>
-      Newest
-      </option>
-    </select>
-
-  </div>
-
-</form>
-</header>
+        <button type="submit">Search</button>
+      </div>
+    </form>
+  </header>
 
   {% if error %}
   <div class="alert alert-warning text-center py-4">{{ error }}</div>
@@ -127,7 +88,5 @@ hero and a section showcasing variety of recipes. #}
     </div>
   </section>
   {% endif %} {% endfor %} {% endif %}
-
-  
 </div>
 {% endblock %}
