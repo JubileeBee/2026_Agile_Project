@@ -46,6 +46,20 @@ avatarOptions.forEach(avatar => {
     });
 });
 
+// Syncs modal avatar selection with the currently saved profile image
+// so the correct preset avatar is highlighted when the modal opens.
+openModal.addEventListener('click', () => {
+    const currentSrc = profileImg.src;
+
+    avatarOptions.forEach(avatar => {
+        avatar.classList.remove('selected');   
+        
+        if (avatar.src === currentSrc) {
+            avatar.classList.add('selected');
+        }
+    });
+});
+
 
 //Handles profile updates: sends data to backend and synchronises UI state
 

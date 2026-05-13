@@ -145,10 +145,24 @@ def profile():
 def update_profile():
          
     #JSON payload from frontend edit profile modal
-    data = request.get_json()
+    data = request.get_json() or {}
     new_name = data.get('name', '').strip()
     new_bio = data.get('bio', '').strip()
-    new_avatar = data.get('profile_image', '').strip()
+    new_avatar = data.get('profile_image')
+
+    # Avatar Validation:
+    # Whitelist the 5 preset avatars on backend to prevent malicious URLs 
+    # being saved via direct API requests.
+    ALLOWED_AVATARS = {
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539"
+    }
+
+    if new_avatar and new_avatar not in ALLOWED_AVATARS:
+        return jsonify({'success': False, 'error': 'Invalid avatar selected'}), 400
 
     # Username validation must not be empty
     if not new_name:
