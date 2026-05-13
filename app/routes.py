@@ -1,5 +1,5 @@
 import re
-from flask import render_template, request, redirect, url_for, jsonify
+from flask import render_template, request, redirect, url_for, jsonify, abort, flash
 from app import app, db
 from sqlalchemy import desc, func, or_
 from flask_login import login_user, login_required, current_user, logout_user
@@ -307,7 +307,7 @@ def logout():
 @app.route('/post')
 @login_required
 def post():
-    return render_template('post.html')
+    return redirect(url_for('add_recipe'))
 
 @app.route('/recipe/<int:id>', methods=['GET', 'POST'])
 def recipe(id):
@@ -343,6 +343,24 @@ def recipe(id):
         recipe=recipe,
         related_recipes=related_recipes
     )
+
+@app.route('/comment/<int:comment_id>/delete', methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+
+    comment = Comment.query.get_or_404(comment_id)
+
+    if comment.user_id != current_user.id:
+        abort(403)
+
+    recipe_id = comment.recipe_id
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    flash("Comment deleted successfully.", "success")
+
+    return redirect(url_for('recipe', id=recipe_id))
 
 @app.route('/recipe/<int:id>/like', methods=['POST'])
 @login_required
@@ -380,8 +398,8 @@ def edit_recipe(id):
         recipe.description = request.form['description']
         recipe.ingredients = request.form['ingredients']
         recipe.instructions = request.form['instructions']
-        recipe.category = request.form['category']
-        recipe.image_file = request.form['image_url']
+        recipe.category = CategoryEnum[request.form['category']]
+        recipe.image_file = request.form['image_file']
 
         db.session.commit()
 
