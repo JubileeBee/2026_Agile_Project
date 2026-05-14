@@ -160,57 +160,65 @@ confirmDeleteBtn.addEventListener('click', async () => {
     }, 2500);
 });
 
+// Set initial liked state on page load
+document.querySelectorAll('.heart-btn').forEach(btn => {
+    const icon = btn.querySelector('.material-icons')
+    if (icon.textContent.trim() === 'favorite') {
+        btn.classList.add('liked')
+    }
+})
 
 // Toggles like state by calling backend API and synchronising UI + profile stats without page reload
-document.querySelectorAll('.heart-btn').forEach(btn => {
+function attachHeartListener(btn) {
     btn.addEventListener('click', async (e) => {
         // Prevent card click / navigation from triggering
         e.preventDefault()
         e.stopPropagation()
 
-        // Get the form's action URL which has the recipe id
-        const form = btn.closest('form')
-        const url = form.action
+        // Get the URL from data-url attribute which has the recipe id
+        const url = btn.dataset.url
         const card = btn.closest('[data-recipe-id]') || btn.closest('article')
         const recipeId = url.split('/')[2] // extracts id from /recipe/id/like
 
         // Send POST request to toggle like/unlike in backend
         const res = await fetch(url, { method: 'POST' })
         const data = await res.json()
-        
-        // Icon inside heart button
-        const icon = btn.querySelector('.material-icons')
+
+        // Update ALL heart buttons for this recipe across all tabs
+        document.querySelectorAll(`.heart-btn[data-url="${url}"]`).forEach(b => {
+            const icon = b.querySelector('.material-icons')
+            if (data.liked) {
+                b.classList.add('liked')
+                icon.textContent = 'favorite'
+            } else {
+                b.classList.remove('liked')
+                icon.textContent = 'favorite_border'
+            }
+        })
 
         if (data.liked) {
-            // Update UI to fill red heart
-            btn.classList.add('liked')
-            icon.textContent = 'favorite'
-
-            // Clone the card and add it to the likes tab dynamically
             const likesTab = document.querySelector('#likes .row')
-            const clonedCard = card.closest('.col-12').cloneNode(true)
-            likesTab.appendChild(clonedCard)
+
+            // Only clone and add if not already in likes tab
+            const alreadyExists = likesTab.querySelector(`[data-recipe-id="${recipeId}"]`)
+            if (!alreadyExists) {
+                const clonedCard = card.closest('.col-12').cloneNode(true)
+                // Re-attach listener to cloned heart button so it works after cloning
+                attachHeartListener(clonedCard.querySelector('.heart-btn'))
+                likesTab.appendChild(clonedCard)
+            }
 
             // Increment likes counter in profile stats
             const likesCount = document.querySelector('.stat:nth-child(3) .stat-number')
             likesCount.textContent = parseInt(likesCount.textContent) + 1
 
         } else {
-            // update UI to just the outline heart
-            btn.classList.remove('liked')
-            icon.textContent = 'favorite_border'
-
-            // Remove the card from likes tab
-            const likesTab = document.querySelector('#likes .row')
-            likesTab.querySelectorAll('[data-recipe-id]').forEach(c => {
-                if (c.dataset.recipeId === recipeId) {
-                    c.closest('.col-12').remove()
-                }
-            })
-
             // Decrement likes count in profile stats
             const likesCount = document.querySelector('.stat:nth-child(3) .stat-number')
             likesCount.textContent = parseInt(likesCount.textContent) - 1
         }
     })
-})
+}
+
+// Attach listener to all heart buttons on page load
+document.querySelectorAll('.heart-btn').forEach(btn => attachHeartListener(btn))

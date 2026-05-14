@@ -385,6 +385,14 @@ html, body {
     min-height: 0;
 }
 
+.recipe-card h1 {
+    text-align: left;
+}
+
+.recipe-footer {
+    justify-content: flex-start;
+}
+
 .card-meta {
     display: flex;
     justify-content: space-between;

@@ -159,18 +159,13 @@ content %}
   </div>
 
   {% for tab_id, recipes, is_active in tabs %}
-  <div
-    class="profile-tab-content {% if is_active %}active{% endif %}"
-    id="{{ tab_id }}"
-  >
-    <div class="container">
-      <div class="row g-4">
-        {% for recipe in recipes %}
-        <div class="col-12 col-md-6 col-lg-4">
-          {% include "recipe_card.html" %}
-        </div>
-        {% endfor %}
-      </div>
+  <div class="profile-tab-content {% if is_active %}active{% endif %}" id="{{ tab_id }}">
+    <div class="row g-4 px-4">
+    {% for recipe in recipes %}
+    <div class="col-12 col-md-6 col-lg-4">
+        {% include "recipe_card.html" %}
+    </div>
+    {% endfor %}
     </div>
   </div>
   {% endfor %} {# Bye popup: shown briefly after account deletion before
@@ -180,7 +175,9 @@ content %}
     <p>Bye bye, we'll miss you!</p>
   </div>
 
-  <script src="{{ url_for('static', filename='js/profile_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profile_script.js') }}"></script>
 </div>
 
 {% endblock %}
+
+{% block scripts %}{% endblock %}
