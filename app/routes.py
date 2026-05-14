@@ -362,25 +362,37 @@ def recipe(id):
 
     recipe = Recipe.query.get_or_404(id)
 
+    # comment posting
     if request.method == 'POST':
-
         if not current_user.is_authenticated:
             return redirect(url_for('login'))
 
         comment_text = request.form.get('comment')
 
         if comment_text and comment_text.strip():
-
             new_comment = Comment(
                 content=comment_text.strip(),
                 user_id=current_user.id,
                 recipe_id=recipe.id
             )
-
             db.session.add(new_comment)
             db.session.commit()
 
         return redirect(url_for('recipe', id=recipe.id))
+
+    already_liked = False
+    already_faved = False
+
+    if current_user.is_authenticated:
+        already_liked = Like.query.filter_by(
+            user_id=current_user.id,
+            recipe_id=id
+        ).first() is not None
+
+        already_faved = Favourite.query.filter_by(
+            user_id=current_user.id,
+            recipe_id=id
+        ).first() is not None
 
     related_recipes = Recipe.query.filter(
         Recipe.id != recipe.id
@@ -389,7 +401,9 @@ def recipe(id):
     return render_template(
         'recipe.html',
         recipe=recipe,
-        related_recipes=related_recipes
+        related_recipes=related_recipes,
+        already_liked=already_liked,
+        already_faved=already_faved
     )
 
 @app.route('/comment/<int:comment_id>/delete', methods=['POST'])
@@ -415,7 +429,12 @@ def delete_comment(comment_id):
 def like_recipe(id):
     # Handles like button interactions by adding/removing a like record
     # and synchronising frontend state with updated like count
-
+    recipe_obj = Recipe.query.get_or_404(id)
+    if recipe_obj.user_id == current_user.id:
+        return jsonify({
+            'success': False,
+            'error': 'You cannot like your own recipe.'
+        }), 403
      
     existing_like = Like.query.filter_by(user_id=current_user.id, recipe_id=id).first()
     
@@ -433,6 +452,37 @@ def like_recipe(id):
         # return updated state and new like count
         return jsonify({'liked': True, 'likes': Like.query.filter_by(recipe_id=id).count()})
 
+@app.route('/recipe/<int:id>/favourite', methods=['POST'])
+@login_required
+def favourite_recipe(id):
+
+    recipe = Recipe.query.get_or_404(id)
+
+    if recipe.user_id == current_user.id:
+        return jsonify({
+            'success': False,
+            'error': 'You cannot favourite your own recipe.'
+        }), 403
+
+    existing = Favourite.query.filter_by(
+        user_id=current_user.id,
+        recipe_id=id
+    ).first()
+
+    if existing:
+        db.session.delete(existing)
+        favourited = False
+    else:
+        db.session.add(Favourite(user_id=current_user.id, recipe_id=id))
+        favourited = True
+
+    db.session.commit()
+
+    return jsonify({
+        'success': True,
+        'favourited': favourited,
+        'favourites': Favourite.query.filter_by(recipe_id=id).count()
+    })
 
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
 @login_required

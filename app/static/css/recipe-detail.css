@@ -317,3 +317,17 @@
     padding-top: 20px;
     border-top: 1px solid #ccc;
 }
+
+
+/* FAVOURITE DEFAULT */
+#favouriteBtn {
+    background-color: transparent;
+    color: var(--primary-brown);
+}
+
+/* FAVOURITE ACTIVE */
+#favouriteBtn.favourited {
+    background-color: var(--primary-brown) !important;
+    border-color: var(--primary-brown) !important;
+    color: white !important;
+}
