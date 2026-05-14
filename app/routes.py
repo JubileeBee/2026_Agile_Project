@@ -153,6 +153,71 @@ def recipes():
         liked_recipe_ids=liked_recipe_ids,
     )
 
+@app.route("/api/live-search")
+def live_search():
+
+    query = request.args.get('q', '').strip()
+    difficulty = request.args.get('difficulty', '')
+    category = request.args.get('category', '')
+    sort = request.args.get('sort', '')
+
+    results_query = Recipe.query
+
+    if query:
+        results_query = results_query.filter(
+            or_(
+                Recipe.title.ilike(f'%{query}%'),
+                Recipe.description.ilike(f'%{query}%'),
+                Recipe.ingredients.ilike(f'%{query}%'),
+                Recipe.category.cast(db.String).ilike(f'%{query}%')
+            )
+        )
+
+    if difficulty:
+        results_query = results_query.filter(
+            Recipe.difficulty == DifficultyEnum[difficulty]
+        )
+
+    if category:
+        results_query = results_query.filter(
+            Recipe.category == CategoryEnum[category]
+        )
+
+    if sort == 'alphabetical':
+        results_query = results_query.order_by(
+            Recipe.title.asc()
+        )
+
+    elif sort == 'newest':
+        results_query = results_query.order_by(
+            Recipe.created_at.desc()
+        )
+
+    results = results_query.all()
+
+    recipes_data = []
+
+    liked_recipe_ids = []
+
+    if current_user.is_authenticated:
+        liked_recipe_ids = [
+            like.recipe_id for like in current_user.likes
+        ]
+
+    for recipe in results:
+        recipes_data.append({
+            "id": recipe.id,
+            "title": recipe.title,
+            "description": recipe.description,
+            "image_file": recipe.image_file,
+            "category": recipe.category.name,
+            "difficulty": recipe.difficulty.name,
+            "likes": len(recipe.likes),
+            "liked": recipe.id in liked_recipe_ids
+        })
+
+    return jsonify(recipes_data)
+
 @app.route("/privacy_policy")
 def privacy():
     return render_template("privacy.html")
