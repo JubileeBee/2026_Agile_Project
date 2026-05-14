@@ -1,9 +1,22 @@
 from app.models import User, Recipe
 
 # Test that a logged-in user can create a recipe
-# Creates a test user and logs them in
-# Submits recipe form data to the add_recipe route
-# Verifies that the recipe is stored in the database
+#
+# This test covers:
+# - Authentication tests:
+#   creates and logs in a valid user
+#
+# - Protected route tests:
+#   verifies logged-in users can access the add_recipe route
+#
+# - Form submission tests:
+#   submits recipe form data through a POST request
+#
+# - Database creation tests:
+#   verifies the recipe is successfully stored in the database
+#
+# - Recipe validation/processing tests:
+#   checks recipe fields are correctly saved after processing
 
 def test_create_recipe(client):
 
