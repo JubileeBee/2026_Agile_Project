@@ -103,16 +103,22 @@ block content %}
           <!-- ACTIONS -->
           <div class="recipe-actions mt-auto d-flex flex-wrap gap-3">
             <!-- LIKE -->
-            <button class="btn btn-danger action-btn" id="likeBtn">
-              ❤️
-              <span id="likeCount">
-                {{ recipe.likes|length if recipe.likes else 0 }}
-              </span>
+            <button
+                id="likeBtn"
+                class="btn action-btn {% if already_liked %}liked{% endif %}"
+                type="button"
+                data-url="{{ url_for('like_recipe', id=recipe.id) }}"
+            >
+                ❤️ <span id="likeCount">{{ recipe.likes|length }}</span>
             </button>
 
-            <!-- FAVOURITE -->
-            <button class="btn btn-outline-dark action-btn" id="favouriteBtn">
-              ⭐ Favourite
+            <button
+                id="favouriteBtn"
+                class="btn action-btn {% if already_faved %}favourited{% endif %}"
+                type="button"
+                data-url="{{ url_for('favourite_recipe', id=recipe.id) }}"
+            >
+                ⭐ Favourite
             </button>
 
             <!-- SHARE -->
