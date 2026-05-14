@@ -497,13 +497,51 @@ def api_recipes():
     })
     
 @app.route('/add_recipe', methods=['GET', 'POST'])
+@login_required
 def add_recipe():
 
     if request.method == 'POST':
 
-        # temporary placeholder
-        print("Recipe submitted!")
+        ingredient_names = request.form.getlist('ingredient_name[]')
+        ingredient_quantities = request.form.getlist('ingredient_quantity[]')
+        ingredient_units = request.form.getlist('ingredient_unit[]')
 
-        return redirect(url_for('home'))
+        ingredients = []
+
+        for name, qty, unit in zip(
+            ingredient_names,
+            ingredient_quantities,
+            ingredient_units
+        ):
+            ingredients.append(f"{qty} {unit} {name}".strip())
+
+        ingredients_text = "\n".join(ingredients)
+
+        image = request.files.get('image')
+        image_filename = None
+
+        if image and image.filename:
+            image_filename = image.filename
+            image.save(f'app/static/images/uploads/{image_filename}')
+
+        new_recipe = Recipe(
+            title=request.form['title'],
+            description=request.form['description'],
+            ingredients=ingredients_text,
+            instructions=request.form['instructions'],
+            category=CategoryEnum[request.form['category']],
+            difficulty=DifficultyEnum[request.form['difficulty']],
+            prep_time=int(request.form['prep_time']),
+            cook_time=int(request.form['cook_time']),
+            servings=int(request.form['servings']),
+            notes=request.form.get('notes'),
+            image_file=image_filename,
+            user_id=current_user.id
+        )
+
+        db.session.add(new_recipe)
+        db.session.commit()
+
+        return redirect(url_for('recipe', id=new_recipe.id))
 
     return render_template('add_recipe.html')

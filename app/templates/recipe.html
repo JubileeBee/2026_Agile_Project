@@ -13,23 +13,23 @@ block content %}
       <!-- IMAGE -->
       <div class="col-lg-6">
         <div class="recipe-image-wrapper h-100">
-          {% if recipe.image_file and recipe.image_file.startswith('http') %}
 
           <img
-            src="{{ recipe.image_file }}"
+            src="
+              {% if recipe.image_file %}
+                {% if 'http' in recipe.image_file or '/static/' in recipe.image_file %}
+                  {{ recipe.image_file }}
+                {% else %}
+                  {{ url_for('static', filename='images/uploads/' ~ recipe.image_file) }}
+                {% endif %}
+              {% else %}
+                {{ url_for('static', filename='images/default.png') }}
+              {% endif %}
+            "
             alt="{{ recipe.title }}"
             class="recipe-hero-image"
           />
-
-          {% else %}
-
-          <img
-            src="{{ url_for('static', filename=recipe.image_file if recipe.image_file else 'images/default_recipe.jpg') }}"
-            alt="{{ recipe.title }}"
-            class="recipe-hero-image"
-          />
-
-          {% endif %}
+        
         </div>
       </div>
 
@@ -370,24 +370,22 @@ block content %}
             class="related-recipe text-decoration-none"
           >
             <!-- IMAGE -->
-            {% if related.image_file and related.image_file.startswith('http')
-            %}
 
             <img
-              src="{{ related.image_file }}"
+              src="
+                {% if related.image_file %}
+                  {% if 'http' in related.image_file or '/static/' in related.image_file %}
+                    {{ related.image_file }}
+                  {% else %}
+                    {{ url_for('static', filename='images/uploads/' ~ related.image_file) }}
+                  {% endif %}
+                {% else %}
+                  {{ url_for('static', filename='images/default.png') }}
+                {% endif %}
+              "
               class="related-image"
               alt="{{ related.title }}"
             />
-
-            {% else %}
-
-            <img
-              src="{{ url_for('static', filename=related.image_file if related.image_file else 'images/default_recipe.jpg') }}"
-              class="related-image"
-              alt="{{ related.title }}"
-            />
-
-            {% endif %}
 
             <!-- CONTENT -->
             <div class="related-content">
