@@ -145,12 +145,16 @@ def recipes():
     liked_recipe_ids = []
     if current_user.is_authenticated:
         liked_recipe_ids = [like.recipe_id for like in current_user.likes]
+    total_likes = Like.query.count()
+    total_favourites = Favourite.query.count()
 
     return render_template(
         'search_results.html',
         query=query,
         results=results,
         liked_recipe_ids=liked_recipe_ids,
+        total_likes=total_likes,
+        total_favourites=total_favourites
     )
 
 @app.route("/api/live-search")

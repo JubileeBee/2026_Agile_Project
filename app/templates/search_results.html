@@ -17,7 +17,18 @@
   <p class="text-muted mb-4">{{ results|length }} recipe(s) found</p>
   {% else %}
   <h1 class="mb-4">Browse All Recipes</h1>
-  <p class="text-muted mb-4">{{ results|length }} recipe(s) available</p>
+  <div class="search-stats mb-4">
+
+  <p class="text-muted mb-2">
+    {{ results|length }} recipe(s) available
+  </p>
+
+  <div class="recipe-community-stats">
+    <span>❤️ {{ total_likes }} likes</span>
+    <span>⭐ {{ total_favourites }} favourites</span>
+  </div>
+
+</div>
   {% endif %}
 <div class="recipes-search-hero">
   <form

@@ -104,3 +104,11 @@
 .search-main-row .search-input {
     flex: 1;
 }
+.recipe-community-stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: #8b5e3c;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
