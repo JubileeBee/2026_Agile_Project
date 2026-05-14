@@ -2,17 +2,25 @@
 const likeBtn = document.getElementById("likeBtn");
 const likeCount = document.getElementById("likeCount");
 
-if (likeBtn) {
-    likeBtn.addEventListener("click", () => {
+if (likeBtn && likeCount) {
+    likeBtn.addEventListener("click", async () => {
+        const url = likeBtn.dataset.url;
 
-        likeBtn.classList.toggle("liked");
+        try {
+            const res = await fetch(url, { method: "POST" });
+            const data = await res.json();
 
-        let count = parseInt(likeCount.textContent);
+            if (!res.ok) {
+                alert(data.error || "Action not allowed");
+                return;
+            }
 
-        if (likeBtn.classList.contains("liked")) {
-            likeCount.textContent = count + 1;
-        } else {
-            likeCount.textContent = count - 1;
+            // backend truth
+            likeBtn.classList.toggle("liked", data.liked);
+            likeCount.textContent = data.likes;
+
+        } catch (err) {
+            console.error(err);
         }
     });
 }
@@ -22,13 +30,26 @@ if (likeBtn) {
 const favouriteBtn = document.getElementById("favouriteBtn");
 
 if (favouriteBtn) {
-    favouriteBtn.addEventListener("click", () => {
-        favouriteBtn.classList.toggle("favourited");
+    favouriteBtn.addEventListener("click", async () => {
+        const url = favouriteBtn.dataset.url;
 
-        if (favouriteBtn.classList.contains("favourited")) {
-            favouriteBtn.innerHTML = "⭐ Added to Favourites";
-        } else {
-            favouriteBtn.innerHTML = "⭐ Favourite";
+        try {
+            const res = await fetch(url, { method: "POST" });
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.error || "Action not allowed");
+                return;
+            }
+
+            favouriteBtn.classList.toggle("favourited", data.favourited);
+
+            favouriteBtn.textContent = data.favourited
+                ? "⭐ Added to Favourites"
+                : "⭐ Favourite";
+
+        } catch (err) {
+            console.error(err);
         }
     });
 }
@@ -94,17 +115,4 @@ const commentsSection = document.querySelector(".comments-wrapper");
 
 if (commentsSection) {
     commentsSection.style.scrollBehavior = "smooth";
-}
-.login-comment-prompt {
-    color: #666;
-    margin-bottom: 2rem;
-    font-size: 0.95rem;
-}
-
-.login-comment-prompt a {
-    font-weight: 600;
-    text-decoration: none;
-}
-.comment-card {
-    padding-top: 1rem;
 }

@@ -1,156 +1,183 @@
-{# 
-    User Profile Page Template
-    Displays the user's profile information including avatar, name, bio, and stats.
-    
-    Macro:
-        - recipe_cards(recipes, is_owner=False): reusable recipe card grid
-          used across My Recipes, Favourites, and Likes tabs
-          - recipes: list of recipe dicts to display
-          - is_owner: if True shows edit button and hides heart button (default False)
-#}
-{% extends "base.html" %}
-
-{% block content %}
-
+{# User Profile Page Template Displays the user's profile information including
+avatar, name, bio, and stats. Macro: - recipe_cards(recipes, is_owner=False):
+reusable recipe card grid used across My Recipes, Favourites, and Likes tabs -
+recipes: list of recipe dicts to display - is_owner: if True shows edit button
+and hides heart button (default False) #} {% extends "base.html" %} {% block
+content %}
 
 <div class="profile-container">
-    
-    {# Profile Header: avatar, name, bio, and stats #}
-    <div class="profile-header">
-        <div class="profile-avatar-wrap">
-            <div class="profile-avatar">
-                {# Avatar image pulled from DB, defaults set in models.py #}
-                <img 
-                    src="{{ user.profile_image }}"
-                    class="profile-img"
-                    alt="Profile Image">
-            </div>
-        </div>
-
-        <div class="profile-info">
-            <h1 class="profile-name">{{ user.name }}</h1>
-            <p class="profile-bio">{{ user.bio }}</p>
-
-            {# Stats: recipe count, favourites count, likes count #}
-            <div class="profile-stats">
-                <div class="stat">
-                    <span class="stat-number">{{ user.recipes_count }}</span>
-                    <span class="stat-label">Recipes</span>
-                </div>
-
-                <div class="stat">
-                    <span class="stat-number">{{ user.favourites_count }}</span>
-                    <span class="stat-label">Favourites</span>
-                </div>
-
-                <div class="stat">
-                    <span class="stat-number">{{ user.likes_count }}</span>
-                    <span class="stat-label">Likes</span>
-                </div>
-
-            </div>
-        </div>
-
-        {# Opens the edit profile modal #}
-        <a href="#" class="edit-profile-btn" id="openModal">
-            <span class="material-icons">edit</span>
-            Edit Profile
-        </a>
+  {# Profile Header: avatar, name, bio, and stats #}
+  <div class="profile-header">
+    <div class="profile-avatar-wrap">
+      <div class="profile-avatar">
+        {# Avatar image pulled from DB, defaults set in models.py #}
+        <img
+          src="{{ user.profile_image }}"
+          class="profile-img"
+          alt="Profile Image"
+        />
+      </div>
     </div>
 
-        {# Edit Profile Modal: update display name, bio, and avatar #}
-        <div class="popup-overlay" id="popupOverlay">
-            <div class="popup">
-                <div class="popup-header">
-                    <h2>Edit Profile</h2>
-                    <button class="popup-close-btn" id="closeModal">
-                        <span class="material-icons">close</span>
-                    </button>
-                </div>
+    <div class="profile-info">
+      <h1 class="profile-name">{{ user.name }}</h1>
+      <p class="profile-bio">{{ user.bio }}</p>
 
-                <div class="form-group image-upload-group">
-                    <div class="form-group">
-                        <label class="form-label">Choose Avatar</label>
-                        <div class="avatar-options">
-                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 1">
-                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 2">
-                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 3">
-                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 4">
-                            <img class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539" alt="Avatar 5">
-                        </div>
-                    </div>
-                </div>
-
-                {# Display name input: must be unique, validated on backend #}
-                <div class="form-group">
-                    <label class="form-label">Display Name</label>
-                    <input type="text" class="form-input" id="editName" value="{{ user.name }}" placeholder="Enter your name">
-                </div>
-
-                {# Bio input: no uniqueness constraint #}
-                <div class="form-group">
-                    <label class="form-label">Bio</label>
-                    <textarea class="form-input form-textarea" id="editBio" placeholder="Tell us about yourself">{{ user.bio }}</textarea>
-                </div>
-
-                <button class="save-btn" id="saveBtn">Save Changes</button>
-
-                {# Delete account section: requires typing DELETE to confirm, removes user from DB #}
-                <div class="delete-section">
-                    <button class="delete-btn" id="deleteToggle">
-                        Delete Account
-                    </button>
-                    <div class="delete-modal" id="deleteModal">
-                        <p>Are you sure you want to delete your account?</p>
-                        <p>This action cannot be undone.</p>
-                        <div class="delete-confirm-box">
-                            <p>Type <strong>DELETE</strong> below to confirm.</p>
-                            <input type="text" class="form-input" id="deleteConfirmInput" placeholder="Type DELETE to confirm">
-                            <button class="confirm-delete-btn" id="confirmDeleteBtn" disabled>
-                                Yes, Delete My Account
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      {# Stats: recipe count, favourites count, likes count #}
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-number">{{ user.recipes_count }}</span>
+          <span class="stat-label">Recipes</span>
         </div>
-    
-    {# Profile Tabs: switch between My Recipes, Favourites, and Likes #}
-    
-    {% set tabs = [
-        ('my-recipes', user.recipes, True),
-        ('favourites', user.favourites, False),
-        ('likes', user.likes, False)
-    ] %}
 
-    <div class="profile-tabs">
-        <button class="profile-tab active" data-tab="my-recipes">My Recipes</button>
-        <button class="profile-tab" data-tab="favourites">Favourites</button>
-        <button class="profile-tab" data-tab="likes">Likes</button>
+        <div class="stat">
+          <span class="stat-number">{{ user.favourites_count }}</span>
+          <span class="stat-label">Favourites</span>
+        </div>
+
+        <div class="stat">
+          <span class="stat-number">{{ user.likes_count }}</span>
+          <span class="stat-label">Likes</span>
+        </div>
+      </div>
     </div>
 
-    {% for tab_id, recipes, is_active in tabs %}
-    <div class="profile-tab-content {% if is_active %}active{% endif %}" id="{{ tab_id }}">
-        <div class="container">
-            <div class="row g-4">
-                {% for recipe in recipes %}
-                <div class="col-12 col-md-6 col-lg-4">
-                    {% include "recipe_card.html" %}
-                </div>
-                {% endfor %}
-            </div>
+    {# Opens the edit profile modal #}
+    <a href="#" class="edit-profile-btn" id="openModal">
+      <span class="material-icons">edit</span>
+      Edit Profile
+    </a>
+  </div>
+
+  {# Edit Profile Modal: update display name, bio, and avatar #}
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+      <div class="popup-header">
+        <h2>Edit Profile</h2>
+        <button class="popup-close-btn" id="closeModal">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="form-group image-upload-group">
+        <div class="form-group">
+          <label class="form-label">Choose Avatar</label>
+          <div class="avatar-options">
+            <img
+              class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}"
+              src="https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539"
+              alt="Avatar 1"
+            />
+            <img
+              class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}"
+              src="https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539"
+              alt="Avatar 2"
+            />
+            <img
+              class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}"
+              src="https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539"
+              alt="Avatar 3"
+            />
+            <img
+              class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}"
+              src="https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539"
+              alt="Avatar 4"
+            />
+            <img
+              class="avatar-option {% if user.profile_image == 'https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539' %}selected{% endif %}"
+              src="https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539"
+              alt="Avatar 5"
+            />
+          </div>
         </div>
+      </div>
+
+      {# Display name input: must be unique, validated on backend #}
+      <div class="form-group">
+        <label class="form-label">Display Name</label>
+        <input
+          type="text"
+          class="form-input"
+          id="editName"
+          value="{{ user.name }}"
+          placeholder="Enter your name"
+          minlength="3"
+          maxlength="64"
+          pattern="^[a-zA-Z0-9_]+$"
+          required
+        />
+      </div>
+
+      {# Bio input: no uniqueness constraint #}
+      <div class="form-group">
+        <label class="form-label">Bio</label>
+        <textarea
+          class="form-input form-textarea"
+          id="editBio"
+          placeholder="Tell us about yourself"
+          maxlength="250"
+        >
+{{ user.bio }}</textarea
+        >
+        <small id="bioCounter" class="char-counter">0/250</small>
+      </div>
+
+      <button class="save-btn" id="saveBtn">Save Changes</button>
+
+      {# Delete account section: requires typing DELETE to confirm, removes user
+      from DB #}
+      <div class="delete-section">
+        <button class="delete-btn" id="deleteToggle">Delete Account</button>
+        <div class="delete-modal" id="deleteModal">
+          <p>Are you sure you want to delete your account?</p>
+          <p>This action cannot be undone.</p>
+          <div class="delete-confirm-box">
+            <p>Type <strong>DELETE</strong> below to confirm.</p>
+            <input
+              type="text"
+              class="form-input"
+              id="deleteConfirmInput"
+              placeholder="Type DELETE to confirm"
+            />
+            <button class="confirm-delete-btn" id="confirmDeleteBtn" disabled>
+              Yes, Delete My Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Profile Tabs: switch between My Recipes, Favourites, and Likes #} {% set
+  tabs = [ ('my-recipes', user.recipes, True), ('favourites', user.favourites,
+  False), ('likes', user.likes, False) ] %}
+
+  <div class="profile-tabs">
+    <button class="profile-tab active" data-tab="my-recipes">My Recipes</button>
+    <button class="profile-tab" data-tab="favourites">Favourites</button>
+    <button class="profile-tab" data-tab="likes">Likes</button>
+  </div>
+
+  {% for tab_id, recipes, is_active in tabs %}
+  <div class="profile-tab-content {% if is_active %}active{% endif %}" id="{{ tab_id }}">
+    <div class="row g-4 px-4">
+    {% for recipe in recipes %}
+    <div class="col-12 col-md-6 col-lg-4">
+        {% include "recipe_card.html" %}
     </div>
     {% endfor %}
-    
-    {# Bye popup: shown briefly after account deletion before redirecting home #}
-    <div class="bye-popup-overlay" id="byePopupOverlay"></div>
-    <div class="bye-popup" id="byePopup">
-        <p> Bye bye, we'll miss you!</p>
     </div>
+  </div>
+  {% endfor %} {# Bye popup: shown briefly after account deletion before
+  redirecting home #}
+  <div class="bye-popup-overlay" id="byePopupOverlay"></div>
+  <div class="bye-popup" id="byePopup">
+    <p>Bye bye, we'll miss you!</p>
+  </div>
 
     <script src="{{ url_for('static', filename='js/profile_script.js') }}"></script>
-
 </div>
 
 {% endblock %}
+
+{% block scripts %}{% endblock %}

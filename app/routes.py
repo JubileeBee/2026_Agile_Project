@@ -1,11 +1,13 @@
-from flask import render_template, request, redirect, url_for, jsonify
+import re
+from flask import render_template, request, redirect, url_for, jsonify, abort, flash
 from app import app, db
-from sqlalchemy import desc, func
+from sqlalchemy import desc, func, or_
 from flask_login import login_user, login_required, current_user, logout_user
 from app.models import (
     Recipe,
     Comment,
     CategoryEnum,
+    DifficultyEnum,
     Like,
     Favourite,
     User
@@ -100,8 +102,56 @@ def home():
 
 @app.route("/recipes")
 def recipes():
-    return render_template("browse_recipes.html")
 
+    query = request.args.get('q', '').strip()
+    difficulty = request.args.get('difficulty', '')
+    category = request.args.get('category', '')
+    sort = request.args.get('sort', '')
+
+    results_query = Recipe.query
+
+    if query:
+        results_query = results_query.filter(
+            or_(
+                Recipe.title.ilike(f'%{query}%'),
+                Recipe.description.ilike(f'%{query}%'),
+                Recipe.ingredients.ilike(f'%{query}%'),
+                Recipe.category.cast(db.String).ilike(f'%{query}%')
+            )
+        )
+
+    if difficulty:
+        results_query = results_query.filter(
+            Recipe.difficulty == DifficultyEnum[difficulty]
+        )
+
+    if category:
+        results_query = results_query.filter(
+            Recipe.category == CategoryEnum[category]
+        )
+
+    if sort == 'alphabetical':
+        results_query = results_query.order_by(
+            Recipe.title.asc()
+        )
+
+    elif sort == 'newest':
+        results_query = results_query.order_by(
+            Recipe.created_at.desc()
+        )
+
+    results = results_query.all()
+
+    liked_recipe_ids = []
+    if current_user.is_authenticated:
+        liked_recipe_ids = [like.recipe_id for like in current_user.likes]
+
+    return render_template(
+        'search_results.html',
+        query=query,
+        results=results,
+        liked_recipe_ids=liked_recipe_ids,
+    )
 
 @app.route("/privacy_policy")
 def privacy():
@@ -144,11 +194,48 @@ def profile():
 def update_profile():
          
     #JSON payload from frontend edit profile modal
-    data = request.get_json()
+    data = request.get_json() or {}
     new_name = data.get('name', '').strip()
     new_bio = data.get('bio', '').strip()
-    new_avatar = data.get('profile_image', '').strip()
+    new_avatar = data.get('profile_image')
 
+    # Avatar Validation:
+    # Whitelist the 5 preset avatars on backend to prevent malicious URLs 
+    # being saved via direct API requests.
+    ALLOWED_AVATARS = {
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Destiny&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Aidan&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Kimberly&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Lilliana&backgroundColor=DDB892&shapeColor=7F5539",
+        "https://api.dicebear.com/7.x/thumbs/svg?seed=Avery&backgroundColor=DDB892&shapeColor=7F5539"
+    }
+
+    if new_avatar and new_avatar not in ALLOWED_AVATARS:
+        return jsonify({'success': False, 'error': 'Invalid avatar selected'}), 400
+
+    # Username validation must not be empty
+    if not new_name:
+        return jsonify({'success': False, 'error': 'Username cannot be empty'}), 400
+
+    # Username validation should be above 3 and under 64 characters
+    if len(new_name) < 3:
+        return jsonify({'success': False, 'error': 'Username must be at least 3 characters long'}), 400
+
+    if len(new_name) > 64:
+        return jsonify({'success': False, 'error': 'Username cannot exceed 64 characters'}), 400
+
+    #Username must not contain spaces or special characters (only letters, numbers, underscores)
+    if not re.match(r'^[a-zA-Z0-9_]+$', new_name):
+        return jsonify({'success': False, 'error': 'Username cannot contain spaces or special characters (only letters, numbers, underscores)'}), 400
+    
+    #Username must not be only underscores
+    if new_name.strip('_') == '':
+        return jsonify({'success': False, 'error': 'Username cannot be only underscores'}), 400
+
+    # Bio validation should be under 250 characters
+    if len(new_bio) > 250:
+        return jsonify({'success': False,'error': 'Bio cannot exceed 250 characters'}), 400
+    
     # Ensure username is unique, but allow the user to keep their own username
     if new_name != current_user.username:
         existing = User.query.filter_by(username=new_name).first()
@@ -268,32 +355,44 @@ def logout():
 @app.route('/post')
 @login_required
 def post():
-    return render_template('post.html')
+    return redirect(url_for('add_recipe'))
 
 @app.route('/recipe/<int:id>', methods=['GET', 'POST'])
 def recipe(id):
 
     recipe = Recipe.query.get_or_404(id)
 
+    # comment posting
     if request.method == 'POST':
-
         if not current_user.is_authenticated:
             return redirect(url_for('login'))
 
         comment_text = request.form.get('comment')
 
         if comment_text and comment_text.strip():
-
             new_comment = Comment(
                 content=comment_text.strip(),
                 user_id=current_user.id,
                 recipe_id=recipe.id
             )
-
             db.session.add(new_comment)
             db.session.commit()
 
         return redirect(url_for('recipe', id=recipe.id))
+
+    already_liked = False
+    already_faved = False
+
+    if current_user.is_authenticated:
+        already_liked = Like.query.filter_by(
+            user_id=current_user.id,
+            recipe_id=id
+        ).first() is not None
+
+        already_faved = Favourite.query.filter_by(
+            user_id=current_user.id,
+            recipe_id=id
+        ).first() is not None
 
     related_recipes = Recipe.query.filter(
         Recipe.id != recipe.id
@@ -302,15 +401,40 @@ def recipe(id):
     return render_template(
         'recipe.html',
         recipe=recipe,
-        related_recipes=related_recipes
+        related_recipes=related_recipes,
+        already_liked=already_liked,
+        already_faved=already_faved
     )
+
+@app.route('/comment/<int:comment_id>/delete', methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+
+    comment = Comment.query.get_or_404(comment_id)
+
+    if comment.user_id != current_user.id:
+        abort(403)
+
+    recipe_id = comment.recipe_id
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    flash("Comment deleted successfully.", "success")
+
+    return redirect(url_for('recipe', id=recipe_id))
 
 @app.route('/recipe/<int:id>/like', methods=['POST'])
 @login_required
 def like_recipe(id):
     # Handles like button interactions by adding/removing a like record
     # and synchronising frontend state with updated like count
-
+    recipe_obj = Recipe.query.get_or_404(id)
+    if recipe_obj.user_id == current_user.id:
+        return jsonify({
+            'success': False,
+            'error': 'You cannot like your own recipe.'
+        }), 403
      
     existing_like = Like.query.filter_by(user_id=current_user.id, recipe_id=id).first()
     
@@ -328,6 +452,37 @@ def like_recipe(id):
         # return updated state and new like count
         return jsonify({'liked': True, 'likes': Like.query.filter_by(recipe_id=id).count()})
 
+@app.route('/recipe/<int:id>/favourite', methods=['POST'])
+@login_required
+def favourite_recipe(id):
+
+    recipe = Recipe.query.get_or_404(id)
+
+    if recipe.user_id == current_user.id:
+        return jsonify({
+            'success': False,
+            'error': 'You cannot favourite your own recipe.'
+        }), 403
+
+    existing = Favourite.query.filter_by(
+        user_id=current_user.id,
+        recipe_id=id
+    ).first()
+
+    if existing:
+        db.session.delete(existing)
+        favourited = False
+    else:
+        db.session.add(Favourite(user_id=current_user.id, recipe_id=id))
+        favourited = True
+
+    db.session.commit()
+
+    return jsonify({
+        'success': True,
+        'favourited': favourited,
+        'favourites': Favourite.query.filter_by(recipe_id=id).count()
+    })
 
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -341,8 +496,8 @@ def edit_recipe(id):
         recipe.description = request.form['description']
         recipe.ingredients = request.form['ingredients']
         recipe.instructions = request.form['instructions']
-        recipe.category = request.form['category']
-        recipe.image_file = request.form['image_url']
+        recipe.category = CategoryEnum[request.form['category']]
+        recipe.image_file = request.form['image_file']
 
         db.session.commit()
 
@@ -350,7 +505,6 @@ def edit_recipe(id):
 
     return render_template('edit_recipe.html', recipe=recipe)
 
-# Vanessa's route added by Nabeel
 
 @app.route('/api/recipes')
 def api_recipes():
@@ -393,13 +547,51 @@ def api_recipes():
     })
     
 @app.route('/add_recipe', methods=['GET', 'POST'])
+@login_required
 def add_recipe():
 
     if request.method == 'POST':
 
-        # temporary placeholder
-        print("Recipe submitted!")
+        ingredient_names = request.form.getlist('ingredient_name[]')
+        ingredient_quantities = request.form.getlist('ingredient_quantity[]')
+        ingredient_units = request.form.getlist('ingredient_unit[]')
 
-        return redirect(url_for('home'))
+        ingredients = []
+
+        for name, qty, unit in zip(
+            ingredient_names,
+            ingredient_quantities,
+            ingredient_units
+        ):
+            ingredients.append(f"{qty} {unit} {name}".strip())
+
+        ingredients_text = "\n".join(ingredients)
+
+        image = request.files.get('image')
+        image_filename = None
+
+        if image and image.filename:
+            image_filename = image.filename
+            image.save(f'app/static/images/uploads/{image_filename}')
+
+        new_recipe = Recipe(
+            title=request.form['title'],
+            description=request.form['description'],
+            ingredients=ingredients_text,
+            instructions=request.form['instructions'],
+            category=CategoryEnum[request.form['category']],
+            difficulty=DifficultyEnum[request.form['difficulty']],
+            prep_time=int(request.form['prep_time']),
+            cook_time=int(request.form['cook_time']),
+            servings=int(request.form['servings']),
+            notes=request.form.get('notes'),
+            image_file=image_filename,
+            user_id=current_user.id
+        )
+
+        db.session.add(new_recipe)
+        db.session.commit()
+
+        return redirect(url_for('recipe', id=new_recipe.id))
 
     return render_template('add_recipe.html')

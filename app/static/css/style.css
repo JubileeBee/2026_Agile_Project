@@ -259,27 +259,6 @@ html, body {
 }
  
 /* =========================
-   Recipe Detail Page
-   ========================= */
-.recipe-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-}
- 
-.recipe-image img {
-    width: 100%;
-    border-radius: 10px;
-}
- 
-.comments-section {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #ccc;
-}
- 
-/* =========================
-   Home Page / Hero
    Home Page / Hero
    ========================= */
 .welcome-hero {
@@ -413,7 +392,15 @@ html, body {
     overflow: hidden;
     min-height: 0;
 }
- 
+
+.recipe-card h1 {
+    text-align: left;
+}
+
+.recipe-footer {
+    justify-content: flex-start;
+}
+
 .card-meta {
     display: flex;
     justify-content: space-between;
@@ -877,8 +864,4 @@ html, body {
 .edit-btn:hover {
     transform: scale(1.1);
 }
- 
- 
- 
- 
- 
+

@@ -33,9 +33,11 @@ def seed_data():
             Recipe(
                 title='Chocolate Lava Cake',
                 description='A decadent chocolate cake with a gooey molten center.',
-                ingredients='Chocolate, butter, eggs, sugar, flour',
+                ingredients='200g chocolate, 100g butter, 3 eggs, 150g sugar, 100g flour',
                 instructions='Melt chocolate, mix ingredients, bake at 200C for 12 mins.',
                 category=CategoryEnum.DESSERT,
+                prep_time=10,
+                notes='Best served warm with vanilla ice cream.',
                 cook_time=30,
                 difficulty=DifficultyEnum.MEDIUM,
                 servings=4,
@@ -45,9 +47,11 @@ def seed_data():
             Recipe(
                 title='Avocado Toast',
                 description='Simple and delicious avocado toast with a poached egg.',
-                ingredients='Bread, avocado, eggs, salt, pepper, lemon',
+                ingredients='2 slices of bread, 1 ripe avocado, 2 eggs, salt, pepper, 1 tbsp lemon juice',
                 instructions='Toast bread, mash avocado, poach egg, assemble.',
                 category=CategoryEnum.BREAKFAST,
+                prep_time=5,
+                notes='Add chilli flakes for extra kick.',
                 cook_time=10,
                 difficulty=DifficultyEnum.EASY,
                 servings=1,
@@ -57,9 +61,11 @@ def seed_data():
             Recipe(
                 title='Soy Sauce Ramen',
                 description='Rich and flavourful Japanese soy sauce ramen.',
-                ingredients='Ramen noodles, soy sauce, broth, pork, eggs, green onions',
+                ingredients='100g ramen noodles, 2 tbsp soy sauce, 1 cup broth, 100g pork, 2 eggs, 2 green onions',
                 instructions='Prepare broth, cook noodles, assemble toppings.',
                 category=CategoryEnum.DINNER,
+                prep_time=15,
+                notes='Use homemade broth for best results.',
                 cook_time=45,
                 difficulty=DifficultyEnum.HARD,
                 servings=2,
@@ -69,9 +75,11 @@ def seed_data():
             Recipe(
                 title='Caesar Salad',
                 description='Classic Caesar salad with homemade dressing.',
-                ingredients='Romaine lettuce, parmesan, croutons, caesar dressing',
+                ingredients='1 head of romaine lettuce, 50g parmesan, 100g croutons, 3 tbsp caesar dressing',
                 instructions='Toss lettuce with dressing, add croutons and parmesan.',
                 category=CategoryEnum.LUNCH,
+                prep_time=10,
+                notes='Make dressing fresh for best flavour.',
                 cook_time=15,
                 difficulty=DifficultyEnum.EASY,
                 servings=2,
@@ -81,9 +89,11 @@ def seed_data():
             Recipe(
                 title='Mango Smoothie',
                 description='Refreshing tropical mango smoothie.',
-                ingredients='Mango, yogurt, milk, honey, ice',
+                ingredients='2 ripe mangos, 1 cup yogurt, 1 cup milk, 2 tbsp honey, 1 cup ice',
                 instructions='Blend all ingredients until smooth.',
                 category=CategoryEnum.DRINK,
+                prep_time=5,
+                notes='Use frozen mango for a thicker smoothie.',
                 cook_time=5,
                 difficulty=DifficultyEnum.EASY,
                 servings=2,
@@ -93,9 +103,11 @@ def seed_data():
             Recipe(
                 title='Banana Pancakes',
                 description='Fluffy banana pancakes perfect for a lazy morning.',
-                ingredients='Bananas, flour, eggs, milk, butter, maple syrup',
+                ingredients='2 ripe bananas, 1 cup flour, 3 eggs, 1 cup milk, 2 tbsp butter, 2 tbsp maple syrup',
                 instructions='Mash bananas, mix batter, cook on griddle.',
                 category=CategoryEnum.BREAKFAST,
+                prep_time=10,
+                notes='The riper the banana the sweeter the pancakes.',
                 cook_time=20,
                 difficulty=DifficultyEnum.EASY,
                 servings=4,
@@ -105,9 +117,11 @@ def seed_data():
             Recipe(
                 title='Chicken Stir Fry',
                 description='Quick and healthy chicken stir fry with vegetables.',
-                ingredients='Chicken, bell peppers, broccoli, soy sauce, garlic, ginger',
+                ingredients='100g chicken, 1 bell pepper, 100g broccoli, 2 tbsp soy sauce, 2 cloves garlic, 1 tsp ginger',
                 instructions='Stir fry chicken, add vegetables and sauce, serve with rice.',
                 category=CategoryEnum.DINNER,
+                prep_time=15,
+                notes='Slice chicken thin for quicker cooking.',
                 cook_time=25,
                 difficulty=DifficultyEnum.EASY,
                 servings=3,
@@ -117,9 +131,11 @@ def seed_data():
             Recipe(
                 title='Eggs Benedict',
                 description='Classic brunch dish with poached eggs and hollandaise sauce.',
-                ingredients='English muffins, ham, eggs, hollandaise sauce',
+                ingredients='2 English muffins, 100g ham, 2 eggs, 100ml hollandaise sauce',
                 instructions='Toast muffins, poach eggs, make hollandaise, assemble.',
                 category=CategoryEnum.BRUNCH,
+                prep_time=15,
+                notes='Fresh hollandaise makes all the difference.',
                 cook_time=30,
                 difficulty=DifficultyEnum.HARD,
                 servings=2,
@@ -129,9 +145,11 @@ def seed_data():
             Recipe(
                 title='Granola Bar',
                 description='Healthy homemade granola bars perfect for snacking.',
-                ingredients='Oats, honey, peanut butter, chocolate chips, nuts',
+                ingredients='1 cup oats, 1/2 cup honey, 1/2 cup peanut butter, 1/2 cup chocolate chips, 1/2 cup nuts',
                 instructions='Mix ingredients, press into pan, bake and cut into bars.',
                 category=CategoryEnum.SNACK,
+                prep_time=10,
+                notes='Store in an airtight container for up to a week.',
                 cook_time=20,
                 difficulty=DifficultyEnum.EASY,
                 servings=12,
@@ -141,9 +159,11 @@ def seed_data():
             Recipe(
                 title='Tiramisu',
                 description='Classic Italian dessert with coffee and mascarpone.',
-                ingredients='Ladyfingers, mascarpone, eggs, sugar, coffee, cocoa powder',
+                ingredients='100g ladyfingers, 250g mascarpone, 4 eggs, 100g sugar, 1 cup coffee, 2 tbsp cocoa powder',
                 instructions='Dip ladyfingers in coffee, layer with mascarpone cream, chill.',
                 category=CategoryEnum.DESSERT,
+                prep_time=20,
+                notes='Refrigerate overnight for best results.',
                 cook_time=40,
                 difficulty=DifficultyEnum.MEDIUM,
                 servings=6,
@@ -169,7 +189,7 @@ def seed_data():
 
         # ------------------ FAVOURITES ------------------
         fav_pairs = [
-            (1, 3), (1, 5), (2, 2), (2, 6),
+            (1, 3), (1, 5), (2, 6),
             (3, 7), (4, 1), (5, 4), (5, 9)
         ]
 
