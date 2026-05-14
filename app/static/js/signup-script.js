@@ -16,12 +16,17 @@ setupToggle('confirmToggle', 'confirmPassword');
 const pwInput       = document.getElementById('password');
 const strengthBar   = document.getElementById('strengthBar');
 const strengthLabel = document.getElementById('strengthLabel');
-const segments      = ['seg1', 'seg2', 'seg3', 'seg4'].map(id => document.getElementById(id));
+const segments = ['seg1', 'seg2', 'seg3', 'seg4']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
 const labels        = ['', 'Weak', 'Fair', 'Good', 'Strong'];
 const classes       = ['', 'active-weak', 'active-fair', 'active-good', 'active-strong'];
 
 function getStrength(pw) {
     let score = 0;
+
+    //only check strength if password is at least 8 characters
+    if(pw.length < 8) return 0;
     if (pw.length >= 8)          score++;
     if (/[A-Z]/.test(pw))        score++;
     if (/[0-9]/.test(pw))        score++;
@@ -96,11 +101,13 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     btn.classList.add('loading');
 
 try {
-
+    const csrfToken =
+    document.querySelector('meta[name="csrf-token"]').content;
     const response = await fetch('/signup', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
         },
         body: JSON.stringify({
             username: `${firstName} ${lastName}`,

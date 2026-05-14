@@ -65,17 +65,10 @@ class RecipeSharingLoginForm{
         container.style.transform = 'translateY(0)';
     }
 
-    triggerGentleRipple(element) {
-        //Create ripple effect
-        element.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            element.style.transform = 'scale(1)';
-        }, 150);    
-    }
 
     addGentleClickEffects() {
         //Add click animations to all interactive elements
-        const interactiveElements = document.querySelectorAll('.login-button, .gentle-checkbox');
+        const interactiveElements = document.querySelectorAll('.sign_in_button, .gentle-checkbox');
         interactiveElements.forEach(el => {
             el.addEventListener('mousedown', () => {
                 el.style.transform = 'scale(0.98)';
@@ -113,8 +106,8 @@ class RecipeSharingLoginForm{
             return false;
         }
 
-        if (password.length < 6) {
-            this.showError('password', 'Password must be at least 6 characters long.');
+        if (password.length < 8) {
+            this.showError('password', 'Password must be at least 8 characters long.');
             return false;
         }
 
@@ -171,11 +164,13 @@ class RecipeSharingLoginForm{
         this.setLoading(true);
         
         try {
+            const csrfToken =document.querySelector('meta[name="csrf-token"]').content;
             // Simulate gentle authentication process
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
                 },
                 body: JSON.stringify({
                     email: this.emailInput.value.trim(),
@@ -193,7 +188,7 @@ class RecipeSharingLoginForm{
                 }, 1800);
 
             } else {
-                this.showError('password', result.error || 'Login failed.');
+                this.showError('email', result.error || 'Login failed.');
 }        } catch (error) {
             this.showError('password', 'Sign in failed. Please try again.');
         } finally {
@@ -210,7 +205,6 @@ class RecipeSharingLoginForm{
         setTimeout(() => {
             this.form.style.display = 'none';
             document.querySelector('.comfort-signup').style.display = 'none';
-            document.querySelector('.gentle-divider').style.display = 'none';
             
             // Show gentle success
             this.successMessage.classList.add('show');
