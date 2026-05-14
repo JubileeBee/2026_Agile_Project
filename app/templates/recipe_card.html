@@ -1,39 +1,74 @@
 <a href="{{ url_for('recipe', id=recipe.id) }}" class="recipe-link">
   <article class="recipe-card">
-    <figure class="recipe-image">
-      <img
-        src="{{ recipe.image_file or '/static/images/default.jpg' }}"
-        alt="{{ recipe.title }}"
-      />
+      <figure class="recipe-image">
 
-      {# Heart button logic: - Not shown if user is the owner of the recipe -
-      Not shown if user is logged out - Shows filled heart if already liked,
-      empty if not #} {% if current_user.is_authenticated and current_user.id !=
-      recipe.user_id %} {% set already_liked = recipe.id in liked_recipe_ids %}
-      <form action="{{ url_for('like_recipe', id=recipe.id) }}" method="POST">
-        <button
-          class="heart-btn"
-          type="submit"
-          onclick="event.stopPropagation()"
-        >
-          {% if already_liked %}
-          <span class="material-icons" style="color: red">favorite</span>
-          {% else %}
-          <span class="material-icons">favorite_border</span>
-          {% endif %}
-        </button>
-      </form>
-      {% endif %} {# Only show edit button if the logged in user is the author
-      of the recipe #} {% if current_user.is_authenticated and current_user.id
-      == recipe.user_id %}
-      <button
-        class="edit-btn"
-        onclick="event.preventDefault(); event.stopPropagation(); window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';"
-      >
-        <span class="material-icons">edit</span>
-      </button>
-      {% endif %}
-    </figure>
+        <img
+          src="
+            {% if recipe.image_file %}
+              {% if 'http' in recipe.image_file or '/static/' in recipe.image_file %}
+                {{ recipe.image_file }}
+              {% else %}
+                {{ url_for('static', filename='images/uploads/' ~ recipe.image_file) }}
+              {% endif %}
+            {% else %}
+              {{ url_for('static', filename='images/default.png') }}
+            {% endif %}
+          "
+          alt="{{ recipe.title }}"
+        />
+      
+        {# Heart button logic:
+           - Not shown if user is the owner
+           - Not shown if logged out
+           - Filled if already liked
+        #}
+      
+        {% if current_user.is_authenticated and current_user.id != recipe.user_id %}
+      
+          {% set already_liked = recipe.id in liked_recipe_ids %}
+      
+          <form action="{{ url_for('like_recipe', id=recipe.id) }}"
+                method="POST">
+      
+            <button
+              class="heart-btn"
+              type="submit"
+              onclick="event.stopPropagation()">
+      
+              {% if already_liked %}
+                <span class="material-icons" style="color: red">
+                  favorite
+                </span>
+              {% else %}
+                <span class="material-icons">
+                  favorite_border
+                </span>
+              {% endif %}
+      
+            </button>
+      
+          </form>
+      
+        {% endif %}
+      
+        {# Edit button for owner only #}
+      
+        {% if current_user.is_authenticated
+              and current_user.id == recipe.user_id %}
+      
+          <button
+            class="edit-btn"
+            onclick="event.preventDefault();
+                     event.stopPropagation();
+                     window.location.href='{{ url_for('edit_recipe', id=recipe.id) }}';">
+      
+            <span class="material-icons">edit</span>
+      
+          </button>
+      
+        {% endif %}
+      
+      </figure>
 
     <div class="recipe-card-content">
       <div class="card-meta">
