@@ -118,7 +118,7 @@ try {
         // Show success state
         document.getElementById('signupForm').style.display = 'none';
 
-        document.querySelectorAll('.gentle-divider, .comfort-social, .comfort-signup')
+        document.querySelectorAll('.gentle-divider, .comfort-signup')
             .forEach(el => el.style.display = 'none');
 
         const success = document.getElementById('successMessage');

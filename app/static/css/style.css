@@ -2,9 +2,9 @@
    CSS Variables
    ========================= */
 :root {
-    --primary-brown: #7F5539;
-    --primary-brown-dark: #9C6644;
-    --background: #FFFCF2;
+    --primary-brown: #8b6655;
+    --primary-brown-dark: rgba(139, 102, 85, 0.6);
+    --background: rgba(255, 255, 255, 0.8);
     --secondary-bg: #FFF9E3;
     --hover-bg: #EDE0D4;
     --card-color: #ffffff;
@@ -15,14 +15,14 @@
     --nav-height: 70px;
     --nav-bar: #755d47;
 }
-
+ 
 /* =========================
    Global Styles
    ========================= */
 html, body {
     margin: 0;
     padding: 0;
-    font-family: 'Quicksand', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', system-ui, sans-serif;
     background-color: var(--background);
     color: var(--primary-brown);
     overflow-x: hidden;
@@ -30,59 +30,60 @@ html, body {
     display: flex;
     flex-direction: column;
 }
-
+ 
 .page-content {
     flex: 1;
     padding-top: var(--nav-height);
 }
-
+ 
 /* =========================
    Navigation Bar
    ========================= */
 .topnav {
-    background-color: var(--nav-bar); 
+    background-color: var(--background);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 5vw;
     position: fixed;
     width: 100%;
+    width: 100%;
     top: 0;
     z-index: 1000;
     transition: transform 0.3s ease;
     height: var(--nav-height);
 }
-
+ 
 .nav-left {
     display: flex;
     align-items: center;
     gap: 15px;
 }
-
+ 
 .logo-text {
-    font-weight: 700; 
+    font-weight: 700;
     font-size: 24px;
     letter-spacing: -0.5px;
     text-decoration: none;
-    color: var(--secondary-bg);
+    color: var(--primary-brown);
 }
-
+ 
 .nav-right {
     display: flex;
     align-items: center;
     gap: 15px;
 }
-
+ 
 .nav-text {
     text-decoration: none;
-    color: var(--secondary-bg);
+    color: var(--primary-brown);
     font-size: 16px;
     font-weight: 600;
     padding: 6px 2px;
     position: relative;
     transition: color 0.2s;
 }
-
+ 
 .nav-text::after {
     width: 0;
     content: '';
@@ -90,22 +91,22 @@ html, body {
     bottom: 0;
     left: 0;
     height: 2px;
-    background-color: var(--secondary-bg);
+    background-color: var(--primary-brown);
     border-radius: 2px;
     transition: width 0.25s ease;
 }
-
+ 
 .nav-text:hover {
-    color: var(--secondary-bg);
+    color: var(--primary-brown);
 }
-
+ 
 .nav-text:hover::after {
     width: 100%;
 }
-
+ 
 .nav-circle {
     text-decoration: none;
-    color: var(--secondary-bg);
+    color: var(--primary-brown);
     width: 42px;
     height: 42px;
     display: flex;
@@ -114,36 +115,39 @@ html, body {
     border-radius: 50%;
     transition: 0.3s;
 }
-
+ 
 .nav-circle:hover {
     background-color: var(--hover-bg);
 }
-
+ 
 #profile-icon,
 .nav-circle .material-icons {
     font-size: 32px;
 }
-
+ 
 .signup-btn {
     text-decoration: none;
-    background-color: var(--secondary-bg);
-    color: var(--primary-brown);
+    background-color: var(--primary-brown);
+    color: var(--hover-bg);
     padding: 8px 20px;
     border-radius: 25px;
     font-size: 14px;
     font-weight: 600;
     transition: 0.3s;
 }
-
+ 
 .signup-btn:hover {
-    background-color: #f0e6cc; 
+    background-color: var(--hover-bg);
     color: var(--primary-brown);
 }
-
+ 
 /* =========================
    Floating Post Button
    ========================= */
 .floating-post-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -158,18 +162,19 @@ html, body {
     box-shadow: 0 6px 20px rgba(127, 85, 57, 0.3);
     text-decoration: none;
     z-index: 9999;
+    z-index: 9999;
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
+ 
 .floating-post-btn:hover {
     transform: scale(1.1) rotate(90deg);
     background-color: var(--primary-brown-dark);
 }
-
+ 
 .floating-post-btn .material-icons {
     font-size: 35px;
 }
-
+ 
 /* =========================
    Footer
    ========================= */
@@ -179,7 +184,7 @@ html, body {
     margin-top: 60px;
     padding: 40px 60px 0px 60px;
 }
-
+ 
 .footer-container {
     display: flex;
     flex-direction: column;
@@ -188,17 +193,17 @@ html, body {
     margin: 0 auto 15px auto;
     gap: 20px;
 }
-
+ 
 .footer-brand {
     display: flex;
     justify-content: center;
 }
-
+ 
 .footer-brand img {
     width: 250px;
     padding-bottom: 10px;
 }
-
+ 
 .footer-socials {
     display: flex;
     gap: 20px;
@@ -207,18 +212,18 @@ html, body {
     width: 100%;
     margin-top: -20px;
 }
-
+ 
 .footer-socials a {
     color: var(--secondary-bg);
     font-size: 1.4rem;
     opacity: 0.85;
     transition: 0.3s;
 }
-
+ 
 .footer-socials a:hover {
     opacity: 1;
 }
-
+ 
 .footer-divider {
     max-width: 1200px;
     margin: 0 auto;
@@ -226,7 +231,7 @@ html, body {
     border-top: 1px solid var(--secondary-bg);
     opacity: 0.15;
 }
-
+ 
 .footer-bottom {
     display: flex;
     justify-content: space-between;
@@ -238,21 +243,21 @@ html, body {
     color: var(--secondary-bg);
     opacity: 0.7;
 }
-
+ 
 .footer-bottom p {
     margin: 0;
 }
-
+ 
 .footer-legal a {
     text-decoration: none;
     margin-left: 20px;
     color: var(--secondary-bg);
 }
-
+ 
 .footer-legal a:hover {
     text-decoration: underline;
 }
-
+ 
 /* =========================
    Home Page / Hero
    ========================= */
@@ -261,26 +266,26 @@ html, body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 300px; 
     height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: var(--primary-brown);
+    color: var(--primary-brown);
     text-align: center;
 }
-
+ 
 .welcome-hero h1 {
     font-size: clamp(35px, 4vw, 40px);
     font-weight: 700;
     margin-bottom: 10px;
 }
-
+ 
 .welcome-hero p {
     margin-top: 0;
 }
-
+ 
 .search-container {
     display: flex;
     margin-top: 15px;
@@ -290,7 +295,7 @@ html, body {
     margin-left: auto;
     margin-right: auto;
 }
-
+ 
 .search-container input {
     padding: 10px 15px;
     border: none;
@@ -299,7 +304,7 @@ html, body {
     flex: 0.67;
     min-width: 0;
 }
-
+ 
 .search-container button {
     padding: 10px 15px;
     border: none;
@@ -308,31 +313,33 @@ html, body {
     background-color: var(--primary-brown);
     color: white;
 }
-
+ 
 .home-container h2 {
     flex-direction: column;
     align-items: left;
     gap: 20px;
     padding: 0px;
 }
-
+ 
 .home-container .container {
     max-width: 1200px;
     padding-left: 20px;
     padding-right: 20px;
 }
-
+ 
 .section-header {
     padding-left: -12px;
+    padding-left: -12px;
 }
-
+ 
 .section-header h2 {
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 50px;
     color: var(--primary-brown-dark);
+    color: var(--primary-brown-dark);
 }
-
+ 
 /* =========================
    Recipe Card
    ========================= */
@@ -343,6 +350,7 @@ html, body {
     color: var(--primary-brown-dark);
     width: 100%;
     max-width: 100%;
+    max-width: 100%;
     height: auto;
     font-family: 'Quicksand', sans-serif;
     line-height: 1.5;
@@ -351,11 +359,11 @@ html, body {
     flex-direction: column;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
+ 
 .recipe-card:hover {
     transform: translateY(-6px);
 }
-
+ 
 .recipe-card figure {
     width: 100%;
     margin: 0;
@@ -364,7 +372,7 @@ html, body {
     border-radius: var(--global-radius) var(--global-radius) 0 0;
     position: relative;
 }
-
+ 
 .recipe-card figure img {
     width: 100%;
     height: 100%;
@@ -373,7 +381,7 @@ html, body {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
-
+ 
 .recipe-card-content {
     flex-grow: 1;
     padding: 0.7rem 1.3rem 0.5rem 1.3rem;
@@ -397,18 +405,20 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    align-items: center;
     margin: 0;
     font-size: 13px;
     flex-wrap: nowrap;
     gap: 8px;
+    gap: 8px;
 }
-
+ 
 .recipe-tags {
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
 }
-
+ 
 .recipe-tag {
     background-color: var(--primary-brown);
     color: #fff;
@@ -417,7 +427,7 @@ html, body {
     font-size: 0.9em;
     font-weight: 600;
 }
-
+ 
 .recipe-stats {
     list-style: none;
     display: flex;
@@ -427,14 +437,14 @@ html, body {
     font-size: 13px;
     color: #777;
 }
-
+ 
 .recipe-stats li {
     display: flex;
     align-items: center;
     gap: 2px;
     color: var(--primary-brown);
 }
-
+ 
 .recipe-card h1 {
     font-size: 1.4rem;
     margin-top: 5px;
@@ -443,30 +453,32 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    white-space: nowrap;
 }
-
+ 
 .recipe-footer {
     display: flex;
     justify-content: flex-end;
+    justify-content: flex-end;
 }
-
+ 
 .user-info {
     display: flex;
     align-items: center;
     gap: 4px;
     color: var(--primary-brown);
 }
-
+ 
 .username {
     font-size: 0.8rem;
     font-weight: 500;
 }
-
+ 
 .recipe-link {
     text-decoration: none;
     color: inherit;
 }
-
+ 
 .heart-btn {
     position: absolute;
     top: 10px;
@@ -481,11 +493,11 @@ html, body {
     justify-content: center;
     cursor: pointer;
 }
-
+ 
 .heart-btn .material-icons {
     color: var(--primary-brown);
 }
-
+ 
 /* Context-specific override:
    Guarantees consistent liked-state styling inside profile-card and recipe-card layouts
    where inheritance or other CSS rules may otherwise override the heart colour */
@@ -493,33 +505,36 @@ html, body {
 .recipe-card .heart-btn.liked .material-icons {
     color: red !important;
 }
-
-
+ 
+ 
 .difficulty.easy {
-    color: green; 
+    color: green;
 }
-
+ 
 .difficulty.medium {
-    color: orange; 
+    color: orange;
 }
-
+ 
 .difficulty.hard {
-    color: red; 
+    color: red;
 }
-
+ 
 /* Global icon sizes for material icons used in recipe cards */
 .icon-sm {
     font-size: 14px;
 }
-
+ 
 .icon-md {
     font-size: 16px;
 }
-
+ 
 /* =========================
    Horizontal Scroll Row
    ========================= */
 .scroll-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
     display: flex;
     overflow-x: auto;
     gap: 20px;
@@ -528,59 +543,62 @@ html, body {
     scrollbar-color: var(--primary-brown-dark) transparent;
     cursor: grab;
     scroll-snap-type: x mandatory;
+    cursor: grab;
+    scroll-snap-type: x mandatory;
 }
-
+ 
 .scroll-row:active {
     cursor: grabbing;
 }
-
+ 
 .scroll-row::-webkit-scrollbar {
     height: 6px;
 }
-
+ 
 .scroll-row::-webkit-scrollbar-track {
     background: transparent;
 }
-
+ 
 .scroll-row::-webkit-scrollbar-thumb {
     background: var(--primary-brown-dark);
     border-radius: 10px;
 }
-
+ 
 .scroll-row::-webkit-scrollbar-button {
     display: none;
 }
-
+ 
 .scroll-item {
+    flex: 0 0 auto;
     flex: 0 0 auto;
     width: 22rem;
     scroll-snap-align: start;
 }
-
+ 
 /* =========================
    Media Queries
    ========================= */
-
+ 
 /* Tablet */
 @media (max-width: 768px) {
-
+ 
     .topnav {
         padding: 10px 3vw;
     }
-
+ 
     .logo-text {
         font-size: 20px;
     }
-
+ 
     .nav-text {
         font-size: 14px;
     }
-
+ 
     .signup-btn {
         padding: 6px 14px;
         font-size: 13px;
     }
-
+ 
     .footer-bottom {
         flex-direction: column;
         align-items: center;
@@ -588,111 +606,116 @@ html, body {
         text-align: center;
     }
 }
-
+ 
 /* Mobile */
 @media (max-width: 576px) {
     /* Navbar */
     .logo-text {
         font-size: 20px;
     }
-
+ 
     .nav-text {
         font-size: 12px;
     }
-
+ 
     .signup-btn {
         padding: 5px 12px;
         font-size: 11px;
     }
-
+ 
     .nav-circle .material-icons {
         font-size: 26px;
     }
-    
+   
     .nav-right {
         gap: 6px;
     }
-
+ 
     /* Footer */
     .site-footer {
         padding: 20px 20px 0px 20px;
     }
-
+ 
     .footer-bottom {
         flex-direction: column;
         align-items: center;
         gap: 8px;
         text-align: center;
     }
-
+ 
     .footer-legal a {
         margin-left: 10px;
     }
-
+ 
     /* Hero */
     .welcome-hero {
         height: 220px;
         padding: 0 16px;
     }
-
+ 
     .welcome-hero h1 {
         font-size: 1.8rem;
         margin-bottom: 8px;
     }
-
+ 
     .search-container input {
         padding: 8px 12px;
         font-size: 13px;
     }
-
+ 
     .search-container button {
         padding: 8px 14px;
         font-size: 13px;
     }
-
+ 
     /* Section header */
     .section-header {
         padding-left: 20px !important;
         padding-right: 20px !important;
         margin-bottom: 15px;
     }
-
+ 
     .section-header h2 {
         font-size: 1.5rem;
         margin-top: 30px;
     }
-
+ 
     /* Recipe cards */
     .recipe-card {
         width: 75vw;
     }
-
+ 
     .recipe-card figure {
         height: 11rem;
     }
-
+ 
     /* Scroll row */
     .scroll-row {
+        gap: 12px;
+        padding-left: 15px;
         gap: 12px;
         padding-left: 15px;
         padding-right: 15px;
         scroll-padding: 0 20px;
         margin: 0 10px;
+        margin: 0 10px;
     }
-
+ 
     .scroll-item {
         width: 70vw;
+        width: 70vw;
     }
-
+ 
     .recipe-card {
         width: 100%;
+        width: 100%;
     }
-
+ 
     .recipe-card figure {
         height: 11rem;
     }
 }
-
+ 
 /* Small mobile */
 @media (max-width: 375px) {
     /* Navbar */
@@ -703,141 +726,141 @@ html, body {
         height: 50px;
         padding: 8px 10px;
     }
-
+ 
     .nav-right {
         gap: 1px;
     }
-    
-
+   
+ 
     .logo-text {
         font-size: 14px;
     }
-
+ 
     .nav-text {
         font-size: 10px;
     }
-
+ 
     .signup-btn {
         padding: 4px 8px;
         font-size: 10px;
     }
-
+ 
     .nav-circle {
         width: 32px;
         height: 32px;
     }
-
+ 
     .nav-circle .material-icons {
         font-size: 22px;
     }
-
-    
+ 
+   
     /* Hero */
     .welcome-hero {
         height: 180px;
         padding: 0 16px;
     }
-
+ 
     .welcome-hero h1 {
         font-size: 1.4rem;
         margin-bottom: 6px;
     }
-
+ 
     .search-container input {
         padding: 7px 10px;
         font-size: 12px;
     }
-
+ 
     .search-container button {
         padding: 7px 12px;
         font-size: 12px;
     }
-
+ 
     /* Section header */
     .section-header h2 {
         font-size: 1.2rem !important;
         margin-top: 24px !important;
         margin-bottom: 10px !important;
     }
-
+ 
     /* Footer */
     .site-footer {
         padding: 16px 12px 0px 12px;
     }
-
+ 
     .footer-brand img {
         width: 140px;
     }
-
+ 
     .footer-bottom {
         font-size: 0.65rem;
     }
-
+ 
     .footer-legal a {
         margin-left: 6px;
     }
-
+ 
     /* Recipe cards */
     .recipe-card h1 {
         font-size: 1rem;
     }
-
+ 
     .recipe-card-content {
         padding: 0.5rem 0.8rem;
     }
-
+ 
     .recipe-tag {
         padding: 0.3rem 0.7rem;
         font-size: 0.75em;
     }
-
+ 
     .recipe-stats {
         gap: 6px;
         font-size: 11px;
     }
-
+ 
     .recipe-card figure {
         height: 9rem;
     }
-
+ 
     /* Scroll row */
     .scroll-item {
         width: 88vw;
     }
-
+ 
     .recipe-card {
         width: 100%;
     }
 }
-
+ 
 /* =========================
    Edit Button (Recipe Card)
    ========================= */
-
+ 
    .edit-btn {
     position: absolute;
     top: 10px;
-    left: 10px; 
-
+    left: 10px;
+ 
     z-index: 1000;
-
+ 
     background: rgba(255, 255, 255, 0.9);
     border: none;
     border-radius: 50%;
-
+ 
     width: 36px;
     height: 36px;
-
+ 
     display: flex;
     align-items: center;
     justify-content: center;
-
+ 
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-
+ 
     transition: all 0.2s ease;
 }
-
+ 
 .edit-btn:hover {
     transform: scale(1.1);
 }

@@ -6,14 +6,12 @@ class RecipeSharingLoginForm{
         this.passwordToggle = document.getElementById('passwordToggle');
         this.submitButton = this.form.querySelector('.comfort-button');
         this.successMessage = document.getElementById('successMessage');
-        this.socialButtons = document.querySelectorAll('.social-soft');
         this.init();
     }
 
     init() {
         this.bindEvents();
         this.setupPasswordToggle();
-        this.setupSocialButtons();
         this.setupGentleEffects();
     }
     
@@ -40,15 +38,6 @@ class RecipeSharingLoginForm{
 
         });
     }   
-
-    setupSocialButtons() {
-        this.socialButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const provider = button.querySelector('span').textContent.trim();
-                this.handleSocialLogin(provider, button);
-            });
-        });
-    }
     
     setupGentleEffects() {
         // Add soft hover effects on inputs
@@ -86,7 +75,7 @@ class RecipeSharingLoginForm{
 
     addGentleClickEffects() {
         //Add click animations to all interactive elements
-        const interactiveElements = document.querySelectorAll('.comfort-button, .social-soft, .gentle-checkbox');
+        const interactiveElements = document.querySelectorAll('.login-button, .gentle-checkbox');
         interactiveElements.forEach(el => {
             el.addEventListener('mousedown', () => {
                 el.style.transform = 'scale(0.98)';
@@ -211,47 +200,6 @@ class RecipeSharingLoginForm{
             this.setLoading(false);
         }
     }
-    async handleSocialLogin(provider, button) {
-        console.log(`Signing in with ${provider}...`);
-        
-        // Gentle loading state
-        const originalHTML = button.innerHTML;
-        button.style.pointerEvents = 'none';
-        button.style.opacity = '0.7';
-        
-        const loadingHTML = `
-            <div class="social-background"></div>
-            <div class="gentle-spinner">
-                <div class="spinner-circle"></div>
-            </div>
-            <span>Connecting...</span>
-            <div class="social-glow"></div>
-        `;
-        
-        button.innerHTML = loadingHTML;
-        
-        try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            console.log(`Redirecting to ${provider}...`);
-            // window.location.href = `/auth/${provider.toLowerCase()}`;
-        } catch (error) {
-            console.error(`${provider} sign in error:`, error.message);
-        } finally {
-            button.style.pointerEvents = 'auto';
-            button.style.opacity = '1';
-            button.innerHTML = originalHTML;
-        }
-    }
-    setLoading(loading) {
-        this.submitButton.classList.toggle('loading', loading);
-        this.submitButton.disabled = loading;
-        
-        // Disable social buttons during loading
-        this.socialButtons.forEach(button => {
-            button.style.pointerEvents = loading ? 'none' : 'auto';
-            button.style.opacity = loading ? '0.5' : '1';
-        });
-    }
 
     showGentleSuccess() {
         // Hide form with soft transition
@@ -261,7 +209,6 @@ class RecipeSharingLoginForm{
         
         setTimeout(() => {
             this.form.style.display = 'none';
-            document.querySelector('.comfort-social').style.display = 'none';
             document.querySelector('.comfort-signup').style.display = 'none';
             document.querySelector('.gentle-divider').style.display = 'none';
             
