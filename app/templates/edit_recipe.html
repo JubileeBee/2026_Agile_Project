@@ -1,52 +1,216 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block content %}
 
 <div class="container">
+
   <h2 class="form-title">Edit Recipe</h2>
 
   <form method="POST">
+
     <div class="form-group">
       <label>Title</label>
-      <input type="text" name="title" value="{{ recipe.title }}" required />
+
+      <input
+        type="text"
+        name="title"
+        value="{{ recipe.title }}"
+        required
+      />
     </div>
 
     <div class="form-group">
       <label>Description</label>
-      <textarea name="description" required>{{ recipe.description }}</textarea>
+
+      <textarea
+        name="description"
+        required
+      >{{ recipe.description }}</textarea>
     </div>
 
     <div class="form-group">
       <label>Ingredients</label>
-      <textarea name="ingredients" required>{{ recipe.ingredients }}</textarea>
+
+      <textarea
+        name="ingredients"
+        required
+      >{{ recipe.ingredients }}</textarea>
     </div>
 
     <div class="form-group">
       <label>Instructions</label>
-      <textarea name="instructions" required>
-{{ recipe.instructions }}</textarea
-      >
+
+      <textarea
+        name="instructions"
+        required
+      >{{ recipe.instructions }}</textarea>
     </div>
 
     <div class="form-group">
       <label>Category</label>
 
       <select name="category" required>
-        <option value="BREAKFAST">Breakfast</option>
-        <option value="BRUNCH">Brunch</option>
-        <option value="LUNCH">Lunch</option>
-        <option value="DINNER">Dinner</option>
-        <option value="DESSERT">Dessert</option>
-        <option value="DRINK">Drink</option>
-        <option value="SNACK">Snack</option>
+
+        <option value="BREAKFAST"
+          {% if recipe.category and recipe.category.name == 'BREAKFAST' %}
+            selected
+          {% endif %}
+        >
+          Breakfast
+        </option>
+      
+        <option value="BRUNCH"
+          {% if recipe.category and recipe.category.name == 'BRUNCH' %}
+            selected
+          {% endif %}
+        >
+          Brunch
+        </option>
+      
+        <option value="LUNCH"
+          {% if recipe.category and recipe.category.name == 'LUNCH' %}
+            selected
+          {% endif %}
+        >
+          Lunch
+        </option>
+      
+        <option value="DINNER"
+          {% if recipe.category and recipe.category.name == 'DINNER' %}
+            selected
+          {% endif %}
+        >
+          Dinner
+        </option>
+      
+        <option value="DESSERT"
+          {% if recipe.category and recipe.category.name == 'DESSERT' %}
+            selected
+          {% endif %}
+        >
+          Dessert
+        </option>
+      
+        <option value="DRINK"
+          {% if recipe.category and recipe.category.name == 'DRINK' %}
+            selected
+          {% endif %}
+        >
+          Drink
+        </option>
+      
+        <option value="SNACK"
+          {% if recipe.category and recipe.category.name == 'SNACK' %}
+            selected
+          {% endif %}
+        >
+          Snack
+        </option>
+      
       </select>
     </div>
 
     <div class="form-group">
-      <label>Image URL</label>
-      <input type="text" name="image_file" value="{{ recipe.image_file }}" />
+      <label>Difficulty</label>
+
+      <select name="difficulty" required>
+
+        <option value="EASY"
+          {% if recipe.difficulty and recipe.difficulty.name == 'EASY' %}
+            selected
+          {% endif %}
+        >
+          Easy
+        </option>
+
+        <option value="MEDIUM"
+          {% if recipe.difficulty and recipe.difficulty.name == 'MEDIUM' %}
+            selected
+          {% endif %}
+        >
+          Medium
+        </option>
+
+        <option value="HARD"
+          {% if recipe.difficulty and recipe.difficulty.name == 'HARD' %}
+            selected
+          {% endif %}
+        >
+          Hard
+        </option>
+
+      </select>
     </div>
 
-    <button type="submit" class="btn">Update Recipe</button>
+    <div class="form-group">
+      <label>Prep Time (mins)</label>
+
+      <input
+        type="number"
+        name="prep_time"
+        value="{{ recipe.prep_time }}"
+        min="0"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Cook Time (mins)</label>
+
+      <input
+        type="number"
+        name="cook_time"
+        value="{{ recipe.cook_time }}"
+        min="0"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Servings</label>
+
+      <input
+        type="number"
+        name="servings"
+        value="{{ recipe.servings }}"
+        min="1"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Image URL</label>
+
+      <input
+        type="text"
+        name="image_file"
+        value="{{ recipe.image_file }}"
+      />
+    </div>
+
+    <button type="submit" class="btn">
+      Update Recipe
+    </button>
+
   </form>
+
+  <hr>
+
+  <form
+    method="POST"
+    action="{{ url_for('delete_recipe', id=recipe.id) }}"
+    onsubmit="return confirm('Are you sure you want to delete this recipe?');"
+  >
+
+    <button
+      type="submit"
+      class="btn btn-danger"
+    >
+      Delete Recipe
+    </button>
+
+  </form>
+
 </div>
 
 {% endblock %}

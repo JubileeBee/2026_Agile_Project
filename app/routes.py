@@ -432,23 +432,67 @@ def like_recipe(id):
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_recipe(id):
+
     recipe = Recipe.query.get_or_404(id)
+
     if recipe.user_id != current_user.id:
         return redirect(url_for('home'))
 
     if request.method == 'POST':
+
         recipe.title = request.form['title']
         recipe.description = request.form['description']
         recipe.ingredients = request.form['ingredients']
         recipe.instructions = request.form['instructions']
-        recipe.category = CategoryEnum[request.form['category']]
+
+        recipe.category = CategoryEnum[
+            request.form['category']
+        ]
+
+        recipe.difficulty = DifficultyEnum[
+            request.form['difficulty']
+        ]
+
+        recipe.prep_time = int(
+            request.form['prep_time']
+        )
+
+        recipe.cook_time = int(
+            request.form['cook_time']
+        )
+
+        recipe.servings = int(
+            request.form['servings']
+        )
+
         recipe.image_file = request.form['image_file']
 
         db.session.commit()
 
-        return redirect(url_for('recipe', id=recipe.id))
+        return redirect(
+            url_for('recipe', id=recipe.id)
+        )
 
-    return render_template('edit_recipe.html', recipe=recipe)
+    return render_template(
+        'edit_recipe.html',
+        recipe=recipe
+    )
+
+@app.route('/recipe/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_recipe(id):
+
+    recipe = Recipe.query.get_or_404(id)
+
+    if recipe.user_id != current_user.id:
+        abort(403)
+
+    db.session.delete(recipe)
+    db.session.commit()
+
+    flash('Recipe deleted successfully.', 'success')
+
+    return redirect(url_for('home'))
 
 
 @app.route('/api/recipes')
