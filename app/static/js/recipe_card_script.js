@@ -27,6 +27,13 @@ document.addEventListener('DOMContentLoaded', function () {
             icon.textContent = 'favorite_border'
             btn.classList.remove('liked')
           }
+          
+          // Update the like count in the card stats
+          const card = btn.closest('.recipe-card')
+          const likeCount = card.querySelector('.recipe-stats li:first-child')
+          if (likeCount) {
+              likeCount.innerHTML = `<span class="material-icons" style="font-size: 14px">favorite</span> ${data.likes}`
+          }
         })
     })
   })
