@@ -1,4 +1,3 @@
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
 // Profile Tab functionality: handles switching between "My Recipes", "Favourites", and "Likes"
 const tabs = document.querySelectorAll('.profile-tab');
@@ -97,7 +96,7 @@ if (saveBtn) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': getCsrfToken()
             },
             body: JSON.stringify({ name, bio, profile_image: avatar })
         })
