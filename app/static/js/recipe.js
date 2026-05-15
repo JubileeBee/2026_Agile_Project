@@ -6,8 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const heart = document.querySelector(".heart");
     const likeCountEl = document.getElementById("like-count");
 
+    if (!heart || !likeCountEl) return;
+
     let liked = false;
-    let likes = parseInt(likeCountEl.textContent);
+    let likes = parseInt(likeCountEl.textContent) || 0;
 
     heart.addEventListener("click", () => {
         liked = !liked;

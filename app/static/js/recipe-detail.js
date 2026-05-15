@@ -1,3 +1,5 @@
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+
 // LIKE BUTTON
 const likeBtn = document.getElementById("likeBtn");
 const likeCount = document.getElementById("likeCount");
@@ -7,7 +9,13 @@ if (likeBtn && likeCount) {
         const url = likeBtn.dataset.url;
 
         try {
-            const res = await fetch(url, { method: "POST" });
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRFToken": csrfToken
+                }
+            });
             const data = await res.json();
 
             if (!res.ok) {
@@ -34,7 +42,13 @@ if (favouriteBtn) {
         const url = favouriteBtn.dataset.url;
 
         try {
-            const res = await fetch(url, { method: "POST" });
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRFToken": csrfToken
+                }
+            });
             const data = await res.json();
 
             if (!res.ok) {

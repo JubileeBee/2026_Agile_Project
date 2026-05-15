@@ -1,3 +1,5 @@
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+
 // Profile Tab functionality: handles switching between "My Recipes", "Favourites", and "Likes"
 const tabs = document.querySelectorAll('.profile-tab');
 const contents = document.querySelectorAll('.profile-tab-content');
@@ -17,21 +19,23 @@ const openModal = document.getElementById('openModal');
 const overlay = document.getElementById('popupOverlay');
 const closeModal = document.getElementById('closeModal');
 
-openModal.addEventListener('click', function(e) {
-    e.preventDefault();
-    overlay.classList.add('active');
-});
+if (openModal && overlay && closeModal) {
 
-closeModal.addEventListener('click', function() {
-    overlay.classList.remove('active');
-});
+    openModal.addEventListener('click', function(e) {
+        e.preventDefault();
+        overlay.classList.add('active');
+    });
 
-overlay.addEventListener('click', function(e) {
-    if (e.target === overlay) {
+    closeModal.addEventListener('click', function() {
         overlay.classList.remove('active');
-    }
-});
+    });
 
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+            overlay.classList.remove('active');
+        }
+    });
+}
 
 
 // Avatar Selection: Updates profile image and highlights selected avatar
@@ -48,17 +52,19 @@ avatarOptions.forEach(avatar => {
 
 // Syncs modal avatar selection with the currently saved profile image
 // so the correct preset avatar is highlighted when the modal opens.
-openModal.addEventListener('click', () => {
-    const currentSrc = profileImg.src;
+if (openModal && profileImg) {
+    openModal.addEventListener('click', () => {
+        const currentSrc = profileImg.src;
 
-    avatarOptions.forEach(avatar => {
-        avatar.classList.remove('selected');   
-        
-        if (avatar.src === currentSrc) {
-            avatar.classList.add('selected');
-        }
+        avatarOptions.forEach(avatar => {
+            avatar.classList.remove('selected');
+
+            if (avatar.src === currentSrc) {
+                avatar.classList.add('selected');
+            }
+        });
     });
-});
+}
 
 
 //Handles profile updates: sends data to backend and synchronises UI state
@@ -71,57 +77,58 @@ const profileBio = document.querySelector('.profile-bio');
 
 // bio counter
 const bioCounter = document.getElementById('bioCounter');
-bioCounter.textContent = `${editBio.value.length}/250`;
-editBio.addEventListener('input', () => {
+if (bioCounter && editBio) {
     bioCounter.textContent = `${editBio.value.length}/250`;
-})
 
-saveBtn.addEventListener('click', async () => {
-    // Collect user input and selected avatar
-    const name = editName.value
-    const bio = editBio.value
-    const avatar = document.querySelector('.avatar-option.selected')?.src
+    editBio.addEventListener('input', () => {
+        bioCounter.textContent = `${editBio.value.length}/250`;
+    });
+}
 
-    // Send update request to backend (JSON payload with name, bio, and avatar URL)
-    const res = await fetch('/profile/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, bio, profile_image: avatar })
-    })
 
-    const data = await res.json()
+if (saveBtn) {
+    saveBtn.addEventListener('click', async () => {
 
-    // If update successful, update profile UI with new info and close modal
-    if (res.ok && data.success) {
-        const cleanName = name.trim()
-        const cleanBio = bio.trim()
+        const name = editName.value
+        const bio = editBio.value
+        const avatar = document.querySelector('.avatar-option.selected')?.src
 
-        profileName.textContent = cleanName
-        profileBio.textContent = cleanBio
-        profileImg.src = avatar
+        const res = await fetch('/profile/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({ name, bio, profile_image: avatar })
+        })
 
-        editName.value = cleanName 
-        editBio.value = cleanBio
-        overlay.classList.remove('active')
-    } else {
-        
-        // Prevent duplicate error messages and display backend validation error
-        const oldErr = document.getElementById('nameError')
-        if (oldErr) oldErr.remove()
+        const data = await res.json()
 
-        // Show error message below name input (from backend response or generic if missing)
-        const err = document.createElement('p')
-        err.id = 'nameError'
-        err.textContent = data.error || 'Something went wrong'
-        editName.after(err)
+        if (res.ok && data.success) {
+            profileName.textContent = name.trim()
+            profileBio.textContent = bio.trim()
+            profileImg.src = avatar
 
-        // Remove error when user starts typing (runs once per error display)
-        editName.addEventListener('input', () => {
-            const err = document.getElementById('nameError')
-            if (err) err.remove()
-        }, { once: true })
-    }
-});
+            editName.value = name.trim()
+            editBio.value = bio.trim()
+            overlay.classList.remove('active')
+        } else {
+
+            const oldErr = document.getElementById('nameError')
+            if (oldErr) oldErr.remove()
+
+            const err = document.createElement('p')
+            err.id = 'nameError'
+            err.textContent = data.error || 'Something went wrong'
+            editName.after(err)
+
+            editName.addEventListener('input', () => {
+                const err = document.getElementById('nameError')
+                if (err) err.remove()
+            }, { once: true })
+        }
+    });
+}
 
 
 // Delete account confirmation modal, handles open/close, validation, and simulate deletion flow
@@ -130,35 +137,48 @@ const deleteModal = document.getElementById('deleteModal');
 const deleteConfirmInput = document.getElementById('deleteConfirmInput');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
-deleteToggle.addEventListener('click', () => {
-    const isOpen = deleteModal.classList.contains('active');
-    if (isOpen) {
-        deleteModal.classList.remove('active');
-        deleteToggle.textContent = "Delete Account";
-    } else {
-        deleteModal.classList.add('active');
-        deleteToggle.textContent = "Cancel Delete";
-    }
-    deleteConfirmInput.value = "";
-    confirmDeleteBtn.disabled = true;
-});
+if (deleteToggle && deleteModal && deleteConfirmInput && confirmDeleteBtn) {
 
-deleteConfirmInput.addEventListener('input', () => {
-    confirmDeleteBtn.disabled = deleteConfirmInput.value !== 'DELETE';
-});
+    deleteToggle.addEventListener('click', () => {
+        const isOpen = deleteModal.classList.contains('active');
 
-confirmDeleteBtn.addEventListener('click', async () => {
-    const res = await fetch('/profile/delete', { method: 'POST' })
-    const data = await res.json()
+        if (isOpen) {
+            deleteModal.classList.remove('active');
+            deleteToggle.textContent = "Delete Account";
+        } else {
+            deleteModal.classList.add('active');
+            deleteToggle.textContent = "Cancel Delete";
+        }
 
-    overlay.classList.remove('active');
-    document.getElementById('byePopupOverlay').classList.add('active');
-    document.getElementById('byePopup').classList.add('active');
+        deleteConfirmInput.value = "";
+        confirmDeleteBtn.disabled = true;
+    });
 
-    setTimeout(() => {
-        window.location.href = data.redirect || '/';
-    }, 2500);
-});
+    deleteConfirmInput.addEventListener('input', () => {
+        confirmDeleteBtn.disabled = deleteConfirmInput.value !== 'DELETE';
+    });
+
+    confirmDeleteBtn.addEventListener('click', async () => {
+
+        const res = await fetch('/profile/delete', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken
+            }
+        })
+
+        const data = await res.json()
+
+        if (overlay) overlay.classList.remove('active');
+
+        document.getElementById('byePopupOverlay')?.classList.add('active');
+        document.getElementById('byePopup')?.classList.add('active');
+
+        setTimeout(() => {
+            window.location.href = data.redirect || '/';
+        }, 2500);
+    });
+}
 
 // Set initial liked state on page load
 document.querySelectorAll('.heart-btn').forEach(btn => {
@@ -181,7 +201,13 @@ function attachHeartListener(btn) {
         const recipeId = url.split('/')[2] // extracts id from /recipe/id/like
 
         // Send POST request to toggle like/unlike in backend
-        const res = await fetch(url, { method: 'POST' })
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrfToken
+            }
+        })
         const data = await res.json()
 
         // Update ALL heart buttons for this recipe across all tabs
