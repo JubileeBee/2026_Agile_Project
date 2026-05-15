@@ -14,6 +14,8 @@ from app.models import (
     User
 )
 import random
+from werkzeug.utils import secure_filename
+import os
 
 # Helper functions: This can be added to other pages if you want to implement it
 def get_random_by_category(category, limit=10):
@@ -693,8 +695,13 @@ def add_recipe():
         image_filename = None
 
         if image and image.filename:
-            image_filename = image.filename
-            image.save(f'app/static/images/uploads/{image_filename}')
+            # Sanitize filename
+            image_filename = secure_filename(image.filename)
+            #Safe upload path
+            upload_folder = os.path.join("app", "static", "images", "uploads")
+            os.makedirs(upload_folder, exist_ok=True)
+            filepath = os.path.join(upload_folder, image_filename)
+            image.save(filepath)
 
         new_recipe = Recipe(
             title=request.form['title'],
