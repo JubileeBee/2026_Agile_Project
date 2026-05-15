@@ -4,7 +4,6 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import Config
 from flask_wtf.csrf import CSRFProtect
-import secrets
 
 # Create Flask app globally
 app = Flask(__name__)
