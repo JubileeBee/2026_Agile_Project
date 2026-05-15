@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const card = btn.closest('.recipe-card')
           const likeCount = card.querySelector('.recipe-stats li:first-child')
           if (likeCount) {
-              likeCount.innerHTML = `<span class="material-icons" style="font-size: 14px">favorite</span> ${data.likes}`
+              likeCount.textContent = `<span class="material-icons" style="font-size: 14px">favorite</span> ${data.likes}`
           }
         })
         .catch(err => {

@@ -111,10 +111,10 @@ if (shareBtn) {
 
             await navigator.clipboard.writeText(window.location.href);
 
-            shareBtn.innerHTML = "✅ Link Copied";
+            shareBtn.textContent = "✅ Link Copied";
 
             setTimeout(() => {
-                shareBtn.innerHTML = "🔗 Share";
+                shareBtn.textContent = "🔗 Share";
             }, 2000);
 
         } catch (error) {

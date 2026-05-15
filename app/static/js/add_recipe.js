@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const row = document.createElement("div");
             row.classList.add("ingredient-row");
 
-            row.innerHTML = `
+            row.textContent = `
                 <input type="text" name="ingredient_name[]" placeholder="Ingredient" required>
                 <input type="text" name="ingredient_quantity[]" placeholder="Qty">
                 <input type="text" name="ingredient_unit[]" placeholder="Unit">

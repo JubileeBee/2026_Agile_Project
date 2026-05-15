@@ -1,4 +1,5 @@
 import re
+import bleach
 from flask import render_template, request, redirect, url_for, jsonify, abort, flash
 from app import app, db
 from sqlalchemy import desc, func, or_
@@ -156,6 +157,14 @@ def recipes():
         total_likes=total_likes,
         total_favourites=total_favourites
     )
+
+#Example of sanitizing user input for recipe description to prevent XSS
+recipes.description = bleach.clean(
+    request.form['description'],
+    tags=['b', 'i', 'strong', 'em', 'p'],
+    attributes={},
+    strip=True
+)
 
 @app.route("/api/live-search")
 def live_search():

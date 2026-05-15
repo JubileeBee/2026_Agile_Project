@@ -33,10 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(`/api/live-search?${params.toString()}`);
       const recipes = await response.json();
 
-      resultsContainer.innerHTML = "";
+      resultsContainer.textContent = "";
 
       if (recipes.length === 0) {
-        resultsContainer.innerHTML = `
+        resultsContainer.textContent = `
           <div class="text-center py-5">
             <h3>No recipes found</h3>
             <p>Try searching for something else.</p>

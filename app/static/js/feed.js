@@ -15,7 +15,7 @@ function createCard(recipe) {
     const div = document.createElement("div");
     div.className = "col-6 col-md-4";
 
-    div.innerHTML = `
+    div.textContent = `
         <div class="recipe-card">
             <img src="${recipe.image_url}" style="width:100%; border-radius:10px;">
             <h5>${recipe.title}</h5>
@@ -36,7 +36,7 @@ async function fetchRecipes(reset = false) {
     if (reset) {
         page = 1;
         hasMore = true;
-        grid.innerHTML = "";
+        grid.textContent = "";
     }
 
     const res = await fetch(`/api/recipes?page=${page}&search=${currentSearch}&category=${currentCategory}`);
