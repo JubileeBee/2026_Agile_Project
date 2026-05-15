@@ -1,7 +1,3 @@
-const recipeCardCsrfToken = document
-  .querySelector('meta[name="csrf-token"]')
-  ?.content
-
 
 // Handles the like/unlike functionality for recipe cards on the homepage and profile page
 document.addEventListener('DOMContentLoaded', function () {
@@ -24,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         method: 'POST',
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRFToken': recipeCardCsrfToken
+          'X-CSRFToken': getCsrfToken()
         }
       })
         .then(res => res.json())
