@@ -160,14 +160,6 @@ def recipes():
         total_favourites=total_favourites
     )
 
-#Example of sanitizing user input for recipe description to prevent XSS
-recipes.description = bleach.clean(
-    request.form['description'],
-    tags=['b', 'i', 'strong', 'em', 'p'],
-    attributes={},
-    strip=True
-)
-
 @app.route("/api/live-search")
 def live_search():
 
