@@ -1,4 +1,3 @@
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
 // ── Password visibility toggles ──
 function setupToggle(toggleId, inputId) {
