@@ -11,8 +11,10 @@
     <h1>Add Your Recipe</h1>
 
     <form action="/add_recipe"
-          method="POST"
-          enctype="multipart/form-data">
+      method="POST"
+      enctype="multipart/form-data">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
         <!-- =========================
              Recipe Title
