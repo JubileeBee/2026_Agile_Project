@@ -128,7 +128,7 @@ html, body {
 .signup-btn {
     text-decoration: none;
     background-color: var(--primary-brown);
-    color: var(--hover-bg);
+    color: white;
     padding: 8px 20px;
     border-radius: 25px;
     font-size: 14px;
