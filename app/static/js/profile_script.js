@@ -162,7 +162,7 @@ if (deleteToggle && deleteModal && deleteConfirmInput && confirmDeleteBtn) {
         const res = await fetch('/profile/delete', {
             method: 'POST',
             headers: {
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': getCsrfToken()
             }
         })
 
@@ -204,7 +204,7 @@ function attachHeartListener(btn) {
             method: 'POST',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': getCsrfToken()
             }
         })
         const data = await res.json()
