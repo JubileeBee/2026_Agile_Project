@@ -517,6 +517,11 @@ html, body {
 .heart-btn .material-icons {
     color: var(--primary-brown);
 }
+
+/* Liked state */
+.heart-btn.liked {
+    background-color: var(--primary-brown);
+}
  
 /* Context-specific override:
    Guarantees consistent liked-state styling inside profile-card and recipe-card layouts
