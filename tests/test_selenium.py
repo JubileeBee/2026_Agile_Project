@@ -266,7 +266,8 @@ def test_logout_flow():
     time.sleep(2)
 
     # Open logout route
-    driver.get("http://127.0.0.1:5000/logout")
+    logout_button = driver.find_element(By.CLASS_NAME, "logout-btn")
+    logout_button.click()
 
     time.sleep(2)
 
