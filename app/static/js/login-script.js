@@ -1,6 +1,7 @@
-class RecipeSharingLoginForm{
+class RecipeSharingLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
+        if (!this.form) return; // Exit if form not found (e.g. on other pages)
         this.emailInput = document.getElementById('email');
         this.passwordInput = document.getElementById('password');
         this.passwordToggle = document.getElementById('passwordToggle');
@@ -16,52 +17,45 @@ class RecipeSharingLoginForm{
     }
     
     bindEvents() {
+        if (!this.form || !this.emailInput || !this.passwordInput) return;
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
         this.emailInput.addEventListener("blur", () => this.validateEmail());
         this.passwordInput.addEventListener("blur", () => this.validatePassword()); 
         this.emailInput.addEventListener("input", () => this.clearError('email'));
         this.passwordInput.addEventListener("input", () => this.clearError('password'));    
-
-        //Add placeholder animation on focus and blur
         this.emailInput.setAttribute("placeholder", ' ');
         this.passwordInput.setAttribute("placeholder", ' ');
     }
 
     setupPasswordToggle() {
+        if (!this.passwordToggle || !this.passwordInput) return;
         this.passwordToggle.addEventListener('click', () => {
             const type = this.passwordInput.type === 'password' ? 'text' : 'password';
             this.passwordInput.type = type;
             this.passwordToggle.classList.toggle('toggle-active', type === 'text');
-
-            //Add gentle animation for toggle button
             this.triggerGentleRipple(this.passwordToggle);
-
         });
     }   
     
     setupGentleEffects() {
-        // Add soft hover effects on inputs
+        if (!this.emailInput || !this.passwordInput) return;
         [this.emailInput, this.passwordInput].forEach(input => {
             input.addEventListener('focus', (e) => {
                 this.triggerSoftFocus(e.target.closest('.field-container'));
             });
-            
             input.addEventListener('blur', (e) => {
                 this.releaseSoftFocus(e.target.closest('.field-container'));
             });
         });
-        
-        // Add gentle click effects to buttons
         this.addGentleClickEffects();
     }
-    triggerSoftFocus(container)  {
-        //Add subtle glow animation
+
+    triggerSoftFocus(container) {
         container.style.transition = 'all 0.3s ease';
         container.style.transform = 'translateY(-1px)';
     }
 
     releaseSoftFocus(container) {
-        //Remove focus effects
         container.style.transform = 'translateY(0)';
     }
 
@@ -70,15 +64,9 @@ class RecipeSharingLoginForm{
         //Add click animations to all interactive elements
         const interactiveElements = document.querySelectorAll('.sign_in_button, .gentle-checkbox');
         interactiveElements.forEach(el => {
-            el.addEventListener('mousedown', () => {
-                el.style.transform = 'scale(0.98)';
-            });
-            el.addEventListener('mouseup', () => {
-                el.style.transform = 'scale(1)';
-            });
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = 'scale(1)';
-            });
+            el.addEventListener('mousedown', () => { el.style.transform = 'scale(0.98)'; });
+            el.addEventListener('mouseup', () => { el.style.transform = 'scale(1)'; });
+            el.addEventListener('mouseleave', () => { el.style.transform = 'scale(1)'; });
         });
     }
     
@@ -133,22 +121,28 @@ class RecipeSharingLoginForm{
 
         softField.classList.remove('error');
         errorElement.classList.remove('visible');
-        setTimeout(() => {
-            errorElement.textContent = '';
-        }, 300);        
+        setTimeout(() => { errorElement.textContent = ''; }, 300);        
     }
+
     triggerGentleRipple(element) {
         //Create ripple effect to indicate errors
         element.style.animation = 'none';
         element.style.transform = 'translateX(2px)'; 
+        setTimeout(() => { element.style.transform = 'translateX(-2px)'; }, 100);
+        setTimeout(() => { element.style.transform = 'translateX(0)'; }, 200);
+    }
 
-        setTimeout(() => {
-            element.style.transform = 'translateX(-2px)';
-        }, 100);
-
-        setTimeout(() => {
-            element.style.transform = 'translateX(0)';
-        }, 200);
+    setLoading(isLoading) {
+        this.submitButton.disabled = isLoading
+        const btnText = this.submitButton.querySelector('.button-text')
+        const btnLoader = this.submitButton.querySelector('.button-loader')
+        if (isLoading) {
+            btnText.style.opacity = '0'
+            btnLoader.style.display = 'block'
+        } else {
+            btnText.style.opacity = '1'
+            btnLoader.style.display = 'none'
+        }
     }
 
     async handleSubmit(e) {
@@ -157,15 +151,12 @@ class RecipeSharingLoginForm{
         const isEmailValid = this.validateEmail();
         const isPasswordValid = this.validatePassword();
         
-        if (!isEmailValid || !isPasswordValid) {
-            return;
-        }
+        if (!isEmailValid || !isPasswordValid) return;
         
         this.setLoading(true);
         
         try {
-            const csrfToken =document.querySelector('meta[name="csrf-token"]').content;
-            // Simulate gentle authentication process
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
@@ -182,14 +173,11 @@ class RecipeSharingLoginForm{
 
             if (result.success) {
                 this.showGentleSuccess();
-
-                setTimeout(() => {
-                    window.location.href = result.redirect;
-                }, 1800);
-
+                setTimeout(() => { window.location.href = result.redirect; }, 1800);
             } else {
                 this.showError('email', result.error || 'Login failed.');
-}        } catch (error) {
+            }
+        } catch (error) {
             this.showError('password', 'Sign in failed. Please try again.');
         } finally {
             this.setLoading(false);
@@ -213,13 +201,8 @@ class RecipeSharingLoginForm{
             this.triggerSuccessGlow();
             
         }, 300);
-        
-        // Redirect after success
-        setTimeout(() => {
-            console.log('Welcome! Taking you to your dashboard...');
-            // window.location.href = '/dashboard';
-        }, 3500);
     }
+
     triggerSuccessGlow() {
         // Add gentle glow effect to the entire card
         const card = document.querySelector('.soft-card');

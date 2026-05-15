@@ -9,7 +9,6 @@ import secrets
 # Create Flask app globally
 app = Flask(__name__)
 app.config.from_object(Config)
-app.config['SECRET_KEY'] = secrets.token_hex(32)  # Generate a random secret key
 csrf = CSRFProtect(app)  # Enable CSRF protection
 
 # Initialize extensions

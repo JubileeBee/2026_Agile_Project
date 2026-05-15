@@ -1,3 +1,6 @@
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+
+
 // Handles the like/unlike functionality for recipe cards on the homepage and profile page
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.heart-btn').forEach(btn => {
@@ -13,10 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
       e.stopPropagation()
 
       const url = btn.dataset.url
+      if (!url) return
 
       fetch(url, {
         method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': csrfToken
+        }
       })
         .then(res => res.json())
         .then(data => {
@@ -34,6 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
           if (likeCount) {
               likeCount.innerHTML = `<span class="material-icons" style="font-size: 14px">favorite</span> ${data.likes}`
           }
+        })
+        .catch(err => {
+          console.error('Like request failed:', err)
         })
     })
   })

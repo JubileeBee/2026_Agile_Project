@@ -29,7 +29,13 @@ to appear on EVERY page should be added here. #}
 
         {% if current_user and current_user.is_authenticated %}
           <a href="{{ url_for('profile') }}" class="nav-circle"> <span class="material-icons">account_circle</span></a>
-          <a href="{{ url_for('logout') }}" class="signup-btn">Logout</a>
+          <form method="POST" action="{{ url_for('logout') }}" class="logout-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <button type="submit" class="logout-btn">
+              Logout
+            </button>
+          </form>
         {% else %}
           <a href="{{ url_for('login') }}" class="nav-circle"><span class="material-icons">account_circle</span></a>
           <a href="{{ url_for('signup') }}" class="signup-btn">Sign up</a>

@@ -227,6 +227,7 @@ block content %}
 
           <div class="comment-form-card mb-5">
             <form method="POST">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <textarea
                 id="commentTextarea"
                 name="comment"
@@ -291,6 +292,7 @@ block content %}
                     method="POST"
                     action="{{ url_for('delete_comment', comment_id=comment.id) }}"
                   >
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-sm btn-outline-danger">
                       Delete
                     </button>

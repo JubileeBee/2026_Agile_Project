@@ -1,33 +1,38 @@
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const container = document.getElementById("ingredients-container");
     const addBtn = document.getElementById("add-ingredient-btn");
 
-    // Add ingredient row
-    addBtn.addEventListener("click", () => {
-        const row = document.createElement("div");
-        row.classList.add("ingredient-row");
+    if(container && addBtn) {
+        // Add ingredient row
+        addBtn.addEventListener("click", () => {
+            const row = document.createElement("div");
+            row.classList.add("ingredient-row");
 
-        row.innerHTML = `
-            <input type="text" name="ingredient_name[]" placeholder="Ingredient" required>
-            <input type="text" name="ingredient_quantity[]" placeholder="Qty">
-            <input type="text" name="ingredient_unit[]" placeholder="Unit">
-            <button type="button" class="remove-btn">X</button>
-        `;
+            row.innerHTML = `
+                <input type="text" name="ingredient_name[]" placeholder="Ingredient" required>
+                <input type="text" name="ingredient_quantity[]" placeholder="Qty">
+                <input type="text" name="ingredient_unit[]" placeholder="Unit">
+                <button type="button" class="remove-btn">X</button>
+            `;
 
-        container.appendChild(row);
-    });
+            container.appendChild(row);
+        });
 
-    // Remove ingredient (event delegation)
-    container.addEventListener("click", (e) => {
-        if (e.target.classList.contains("remove-btn")) {
-            if (container.children.length > 1) {
-                e.target.parentElement.remove();
-            } else {
-                alert("You need at least one ingredient.");
+        // Remove ingredient (event delegation)
+        container.addEventListener("click", (e) => {
+            if (e.target.classList.contains("remove-btn")) {
+                if (container.children.length > 1) {
+                    e.target.parentElement.remove();
+                } else {
+                    alert("You need at least one ingredient.");
+                }
             }
-        }
-    });
+        });
+    }
+
 
     const prepInput = document.getElementById("prep_time");
     const cookInput = document.getElementById("cook_time");
@@ -55,15 +60,19 @@ document.addEventListener("DOMContentLoaded", () => {
         totalDisplay.textContent = formatTime(total);
     }
 
-    prepInput.addEventListener("input", updateTotalTime);
-    cookInput.addEventListener("input", updateTotalTime);
+    if (prepInput && cookInput) {
+        prepInput.addEventListener("input", updateTotalTime);
+        cookInput.addEventListener("input", updateTotalTime);
+    }
 
     const descInput = document.getElementById("description");
     const descCount = document.getElementById("desc-count");
 
-    descInput.addEventListener("input", () => {
-        const length = descInput.value.length;
-        descCount.textContent = `${length} / 300`;
-    });
+    if (descInput && descCount) {
+        descInput.addEventListener("input", () => {
+            const length = descInput.value.length;
+            descCount.textContent = `${length} / 300`;
+        });
+    }
 
 });

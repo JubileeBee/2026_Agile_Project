@@ -1,16 +1,18 @@
 // Navbar scroll behavior: hide on scroll down, show on scroll up
-let lastScrollY = window.scrollY;
+const navbar = document.querySelector('.topnav');
 
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
+if (navbar) {
+    let lastScrollY = window.scrollY;
 
-    if (currentScrollY < lastScrollY) {
-        // scrolling up — show navbar
-        document.querySelector('.topnav').style.transform = 'translateY(0)';
-    } else {
-        // scrolling down — hide navbar
-        document.querySelector('.topnav').style.transform = 'translateY(-100%)';
-    }
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
 
-    lastScrollY = currentScrollY;
-});
+        if (currentScrollY < lastScrollY) {
+            navbar.style.transform = 'translateY(0)';
+        } else {
+            navbar.style.transform = 'translateY(-100%)';
+        }
+
+        lastScrollY = currentScrollY;
+    });
+}

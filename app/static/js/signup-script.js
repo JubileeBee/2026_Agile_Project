@@ -1,3 +1,5 @@
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+
 // ── Password visibility toggles ──
 function setupToggle(toggleId, inputId) {
     const btn = document.getElementById(toggleId);
@@ -16,23 +18,26 @@ setupToggle('confirmToggle', 'confirmPassword');
 const pwInput       = document.getElementById('password');
 const strengthBar   = document.getElementById('strengthBar');
 const strengthLabel = document.getElementById('strengthLabel');
-const segments = ['seg1', 'seg2', 'seg3', 'seg4']
-    .map(id => document.getElementById(id))
-    .filter(Boolean);
-const labels        = ['', 'Weak', 'Fair', 'Good', 'Strong'];
-const classes       = ['', 'active-weak', 'active-fair', 'active-good', 'active-strong'];
+if (pwInput && strengthBar && strengthLabel) {
 
-function getStrength(pw) {
-    let score = 0;
+    const segments = ['seg1', 'seg2', 'seg3', 'seg4']
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
 
-    //only check strength if password is at least 8 characters
-    if(pw.length < 8) return 0;
-    if (pw.length >= 8)          score++;
-    if (/[A-Z]/.test(pw))        score++;
-    if (/[0-9]/.test(pw))        score++;
-    if (/[^A-Za-z0-9]/.test(pw)) score++;
-    return score;
-}
+    const labels  = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+    const classes = ['', 'active-weak', 'active-fair', 'active-good', 'active-strong'];
+
+    function getStrength(pw) {
+        let score = 0;
+
+        //only check strength if password is at least 8 characters
+        if(pw.length < 8) return 0;
+        if (pw.length >= 8)          score++;
+        if (/[A-Z]/.test(pw))        score++;
+        if (/[0-9]/.test(pw))        score++;
+        if (/[^A-Za-z0-9]/.test(pw)) score++;
+        return score;
+    }
 
 pwInput.addEventListener('input', () => {
     const pw = pwInput.value;
@@ -49,10 +54,12 @@ pwInput.addEventListener('input', () => {
     });
     strengthLabel.textContent = labels[score];
 });
+}
 
 // ── Validation helpers ──
 function showError(id, msg) {
     const el = document.getElementById(id);
+    if (!el) return;
     el.textContent = msg;
     el.classList.add('show');
     el.closest('.soft-field')?.classList.add('error');
@@ -60,6 +67,7 @@ function showError(id, msg) {
 
 function clearError(id) {
     const el = document.getElementById(id);
+    if (!el) return;
     el.textContent = '';
     el.classList.remove('show');
     el.closest('.soft-field')?.classList.remove('error');

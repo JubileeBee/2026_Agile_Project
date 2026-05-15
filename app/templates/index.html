@@ -52,22 +52,12 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
     {% if current_user is defined and current_user.is_authenticated %}
     <a
       href="{{ url_for('post') }}"
-      style="
-        color: var(--primary-brown);
-        text-decoration: underline;
-        font-weight: 600;
-      "
     >
       Add Your First Recipe
     </a>
     {% else %}
     <a
       href="{{ url_for('login') }}"
-      style="
-        color: var(--primary-brown);
-        text-decoration: underline;
-        font-weight: 600;
-      "
     >
       Login to Add Your First Recipe
     </a>
@@ -80,8 +70,8 @@ hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
     {% for section in sections %}
         {% if section.recipes is defined and section.recipes %}
             <section class="section-style {{ section.class|default('') }}">
-                <div class="container">
-                    <div class="section-header mb-1 px-4">
+                <div class="section-header mb-1 px-4">
+                    <div class="section-header mb-1">
                         <h2>{{ section.title }}</h2>
                     </div>
                     <div class="scroll-row d-flex gap-4">

@@ -140,7 +140,27 @@ html, body {
     background-color: var(--hover-bg);
     color: var(--primary-brown);
 }
- 
+
+.logout-btn {
+    all: unset;
+    background-color: var(--primary-brown);
+    color: white;
+
+    padding: 8px 20px;
+    border-radius: 25px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-brown);
+}
+
 /* =========================
    Floating Post Button
    ========================= */
