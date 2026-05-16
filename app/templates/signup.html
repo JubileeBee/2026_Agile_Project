@@ -34,7 +34,8 @@ The form will be submitted to the server for processing and validation.
     <div class="signup-container">
         <div class="soft-card d-flex">
             <!-- Form -->
-            <form class="comfort-form" id="signupForm" novalidate>
+            <form class="comfort-form" id="signupForm" novalidate method="POST" action="{{ url_for('signup') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div classs = "signup-header">
                     <h1 class = "signup-title text-center">Create account</h1>
                     <p class = "signup-subtitle text-center">Join our cooking community</p>
