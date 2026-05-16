@@ -18,7 +18,6 @@ class RecipeSharingLoginForm {
     
     bindEvents() {
         if (!this.form || !this.emailInput || !this.passwordInput) return;
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
         this.emailInput.addEventListener("blur", () => this.validateEmail());
         this.passwordInput.addEventListener("blur", () => this.validatePassword()); 
         this.emailInput.addEventListener("input", () => this.clearError('email'));
