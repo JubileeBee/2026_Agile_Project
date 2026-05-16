@@ -16,3 +16,8 @@ if (navbar) {
         lastScrollY = currentScrollY;
     });
 }
+
+// Wait for fonts to load before showing Material Icons
+document.fonts.ready.then(() => {
+    document.documentElement.classList.add('fonts-loaded');
+});
