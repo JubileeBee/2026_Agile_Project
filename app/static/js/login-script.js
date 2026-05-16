@@ -156,12 +156,11 @@ class RecipeSharingLoginForm {
         this.setLoading(true);
         
         try {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
+                    'X-CSRFToken': getCsrfToken()
                 },
                 body: JSON.stringify({
                     email: this.emailInput.value.trim(),
