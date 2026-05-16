@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const card = btn.closest('.recipe-card')
           const likeCount = card.querySelector('.recipe-stats li:first-child')
           if (likeCount) {
-              likeCount.innerHTML = `<span class="material-icons" style="font-size: 14px">favorite</span> ${data.likes}`
+              likeCount.innerHTML = `<span class="material-icons">favorite</span> ${data.likes}`
           }
         })
         .catch(err => {
@@ -46,3 +46,12 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   })
 })
+
+// Edit button handler
+document.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = btn.dataset.url;
+    });
+});
