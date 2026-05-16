@@ -503,7 +503,7 @@ def like_recipe(id):
         return jsonify({
             'success': False,
             'error': 'You cannot like your own recipe.'
-        }), 403
+        }), 400
      
     existing_like = Like.query.filter_by(user_id=current_user.id, recipe_id=id).first()
     
@@ -531,7 +531,7 @@ def favourite_recipe(id):
         return jsonify({
             'success': False,
             'error': 'You cannot favourite your own recipe.'
-        }), 403
+        }), 400
 
     existing = Favourite.query.filter_by(
         user_id=current_user.id,
