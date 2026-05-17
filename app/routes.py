@@ -337,11 +337,16 @@ def signup():
     if request.method == 'GET':
         return render_template('signup.html')
 
-    data = request.get_json()
+    if request.is_json:
+        data = request.get_json() or {}
 
-    username = data.get('username', '').strip()
-    email = data.get('email', '').strip().lower()
-    password = data.get('password', '')
+        username = data.get('username', '').strip()
+        email = data.get('email', '').strip().lower()
+        password = data.get('password', '')
+    else:
+        username = request.form.get('username', '').strip()
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '')
 
     # Validation
     if not username or not email or not password:
@@ -383,10 +388,10 @@ def signup():
     # Auto login after signup
     login_user(user)
 
-    return jsonify({
-        'success': True,
-        'redirect': url_for('home')
-    })
+    if request.is_json:
+        return jsonify({'success': True, 'redirect': url_for('home')})
+
+    return redirect(url_for('home'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
