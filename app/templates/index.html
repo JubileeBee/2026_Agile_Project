@@ -2,10 +2,8 @@
 It extends the base.html template and fills in the content block with a welcome
 hero and a section showcasing variety of recipes. #} {% extends "base.html" %}
 {% block extra_css %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/search.css') }}"
-/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% endblock %} {% block content %}
 
 <div class="home-container">

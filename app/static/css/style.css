@@ -279,329 +279,11 @@ html, body {
 }
  
 /* =========================
-   Home Page / Hero
-   ========================= */
-.welcome-hero {
-    background-color: #F2EADC;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--primary-brown);
-    color: var(--primary-brown);
-    text-align: center;
-}
- 
-.welcome-hero h1 {
-    font-size: clamp(35px, 4vw, 40px);
-    font-weight: 700;
-    margin-bottom: 10px;
-}
- 
-.welcome-hero p {
-    margin-top: 0;
-}
- 
-.search-container {
-    display: flex;
-    margin-top: 15px;
-    width: 100%;
-    max-width: 750px;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-}
- 
-.search-container input {
-    padding: 10px 15px;
-    border: none;
-    outline: none;
-    border-radius: 20px 0 0 20px;
-    flex: 0.67;
-    min-width: 0;
-}
- 
-.search-container button {
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 0 20px 20px 0;
-    background-color: var(--primary-brown);
-    color: white;
-}
- 
-.home-container h2 {
-    flex-direction: column;
-    align-items: left;
-    gap: 20px;
-    padding: 0px;
-}
- 
-.home-container .container {
-    max-width: 1200px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
- 
-.section-header {
-    padding-left: -12px;
-    padding-left: -12px;
-}
- 
-.section-header h2 {
-    font-weight: 600;
-    margin-bottom: 20px;
-    margin-top: 50px;
-    color: var(--primary-brown-dark);
-    color: var(--primary-brown-dark);
-}
- 
-/* =========================
-   Recipe Card
-   ========================= */
-.recipe-card {
-    background-color: var(--card-color);
-    box-shadow: var(--card-shadow);
-    border-radius: var(--global-radius);
-    color: var(--primary-brown-dark);
-    width: 100%;
-    max-width: 100%;
-    max-width: 100%;
-    height: auto;
-    font-family: 'Quicksand', sans-serif;
-    line-height: 1.5;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
- 
-.recipe-card:hover {
-    transform: translateY(-6px);
-}
- 
-.recipe-card figure {
-    width: 100%;
-    margin: 0;
-    height: 250px;
-    overflow: hidden;
-    border-radius: var(--global-radius) var(--global-radius) 0 0;
-    position: relative;
-}
- 
-.recipe-card figure img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-}
- 
-.recipe-card-content {
-    flex-grow: 1;
-    padding: 0.7rem 1.3rem 0.5rem 1.3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 4px;
-    overflow: hidden;
-    min-height: 0;
-}
-
-.recipe-card h1 {
-    text-align: left;
-}
-
-.recipe-footer {
-    justify-content: flex-start;
-}
-
-.card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-items: center;
-    margin: 0;
-    font-size: 13px;
-    flex-wrap: nowrap;
-    gap: 8px;
-    gap: 8px;
-}
- 
-.recipe-tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
- 
-.recipe-tag {
-    background-color: var(--primary-brown);
-    color: #fff;
-    padding: 0.4rem 1rem;
-    border-radius: 50px;
-    font-size: 0.9em;
-    font-weight: 600;
-}
- 
-.recipe-stats {
-    list-style: none;
-    display: flex;
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-    font-size: 13px;
-    color: #777;
-}
- 
-.recipe-stats li {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    color: var(--primary-brown);
-}
- 
-.recipe-card h1 {
-    font-size: 1.4rem;
-    margin-top: 5px;
-    margin-bottom: -3px;
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    white-space: nowrap;
-}
- 
-.recipe-footer {
-    display: flex;
-    justify-content: flex-end;
-    justify-content: flex-end;
-}
- 
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--primary-brown);
-}
- 
-.username {
-    font-size: 0.8rem;
-    font-weight: 500;
-}
- 
-.recipe-link {
-    text-decoration: none;
-    color: inherit;
-}
- 
-.heart-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(255,255,255,0.8);
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
- 
-.heart-btn .material-icons {
-    color: var(--primary-brown);
-}
- 
-/* Context-specific override:
-   Guarantees consistent liked-state styling inside profile-card and recipe-card layouts
-   where inheritance or other CSS rules may otherwise override the heart colour */
-.profile-card .heart-btn.liked .material-icons,
-.recipe-card .heart-btn.liked .material-icons {
-    color: red !important;
-}
- 
- 
-.difficulty.easy {
-    color: green;
-}
- 
-.difficulty.medium {
-    color: orange;
-}
- 
-.difficulty.hard {
-    color: red;
-}
- 
-/* Global icon sizes for material icons used in recipe cards */
-.icon-sm {
-    font-size: 14px;
-}
- 
-.icon-md {
-    font-size: 16px;
-}
- 
-/* =========================
-   Horizontal Scroll Row
-   ========================= */
-.scroll-row {
-    display: flex;
-    overflow-x: auto;
-    gap: 20px;
-    display: flex;
-    overflow-x: auto;
-    gap: 20px;
-    padding: 7px 0 15px 0;
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-brown-dark) transparent;
-    cursor: grab;
-    scroll-snap-type: x mandatory;
-    cursor: grab;
-    scroll-snap-type: x mandatory;
-}
- 
-.scroll-row:active {
-    cursor: grabbing;
-}
- 
-.scroll-row::-webkit-scrollbar {
-    height: 6px;
-}
- 
-.scroll-row::-webkit-scrollbar-track {
-    background: transparent;
-}
- 
-.scroll-row::-webkit-scrollbar-thumb {
-    background: var(--primary-brown-dark);
-    border-radius: 10px;
-}
- 
-.scroll-row::-webkit-scrollbar-button {
-    display: none;
-}
- 
-.scroll-item {
-    flex: 0 0 auto;
-    flex: 0 0 auto;
-    width: 22rem;
-    scroll-snap-align: start;
-}
- 
-/* =========================
    Media Queries
    ========================= */
  
 /* Tablet */
 @media (max-width: 768px) {
- 
     .topnav {
         padding: 10px 3vw;
     }
@@ -629,7 +311,6 @@ html, body {
  
 /* Mobile */
 @media (max-width: 576px) {
-    /* Navbar */
     .logo-text {
         font-size: 20px;
     }
@@ -646,12 +327,11 @@ html, body {
     .nav-circle .material-icons {
         font-size: 26px;
     }
-   
+ 
     .nav-right {
         gap: 6px;
     }
  
-    /* Footer */
     .site-footer {
         padding: 20px 20px 0px 20px;
     }
@@ -666,82 +346,14 @@ html, body {
     .footer-legal a {
         margin-left: 10px;
     }
- 
-    /* Hero */
-    .welcome-hero {
-        height: 220px;
-        padding: 0 16px;
-    }
- 
-    .welcome-hero h1 {
-        font-size: 1.8rem;
-        margin-bottom: 8px;
-    }
- 
-    .search-container input {
-        padding: 8px 12px;
-        font-size: 13px;
-    }
- 
-    .search-container button {
-        padding: 8px 14px;
-        font-size: 13px;
-    }
- 
-    /* Section header */
-    .section-header {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        margin-bottom: 15px;
-    }
- 
-    .section-header h2 {
-        font-size: 1.5rem;
-        margin-top: 30px;
-    }
- 
-    /* Recipe cards */
-    .recipe-card {
-        width: 75vw;
-    }
- 
-    .recipe-card figure {
-        height: 11rem;
-    }
- 
-    /* Scroll row */
-    .scroll-row {
-        gap: 12px;
-        padding-left: 15px;
-        gap: 12px;
-        padding-left: 15px;
-        padding-right: 15px;
-        scroll-padding: 0 20px;
-        margin: 0 10px;
-        margin: 0 10px;
-    }
- 
-    .scroll-item {
-        width: 70vw;
-        width: 70vw;
-    }
- 
-    .recipe-card {
-        width: 100%;
-        width: 100%;
-    }
- 
-    .recipe-card figure {
-        height: 11rem;
-    }
 }
  
 /* Small mobile */
 @media (max-width: 375px) {
-    /* Navbar */
     :root {
         --nav-height: 50px;
     }
+ 
     .topnav {
         height: 50px;
         padding: 8px 10px;
@@ -750,7 +362,6 @@ html, body {
     .nav-right {
         gap: 1px;
     }
-   
  
     .logo-text {
         font-size: 14px;
@@ -774,36 +385,6 @@ html, body {
         font-size: 22px;
     }
  
-   
-    /* Hero */
-    .welcome-hero {
-        height: 180px;
-        padding: 0 16px;
-    }
- 
-    .welcome-hero h1 {
-        font-size: 1.4rem;
-        margin-bottom: 6px;
-    }
- 
-    .search-container input {
-        padding: 7px 10px;
-        font-size: 12px;
-    }
- 
-    .search-container button {
-        padding: 7px 12px;
-        font-size: 12px;
-    }
- 
-    /* Section header */
-    .section-header h2 {
-        font-size: 1.2rem !important;
-        margin-top: 24px !important;
-        margin-bottom: 10px !important;
-    }
- 
-    /* Footer */
     .site-footer {
         padding: 16px 12px 0px 12px;
     }
@@ -819,69 +400,5 @@ html, body {
     .footer-legal a {
         margin-left: 6px;
     }
- 
-    /* Recipe cards */
-    .recipe-card h1 {
-        font-size: 1rem;
-    }
- 
-    .recipe-card-content {
-        padding: 0.5rem 0.8rem;
-    }
- 
-    .recipe-tag {
-        padding: 0.3rem 0.7rem;
-        font-size: 0.75em;
-    }
- 
-    .recipe-stats {
-        gap: 6px;
-        font-size: 11px;
-    }
- 
-    .recipe-card figure {
-        height: 9rem;
-    }
- 
-    /* Scroll row */
-    .scroll-item {
-        width: 88vw;
-    }
- 
-    .recipe-card {
-        width: 100%;
-    }
 }
  
-/* =========================
-   Edit Button (Recipe Card)
-   ========================= */
- 
-   .edit-btn {
-    position: absolute;
-    top: 10px;
-    left: 10px;
- 
-    z-index: 1000;
- 
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 50%;
- 
-    width: 36px;
-    height: 36px;
- 
-    display: flex;
-    align-items: center;
-    justify-content: center;
- 
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
- 
-    transition: all 0.2s ease;
-}
- 
-.edit-btn:hover {
-    transform: scale(1.1);
-}
-
