@@ -1,5 +1,6 @@
 import re
 import bleach
+import uuid
 from flask import render_template, request, redirect, url_for, jsonify, abort, flash
 from app import app, db
 from sqlalchemy import desc, func, or_
@@ -340,11 +341,16 @@ def signup():
     if request.method == 'GET':
         return render_template('signup.html')
 
-    data = request.get_json()
+    if request.is_json:
+        data = request.get_json() or {}
 
-    username = data.get('username', '').strip()
-    email = data.get('email', '').strip().lower()
-    password = data.get('password', '')
+        username = data.get('username', '').strip()
+        email = data.get('email', '').strip().lower()
+        password = data.get('password', '')
+    else:
+        username = request.form.get('username', '').strip()
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '')
 
     # Validation
     if not username or not email or not password:
@@ -386,38 +392,44 @@ def signup():
     # Auto login after signup
     login_user(user)
 
-    return jsonify({
-        'success': True,
-        'redirect': url_for('home')
-    })
+    if request.is_json:
+        return jsonify({'success': True, 'redirect': url_for('home')})
+
+    return redirect(url_for('home'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
     if request.method == 'GET':
         return render_template('login.html')
 
-    data = request.get_json()
-
-    email = data.get('email', '').strip().lower()
-    password = data.get('password', '')
+    # Support both JSON (JS) and form (Selenium/browser)
+    if request.is_json:
+        data = request.get_json() or {}
+        email = data.get('email', '').strip().lower()
+        password = data.get('password', '')
+    else:
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '')
 
     user = User.query.filter_by(email=email).first()
 
     if user and user.check_password(password):
         login_user(user)
+        if request.is_json:
+            return jsonify({
+                'success': True,
+                'redirect': url_for('home')
+            })
+        return redirect(url_for('home'))
 
+    if request.is_json:
         return jsonify({
-            'success': True,
-            'redirect': url_for('home')
-        })
+            'success': False,
+            'error': 'Invalid email or password'
+        }), 401
+    return render_template('login.html', error='Invalid email or password'), 401
 
-    return jsonify({
-        'success': False,
-        'error': 'Invalid email or password'
-    }), 401
-
-@app.route('/logout', methods=['POST'])
+@app.route('/logout', methods=['GET','POST'])
 @login_required
 def logout():
     logout_user()
@@ -506,7 +518,7 @@ def like_recipe(id):
         return jsonify({
             'success': False,
             'error': 'You cannot like your own recipe.'
-        }), 403
+        }), 400
      
     existing_like = Like.query.filter_by(user_id=current_user.id, recipe_id=id).first()
     
@@ -534,7 +546,7 @@ def favourite_recipe(id):
         return jsonify({
             'success': False,
             'error': 'You cannot favourite your own recipe.'
-        }), 403
+        }), 400
 
     existing = Favourite.query.filter_by(
         user_id=current_user.id,
@@ -687,13 +699,27 @@ def add_recipe():
         image_filename = None
 
         if image and image.filename:
-            # Sanitize filename
-            image_filename = secure_filename(image.filename)
-            #Safe upload path
-            upload_folder = os.path.join("app", "static", "images", "uploads")
+
+            # Sanitize original filename
+            original_filename = secure_filename(image.filename)
+
+            # this keeps the original extension (.jpg, .png, etc.)
+            extension = os.path.splitext(original_filename)[1]
+
+            # Generate unique filename
+            unique_filename = f"{uuid.uuid4().hex}{extension}"
+
+            upload_folder = os.path.join(
+                "app",
+                "static",
+                "images",
+                "uploads"
+            )
+
             os.makedirs(upload_folder, exist_ok=True)
-            filepath = os.path.join(upload_folder, image_filename)
+            filepath = os.path.join(upload_folder, unique_filename)
             image.save(filepath)
+            image_filename = unique_filename
 
         new_recipe = Recipe(
             title=request.form['title'],

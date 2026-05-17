@@ -41,7 +41,7 @@ def seed_data():
                 cook_time=30,
                 difficulty=DifficultyEnum.MEDIUM,
                 servings=4,
-                image_file='https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400',
+                image_file="chocolate_lava_cake.jpeg",
                 user_id=1
             ),
             Recipe(
@@ -55,7 +55,7 @@ def seed_data():
                 cook_time=10,
                 difficulty=DifficultyEnum.EASY,
                 servings=1,
-                image_file='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfqIDCCdL5IDo0IOwcXdOx6q8o7V6su_lCg&s',
+                image_file="avocado_toast.jpeg",
                 user_id=2
             ),
             Recipe(
@@ -69,7 +69,7 @@ def seed_data():
                 cook_time=45,
                 difficulty=DifficultyEnum.HARD,
                 servings=2,
-                image_file='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLQxLm2PI5YnBZFuK-V8K6hDKFkrMTI0uDoA&s',
+                image_file="soy_sauce_ramen.jpeg",
                 user_id=3
             ),
             Recipe(
@@ -83,7 +83,7 @@ def seed_data():
                 cook_time=15,
                 difficulty=DifficultyEnum.EASY,
                 servings=2,
-                image_file='https://bakerbynature.com/wp-content/uploads/2025/01/Caesar-Salad-9.jpg',
+                image_file="caesar_salad.jpg",
                 user_id=4
             ),
             Recipe(
@@ -97,7 +97,7 @@ def seed_data():
                 cook_time=5,
                 difficulty=DifficultyEnum.EASY,
                 servings=2,
-                image_file='https://twosleevers.com/wp-content/uploads/2025/05/Mango-Smoothie-1.jpg',
+                image_file="mango_smoothie.jpg",
                 user_id=5
             ),
             Recipe(
@@ -111,7 +111,7 @@ def seed_data():
                 cook_time=20,
                 difficulty=DifficultyEnum.EASY,
                 servings=4,
-                image_file='https://lmld.org/wp-content/uploads/2010/02/banana-pancakes-3.jpg',
+                image_file="bananas_pancakes.jpg",
                 user_id=1
             ),
             Recipe(
@@ -125,7 +125,7 @@ def seed_data():
                 cook_time=25,
                 difficulty=DifficultyEnum.EASY,
                 servings=3,
-                image_file='https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400',
+                image_file="chicken_stirfry.jpeg",
                 user_id=2
             ),
             Recipe(
@@ -139,7 +139,7 @@ def seed_data():
                 cook_time=30,
                 difficulty=DifficultyEnum.HARD,
                 servings=2,
-                image_file='https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=400',
+                image_file="eggs_benedict.jpeg",
                 user_id=3
             ),
             Recipe(
@@ -153,7 +153,7 @@ def seed_data():
                 cook_time=20,
                 difficulty=DifficultyEnum.EASY,
                 servings=12,
-                image_file='https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400',
+                image_file="granola_bar.jpeg",
                 user_id=4
             ),
             Recipe(
@@ -167,7 +167,7 @@ def seed_data():
                 cook_time=40,
                 difficulty=DifficultyEnum.MEDIUM,
                 servings=6,
-                image_file='https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400',
+                image_file="tiramisu.jpeg",
                 user_id=5
             ),
         ]

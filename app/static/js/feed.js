@@ -1,4 +1,3 @@
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
 let page = 1;
 let loading = false;

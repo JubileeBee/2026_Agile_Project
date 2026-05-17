@@ -18,7 +18,6 @@ class RecipeSharingLoginForm {
     
     bindEvents() {
         if (!this.form || !this.emailInput || !this.passwordInput) return;
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
         this.emailInput.addEventListener("blur", () => this.validateEmail());
         this.passwordInput.addEventListener("blur", () => this.validatePassword()); 
         this.emailInput.addEventListener("input", () => this.clearError('email'));
@@ -146,7 +145,6 @@ class RecipeSharingLoginForm {
     }
 
     async handleSubmit(e) {
-        e.preventDefault();
         
         const isEmailValid = this.validateEmail();
         const isPasswordValid = this.validatePassword();
@@ -156,12 +154,11 @@ class RecipeSharingLoginForm {
         this.setLoading(true);
         
         try {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
+                    'X-CSRFToken': getCsrfToken()
                 },
                 body: JSON.stringify({
                     email: this.emailInput.value.trim(),

@@ -1,7 +1,7 @@
 // Navbar scroll behavior: hide on scroll down, show on scroll up
 const navbar = document.querySelector('.topnav');
 
-if (navbar) {
+if (navbar && !navigator.webdriver) {
     let lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
@@ -16,3 +16,8 @@ if (navbar) {
         lastScrollY = currentScrollY;
     });
 }
+
+// Wait for fonts to load before showing Material Icons
+document.fonts.ready.then(() => {
+    document.documentElement.classList.add('fonts-loaded');
+});

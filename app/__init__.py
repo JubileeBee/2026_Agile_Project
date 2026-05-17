@@ -10,7 +10,32 @@ from flask_talisman import Talisman
 app = Flask(__name__)
 app.config.from_object(Config)
 csrf = CSRFProtect(app)  # Enable CSRF protection
-Talisman(app)  # Enable security headers
+csp = {
+    'default-src': ["'self'"],
+
+    'style-src': [
+        "'self'",
+        "https://cdn.jsdelivr.net"
+    ],
+
+    'script-src': [
+        "'self'",
+        "https://cdn.jsdelivr.net"
+    ],
+
+    'font-src': [
+        "'self'",
+        "https://cdn.jsdelivr.net",
+        "data:"
+    ],
+
+    'img-src': [
+        "'self'",
+        "data:"
+    ]
+}
+
+Talisman(app, content_security_policy=csp)  # Enable security headers
 
 # Initialize extensions
 db = SQLAlchemy(app)

@@ -1,0 +1,243 @@
+/* =========================
+   Home Page / Hero
+   ========================= */
+.welcome-hero {
+    background-color: #F2EADC;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-brown);
+    text-align: center;
+}
+ 
+.welcome-hero h1 {
+    font-size: clamp(35px, 4vw, 40px);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+ 
+.welcome-hero p {
+    margin-top: 0;
+}
+ 
+/* =========================
+   Search button
+   ========================= */
+
+.search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+}
+
+.search-main-row {
+    display: flex;
+    width: min(100%, 700px);
+    min-width: 0;
+    margin: 15px auto 0;
+    align-items: stretch;
+}
+
+.search-main-row input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    border-radius: 20px 0 0 20px;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.search-main-row button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--primary-brown);
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+}
+
+
+/* =========================
+   Home Layout
+   ========================= */
+ 
+.home-container h2 {
+    flex-direction: column;
+    align-items: left;
+    gap: 20px;
+    padding: 0px;
+}
+ 
+.home-container .container {
+    max-width: 1200px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+ 
+.section-header {
+    padding-left: -12px;
+    padding-left: -12px;
+}
+ 
+.section-header h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    color: var(--primary-brown-dark);
+}
+ 
+ 
+/* =========================
+   Horizontal Scroll Row
+   ========================= */
+.scroll-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 7px 0 15px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-brown-dark) transparent;
+    cursor: grab;
+    scroll-snap-type: x mandatory;
+    cursor: grab;
+    scroll-snap-type: x mandatory;
+}
+ 
+.scroll-row:active {
+    cursor: grabbing;
+}
+ 
+.scroll-row::-webkit-scrollbar {
+    height: 6px;
+}
+ 
+.scroll-row::-webkit-scrollbar-track {
+    background: transparent;
+}
+ 
+.scroll-row::-webkit-scrollbar-thumb {
+    background: var(--primary-brown-dark);
+    border-radius: 10px;
+}
+ 
+.scroll-row::-webkit-scrollbar-button {
+    display: none;
+}
+ 
+.scroll-item {
+    flex: 0 0 auto;
+    flex: 0 0 auto;
+    width: 22rem;
+    scroll-snap-align: start;
+}
+
+
+/* =========================
+   Media Queries
+   ========================= */
+ @media (max-width: 992px) {
+    .search-main-row {
+        width: min(90%, 700px);
+    }
+}
+/* Mobile */
+@media (max-width: 576px) {
+    .welcome-hero {
+        height: 220px;
+        padding: 0 16px;
+    }
+ 
+    .welcome-hero h1 {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+
+    .search-main-row {
+        width: min(92%, 700px);
+    }
+
+    .search-main-row input {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .search-main-row button {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+ 
+    .section-header {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        margin-bottom: 15px;
+    }
+ 
+    .section-header h2 {
+        font-size: 1.5rem;
+        margin-top: 30px;
+    }
+ 
+    .scroll-row {
+        gap: 12px;
+        padding-left: 15px;
+        padding-right: 15px;
+        scroll-padding: 0 20px;
+        margin: 0 10px;
+    }
+ 
+    .scroll-item {
+        width: 70vw;
+    }
+}
+ 
+/* Small mobile */
+@media (max-width: 375px) {
+    .welcome-hero {
+        height: 180px;
+        padding: 0 16px;
+    }
+ 
+    .welcome-hero h1 {
+        font-size: 1.4rem;
+        margin-bottom: 6px;
+    }
+
+    .search-main-row {
+        width: min(92%, 700px);
+    }
+
+    .search-main-row input {
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    .search-main-row button {
+        padding: 7px 12px;
+        font-size: 10px;
+    }
+
+    .section-header h2 {
+        font-size: 1.2rem !important;
+        margin-top: 24px !important;
+        margin-bottom: 10px !important;
+    }
+ 
+    .scroll-item {
+        width: 88vw;
+    }
+}

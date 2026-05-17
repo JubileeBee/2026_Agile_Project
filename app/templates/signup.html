@@ -34,8 +34,9 @@ The form will be submitted to the server for processing and validation.
     <div class="signup-container">
         <div class="soft-card d-flex">
             <!-- Form -->
-            <form class="comfort-form" id="signupForm" novalidate>
-                <div classs = "signup-header">
+            <form class="comfort-form" id="signupForm" novalidate method="POST" action="{{ url_for('signup') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class = "signup-header">
                     <h1 class = "signup-title text-center">Create account</h1>
                     <p class = "signup-subtitle text-center">Join our cooking community</p>
                 </div>
@@ -181,6 +182,7 @@ The form will be submitted to the server for processing and validation.
 
     <!-- Bootstrap 5 JS bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
     <script src="{{ url_for('static', filename='js/signup-script.js') }}" defer></script>
 
 </body>

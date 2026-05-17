@@ -1,4 +1,3 @@
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
 // ── Password visibility toggles ──
 function setupToggle(toggleId, inputId) {
@@ -109,13 +108,11 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     btn.classList.add('loading');
 
 try {
-    const csrfToken =
-    document.querySelector('meta[name="csrf-token"]').content;
     const response = await fetch('/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken
+            'X-CSRFToken': getCsrfToken()
         },
         body: JSON.stringify({
             username: `${firstName} ${lastName}`,

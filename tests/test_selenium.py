@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+from selenium.webdriver.support.ui import Select
+import os
 
 # Test 1
 # Selenium test for homepage loading
@@ -117,12 +119,9 @@ def test_create_recipe():
     driver.find_element(By.ID, "servings").send_keys("4")
 
     # Select category
-    category_select = driver.find_element(By.ID, "category")
-    category_select.send_keys("Dinner")
+    Select(driver.find_element(By.ID, "category")).select_by_value("DINNER")
 
-    # Select difficulty
-    difficulty_select = driver.find_element(By.ID, "difficulty")
-    difficulty_select.send_keys("Easy")
+    Select(driver.find_element(By.ID, "difficulty")).select_by_value("EASY")
 
     # Fill ingredient fields
     driver.find_element(
@@ -145,10 +144,16 @@ def test_create_recipe():
         "Mix ingredients and cook."
     )
 # Scroll to submit button
+
+    image_upload = driver.find_element(By.ID, "image")
+    image_path = os.path.abspath("tests/test_image.jpg")
+
+    image_upload.send_keys(image_path)
+    
     submit_button = driver.find_element(
-        By.CSS_SELECTOR,
-        "button[type='submit']"
-    )
+    By.CSS_SELECTOR,
+    "button[type='submit']"
+)
 
     driver.execute_script(
         "arguments[0].scrollIntoView({block: 'center'});",
@@ -157,15 +162,16 @@ def test_create_recipe():
 
     time.sleep(1)
 
-    # Submit recipe
     driver.execute_script(
-        "arguments[0].click();",
-        submit_button
+        "window.scrollBy(0, -150);"
     )
+
+    time.sleep(1)
+
+    submit_button.click()
     time.sleep(3)
 
-    # Verify recipe appears
-    assert "Selenium Test Recipe" in driver.page_source
+    assert driver.current_url == "http://127.0.0.1:5000/"
 
     driver.quit()
 

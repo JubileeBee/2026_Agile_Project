@@ -1,4 +1,3 @@
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
 // Profile Tab functionality: handles switching between "My Recipes", "Favourites", and "Likes"
 const tabs = document.querySelectorAll('.profile-tab');
@@ -97,7 +96,7 @@ if (saveBtn) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': getCsrfToken()
             },
             body: JSON.stringify({ name, bio, profile_image: avatar })
         })
@@ -163,7 +162,7 @@ if (deleteToggle && deleteModal && deleteConfirmInput && confirmDeleteBtn) {
         const res = await fetch('/profile/delete', {
             method: 'POST',
             headers: {
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': getCsrfToken()
             }
         })
 
@@ -205,7 +204,7 @@ function attachHeartListener(btn) {
             method: 'POST',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': getCsrfToken()
             }
         })
         const data = await res.json()
@@ -219,6 +218,16 @@ function attachHeartListener(btn) {
             } else {
                 b.classList.remove('liked')
                 icon.textContent = 'favorite_border'
+            }
+
+            // Update like count on the card
+            const recipeCard = b.closest('.recipe-card')
+            const likeCount = recipeCard?.querySelector('.recipe-stats li:first-child')
+            if (likeCount) {
+                const span = likeCount.querySelector('.material-icons')
+                if (span) {
+                    span.nextSibling.textContent = ` ${data.likes}`
+                }
             }
         })
 

@@ -1,30 +1,30 @@
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
+document.addEventListener('DOMContentLoaded', function() {
+  // Handles the like/unlike functionality for recipe cards on the homepage and profile page
+  if (!document.querySelector('.profile-container')) {
+    document.querySelectorAll('.heart-btn').forEach(btn => {
+      const icon = btn.querySelector('.material-icons')
+      if (!icon) return;
 
-// Handles the like/unlike functionality for recipe cards on the homepage and profile page
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.heart-btn').forEach(btn => {
-    const icon = btn.querySelector('.material-icons')
+      // set initial state
+      if (icon.textContent.trim() === 'favorite') {
+        btn.classList.add('liked')
+      }
 
-    // set initial state
-    if (icon.textContent.trim() === 'favorite') {
-      btn.classList.add('liked')
-    }
+      btn.addEventListener('click', function (e) {
+        e.preventDefault()
+        e.stopPropagation()
 
-    btn.addEventListener('click', function (e) {
-      e.preventDefault()
-      e.stopPropagation()
+        const url = btn.dataset.url
+        if (!url) return
 
-      const url = btn.dataset.url
-      if (!url) return
-
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRFToken': csrfToken
-        }
-      })
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCsrfToken()
+          }
+        })
         .then(res => res.json())
         .then(data => {
           if (data.liked) {
@@ -34,17 +34,33 @@ document.addEventListener('DOMContentLoaded', function () {
             icon.textContent = 'favorite_border'
             btn.classList.remove('liked')
           }
-          
+
           // Update the like count in the card stats
           const card = btn.closest('.recipe-card')
+          if (!card) return; 
+          
           const likeCount = card.querySelector('.recipe-stats li:first-child')
           if (likeCount) {
-              likeCount.textContent = `<span class="material-icons" style="font-size: 14px">favorite</span> ${data.likes}`
+              likeCount.textContent = `<span class="material-icons">favorite</span> ${data.likes}`
           }
         })
         .catch(err => {
-          console.error('Like request failed:', err)
-        })
-    })
-  })
-})
+          console.error('Like request failed:', err);
+        });
+      });
+    });
+  }
+
+  // Edit button handler
+  document.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (btn.dataset.url) {
+        window.location.href = btn.dataset.url;
+      }
+    });
+  });
+
+});
