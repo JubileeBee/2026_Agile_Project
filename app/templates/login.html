@@ -39,7 +39,9 @@
                 <p class="login-subtitle">Cooking is a love story</p>
             </div>
             <!--Login form with email and password fields, remember me checkbox, and submit button-->
-            <form class="comfort-form" id="loginForm" novalidate>
+            <form class="comfort-form" id="loginForm" novalidate method="POST" action="{{ url_for('login') }}">
+                <!-- CSRF token for Flask-WTF -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <!-- Email -->
                 <div class="soft-field mb 2">
                     <div class="form-floating field-container">
