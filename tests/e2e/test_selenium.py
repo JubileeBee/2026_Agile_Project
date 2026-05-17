@@ -146,7 +146,10 @@ def test_create_recipe():
 # Scroll to submit button
 
     image_upload = driver.find_element(By.ID, "image")
-    image_path = os.path.abspath("tests/test_image.jpg")
+    image_path = os.path.join(
+    os.path.dirname(__file__),
+    "test_image.jpg"
+)
 
     image_upload.send_keys(image_path)
     
