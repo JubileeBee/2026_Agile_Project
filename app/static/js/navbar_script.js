@@ -1,7 +1,7 @@
 // Navbar scroll behavior: hide on scroll down, show on scroll up
 const navbar = document.querySelector('.topnav');
 
-if (navbar) {
+if (navbar && !navigator.webdriver) {
     let lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
