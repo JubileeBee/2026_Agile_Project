@@ -90,7 +90,7 @@ SECRET_KEY=your-generated-key-here
 flask db init
 flask db migrate
 flask db upgrade
-python seeds.py
+python seed.py
 ```
 
 > Note: `flask db init` only needs to be run once when setting up for the first time. If you have already done this before, just run `flask db upgrade` and `python seeds.py`.
@@ -104,7 +104,56 @@ Then open your browser and navigate to `http://127.0.0.1:5000`
 > Tip: You can also `Ctrl+Click` the link that appears in your terminal after running the app. To stop the app, press `Ctrl+C` in the terminal.
 
 ### 6. Run the tests
+
+Make sure:
+- the virtual environment is activated
+- dependencies are installed
+- you have two terminals open both in our venv (one will be used for our flask server, the other our tests, you can just open a separate terminal on your IDE and follow through with the following commands)
+
+#### Prepare the database
+
+Before running tests & setting up Flask server, ensure the database is up to date in each terminal (extra precaution), we run:
+
 ```bash
-python tests.py
+flask db upgrade
 ```
-> Note: Make sure the app is stopped (`Ctrl+C`) and your virtual environment is activated.
+
+Not optional, Seed the database with test/sample data, this ensures data is definitly loaded within our venv (extra precaution):
+
+```bash
+python seed.py
+```
+
+Once these steps in our seed and db have been performed, we utilise one terminal to run our flask server.
+
+We run:
+
+```bash
+flask run
+```
+
+#### Run unit tests, on the Terminal separate to our running Flask server
+
+Unit tests can be run first, these tests are the quickest to run through:
+
+```bash
+pytest tests/units 
+```
+
+#### Run end-to-end Selenium tests
+
+Selenium tests take longer than our Unit tests to run.
+
+In that same terminal used to run our unit tests, we perform our Selenium test, run:
+
+```bash
+pytest tests/e2e 
+```
+
+After running all of our individual tests, we can run them in a culmulative state, ensuring these tests pass through together. Within your terminal you ran those two tests in, we than perform:
+
+#### Run all tests
+
+```bash
+pytest 
+```
