@@ -219,6 +219,16 @@ function attachHeartListener(btn) {
                 b.classList.remove('liked')
                 icon.textContent = 'favorite_border'
             }
+
+            // Update like count on the card
+            const recipeCard = b.closest('.recipe-card')
+            const likeCount = recipeCard?.querySelector('.recipe-stats li:first-child')
+            if (likeCount) {
+                const span = likeCount.querySelector('.material-icons')
+                if (span) {
+                    span.nextSibling.textContent = ` ${data.likes}`
+                }
+            }
         })
 
         if (data.liked) {
