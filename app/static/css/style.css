@@ -300,6 +300,11 @@ html, body {
         padding: 6px 14px;
         font-size: 13px;
     }
+
+    .logout-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
  
     .footer-bottom {
         flex-direction: column;
@@ -323,6 +328,11 @@ html, body {
         padding: 5px 12px;
         font-size: 11px;
     }
+
+    .logout-btn {
+        padding: 5px 12px;
+        font-size: 11px;
+    }
  
     .nav-circle .material-icons {
         font-size: 26px;
@@ -330,6 +340,17 @@ html, body {
  
     .nav-right {
         gap: 6px;
+    }
+
+    .floating-post-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    }
+
+    .floating-post-btn .material-icons {
+        font-size: 28px;
     }
  
     .site-footer {
@@ -383,6 +404,17 @@ html, body {
  
     .nav-circle .material-icons {
         font-size: 22px;
+    }
+
+    .floating-post-btn {
+    width: 44px;
+    height: 44px;
+    bottom: 16px;
+    right: 16px;
+    }
+
+    .floating-post-btn .material-icons {
+        font-size: 24px;
     }
  
     .site-footer {
