@@ -55,8 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const total = prep + cook;
 
-        totalInput.value = total;
-        totalDisplay.textContent = formatTime(total);
+        if (totalInput) {
+            totalInput.value = total;
+        }
+        
+        if (totalDisplay) {
+            totalDisplay.textContent = formatTime(total);
+        }
     }
 
     if (prepInput && cookInput) {
