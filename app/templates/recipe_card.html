@@ -1,7 +1,20 @@
 <a href="{{ url_for('recipe', id=recipe.id) }}" class="recipe-link">
   <article class="recipe-card" data-recipe-id="{{ recipe.id }}">
     <figure class="recipe-image">
-      <img src="{{ recipe.image_file or '/static/images/default.jpg' }}" alt="{{ recipe.title }}"/>
+      <img
+        src="
+          {% if recipe.image_file %}
+            {% if 'http' in recipe.image_file or '/static/' in recipe.image_file %}
+              {{ recipe.image_file }}
+            {% else %}
+              {{ url_for('static', filename='images/uploads/' ~ recipe.image_file) }}
+            {% endif %}
+          {% else %}
+            {{ url_for('static', filename='images/default.png') }}
+          {% endif %}
+        "
+        alt="{{ recipe.title }}"
+      />
 
       {# Heart button logic: 
         - Not shown if user is the owner of the recipe 
